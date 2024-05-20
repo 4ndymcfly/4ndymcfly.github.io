@@ -16,7 +16,7 @@ timezone: Europe/Madrid
 
 title: Hacking Épico # the main title
 
-tagline: Un blog dedicado al pentesting y el Hacking Ético # it will display as the sub-title
+tagline: Pentesting, Hacking Ético y WriteUps # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   Un blog dedicado al pentesting y el Hacking Ético.
