@@ -1,0 +1,5 @@
+User-agent: *
+
+Disallow: /norobots/
+
+Sitemap: https//4ndymcfly.github.io/sitemap.xml
