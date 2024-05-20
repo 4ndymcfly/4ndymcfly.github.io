@@ -1,17 +1,17 @@
 
 
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <id>https//4ndymcfly.github.io/</id>
+  <id>https://4ndymcfly.github.io/</id>
   <title>Hacking Épico</title>
   <subtitle>Un blog dedicado al pentesting y el Hacking Ético.</subtitle>
-  <updated>2024-05-20T14:09:51+02:00</updated>
+  <updated>2024-05-20T14:30:29+02:00</updated>
   <author>
     <name>Andrés Lorente</name>
-    <uri>https//4ndymcfly.github.io/</uri>
+    <uri>https://4ndymcfly.github.io/</uri>
   </author>
-  <link rel="self" type="application/atom+xml" href="https//4ndymcfly.github.io/feed.xml"/>
+  <link rel="self" type="application/atom+xml" href="https://4ndymcfly.github.io/feed.xml"/>
   <link rel="alternate" type="text/html" hreflang="en"
-    href="https//4ndymcfly.github.io/"/>
+    href="https://4ndymcfly.github.io/"/>
   <generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator>
   <rights> © 2024 Andrés Lorente </rights>
   <icon>/assets/img/favicons/favicon.ico</icon>
