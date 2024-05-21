@@ -16,7 +16,7 @@ timezone: Europe/Madrid
 
 title: Hacking Épico # the main title
 
-tagline: SysAdmin | Junior Pentester | eJPTv2 | WriteUps | CTF Player # it will display as the sub-title
+tagline: Ciberseguridad | Pentesting | Noticias | Writeups  # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   Un blog dedicado al pentesting y el Hacking Ético.
