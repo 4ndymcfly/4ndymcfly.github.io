@@ -2,7 +2,7 @@
 title: "Tutorial de Ligolo-NG"
 date: Tue May 21 2024 02:00:00 GMT+0200 (Central European Summer Time)
 categories: [Tutoriales, Ligolo-NG]
-tags: [ligolo, ligolo-ng, proxy]
+tags: [ligolo, ligolo-ng, proxy, pivoting]
 image: /assets/img/cabeceras/ligolo-cab.png
 ---
 
@@ -10,7 +10,7 @@ image: /assets/img/cabeceras/ligolo-cab.png
 
 ##### ¿QUÉ ES LIGOLO-NG?
 
-Ligolo-ng es una herramienta de pentesting simple, ligera y rápida que permite a los profesionales de seguridad establecer túneles inversos seguros sin necesidad de utilizar SOCKS. A diferencia de otras herramientas, Ligolo-ng crea un túnel virtual al estilo de una VPN, lo que facilita el pivotaje y el uso de herramientas como Nmap sin tener que pasar por un proxy SOCKS. Gracias a esta aproximación, Ligolo-ng ofrece conexiones más rápidas y estables, mejorando significativamente el rendimiento en comparación con el uso de SOCKS.
+Ligolo-ng es una herramienta de pivoting alternativa a `chisel` y `socat`, ligera y rápida que permite establecer túneles inversos seguros sin necesidad de utilizar SOCKS. A diferencia de otras herramientas, Ligolo-ng crea un túnel virtual al estilo de una VPN, lo que facilita el pivotaje y el uso de herramientas como `nmap` o `netcat` sin tener que pasar por un proxy SOCKS. Gracias a esta característica, Ligolo-ng ofrece conexiones más rápidas y estables, mejorando significativamente el rendimiento en comparación con el uso de SOCKS.
 
 ##### DESCARGA
 
