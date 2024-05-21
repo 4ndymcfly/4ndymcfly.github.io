@@ -6,7 +6,15 @@ tags: [ligolo, ligolo-ng, proxy]
 image: /assets/img/cabeceras/ligolo-cab.png
 ---
 
-#### CONFIGURACIÓN Y PUESTA EN MARCHA DE LIGOLO-NG
+### CONFIGURACIÓN Y PUESTA EN MARCHA DE LIGOLO-NG
+
+##### ¿QUÉ ES LIGOLO-NG?
+
+Ligolo-ng es una herramienta de pentesting simple, ligera y rápida que permite a los profesionales de seguridad establecer túneles inversos seguros sin necesidad de utilizar SOCKS. A diferencia de otras herramientas, Ligolo-ng crea un túnel virtual al estilo de una VPN, lo que facilita el pivotaje y el uso de herramientas como Nmap sin tener que pasar por un proxy SOCKS. Gracias a esta aproximación, Ligolo-ng ofrece conexiones más rápidas y estables, mejorando significativamente el rendimiento en comparación con el uso de SOCKS.
+
+##### DESCARGA
+
+Nos descargaremos tanto el proxy como el cliente desde el repositorio oficial de GitHub [aquí](https://github.com/nicocha30/ligolo-ng). Renombraremos los binarios (opcional) para una mejor manipulación.
 
 ##### MÁQUINA ATACANTE O PROXY (NUESTRA MÁQUINA):
 
