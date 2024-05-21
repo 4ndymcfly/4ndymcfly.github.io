@@ -6,13 +6,17 @@
 - type: twitter
   icon: "fa-brands fa-x-twitter"
 
-- type: email
-  icon: "fas fa-envelope"
-  noblank: true # open link in current tab
-
 - type: hackthebox
   icon: "fa fa-cube"
   url: "https://app.hackthebox.com/profile/1357718"
+
+- type: linkedin
+  icon: "fa-brands fa-linkedin"
+  url:  "https://www.linkedin.com/in/andres-lorente/"               
+
+# - type: email
+#   icon: "fas fa-envelope"
+#   noblank: true # open link in current tab
 
 #- type: rss
 #  icon: "fas fa-rss"

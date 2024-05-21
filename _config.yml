@@ -16,7 +16,7 @@ timezone: Europe/Madrid
 
 title: Hacking Épico # the main title
 
-tagline: Ciberseguridad | Pentesting | Noticias | Writeups  # it will display as the sub-title
+tagline: Blog de Ciberseguridad | Pentesting | Noticias | Writeups # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   Un blog dedicado al pentesting y el Hacking Ético.
@@ -38,8 +38,8 @@ social:
   email: info@hackingepico.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/4ndymcfly # change to your twitter homepage
     - https://github.com/4ndymcfly # change to your github homepage
+    - https://twitter.com/4ndymcfly # change to your twitter homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
