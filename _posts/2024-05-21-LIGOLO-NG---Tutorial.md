@@ -3,8 +3,7 @@ title: "Tutorial de Ligolo-NG"
 date: Tue May 21 2024 02:00:00 GMT+0200 (Central European Summer Time)
 categories: [Tutoriales, Ligolo-NG]
 tags: [ligolo, ligolo-ng, proxy]
-img_path: /assets/img/cabeceras/
-image: ligolo-cab.png
+image: /assets/img/cabeceras/ligolo-cab.png
 ---
 
 #### CONFIGURACIÓN Y PUESTA EN MARCHA DE LIGOLO-NG
