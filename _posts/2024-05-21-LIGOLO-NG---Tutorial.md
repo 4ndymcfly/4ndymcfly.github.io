@@ -14,7 +14,7 @@ Ligolo-ng es una herramienta de pivoting alternativa a `chisel` y `socat`, liger
 
 ##### DESCARGA
 
-Nos descargaremos tanto el proxy como el cliente desde el repositorio oficial de GitHub [aquí](https://github.com/nicocha30/ligolo-ng). Renombraremos los binarios (opcional) para una mejor manipulación.
+Nos descargaremos tanto el proxy como el cliente desde el repositorio oficial de GitHub [aquí](https://github.com/nicocha30/ligolo-ng){:target="_blank"}. Renombraremos los binarios (opcional) para una mejor manipulación.
 
 ##### MÁQUINA ATACANTE O PROXY (NUESTRA MÁQUINA):
 
@@ -126,4 +126,4 @@ $ sudo ip link del ligolo
 
 -----
 
-Repositorio oficial de GitHub [aquí](https://github.com/nicocha30/ligolo-ng)
+Repositorio oficial de GitHub [aquí](https://github.com/nicocha30/ligolo-ng){:target="_blank"}
