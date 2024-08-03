@@ -1,7 +1,7 @@
 ---
 title: "Sincronizar el reloj contra un DC en Kali"
 date: Sat Aug 03 2024 02:00:00 GMT+0200 (Central European Summer Time)
-categories: [Tips, Ligolo-NG]
+categories: [Tips]
 tags: [ntp, ntpdate, ntpsec, dc, kerberos]
 img_path: /assets/img/cabeceras/
 image: NTP.png
