@@ -1,12 +1,12 @@
 ---
-title: "Enumeracion y explotacion de Active Directory"
+title: "Introducción a la enumeración y explotación de Active Directory"
 date: Sat Aug 03 2024 02:00:00 GMT+0200 (Central European Summer Time)
 categories: [Tutoriales, Active Directory]
 tags: [windows, active-directory, crackmapexec, cme, smbmap, kerbrute, impacket, rpcclient, ldapdomaindum, bloodhound, asreproast, evilwinrm, samdump2, diskshadow, rubeus, sharphound, chisel, oscp]
 image: /assets/img/cabeceras/active-directory-logo.png
 ---
 
-## ESCENARIO: WINDOWS SERVER X64 CON AD CON KERBEROS Y SMB ACTIVOS
+## ESCENARIO DE PRUEBAS: AD EN WINDOWS SERVER X64 CON KERBEROS Y SMB ACTIVOS
 
 #### INTRODUCCIÓN:
 
@@ -22,7 +22,7 @@ Aquí se describe una prueba de concepto en un servidor **Windows Server que es 
 
 #### ENUMERACIÓN BÁSICA SMB:
 
-- Primero enumeramos el servicio SMB para obtener información del SO, nombres de dominio y recursos compartidos:
+- Enumeramos el servicio SMB para obtener información del SO, nombres de dominio y recursos compartidos:
 
 
 ```shell
