@@ -2,7 +2,7 @@
 title: "Introducción a la enumeración y explotación de Active Directory"
 date: Sat Aug 03 2024 02:00:00 GMT+0200 (Central European Summer Time)
 categories: [Tutoriales, Active Directory]
-tags: [windows, active-directory, crackmapexec, cme, smbmap, kerbrute, impacket, rpcclient, ldapdomaindum, bloodhound, asreproast, evilwinrm, samdump2, diskshadow, rubeus, sharphound, chisel, oscp]
+tags: [windows, active-directory, crackmapexec, cme, smbmap, kerberos, smb, winrm, kerbrute, impacket, rpcclient, ldapdomaindum, bloodhound, asreproast, evilwinrm, samdump2, diskshadow, rubeus, sharphound, chisel, oscp]
 image: /assets/img/cabeceras/active-directory-logo.png
 ---
 
