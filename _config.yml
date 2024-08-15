@@ -16,10 +16,10 @@ timezone: Europe/Madrid
 
 title: Hacking Épico # the main title
 
-tagline: Blog de Ciberseguridad | Pentesting | Noticias | Writeups # it will display as the sub-title
+tagline: Blog de Ciberseguridad | Noticias | Writeups # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
-  Un blog dedicado al pentesting y el Hacking Ético.
+  Un blog dedicado al pentesting y el Hacking Ético. Por 4ndymcfly.
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
@@ -86,7 +86,7 @@ pageviews:
 #     light  - Use the light color scheme
 #     dark   - Use the dark color scheme
 #
-theme_mode: # [light | dark]
+theme_mode: dark # [light | dark]
 
 # The CDN endpoint for media resources.
 # Notice that once it is assigned, the CDN url
