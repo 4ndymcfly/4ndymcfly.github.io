@@ -1,15 +1,9 @@
 ---
 title: "Bashed"
 date: Fri Aug 23 2024 10:13:12 GMT+0200 (Central European Summer Time)
-categories: [WriteUp, HTB, Linux]
+categories: [WriteUp, HTB]
 tags: [fuzzing, gobuster, pspy]
 image: /assets/img/cabeceras/2024-08-23-bashed---writeup.png
----
-
----
-
-![image](/assets/img/2024-08-23-bashed---writeup/pasted-image-20240127204515.png)
-
 ---
 
 NMAP
