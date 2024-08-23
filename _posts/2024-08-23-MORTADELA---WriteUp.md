@@ -113,13 +113,11 @@ Contiene dos archivos, un dumpeo de keepass y otro que es la BBDD de Keepass:
 
 ![image](/assets/img/2024-08-23-mortadela---writeup/pasted-image-20240405121117.png)
 
-Buscamos info y encontramos esto:
-https://github.com/vdohney/keepass-password-dumper
+Buscamos info y encontramos el repositorio [KeePass Password Dumper](https://github.com/vdohney/keepass-password-dumper)
 
 Debemos emular un proyecto hecho en C# y pasarle el DUMP del Keepass. Con este programa llamado _dotnet_ creamos una lista de posibles contraseñas para romper la seguridad de la base de datos del Keepass.
 
-Instalamos _dotnet_ para Linux:
-https://learn.microsoft.com/en-us/dotnet/core/install/linux-scripted-manual#manual-install
+Instalamos [DOTNET LINUX](https://learn.microsoft.com/en-us/dotnet/core/install/linux-scripted-manual#manual-install) para Linux.
 
 Nos clonamos el repositorio arriba mencionado y ejecutamos lo siguiente:
 
@@ -127,16 +125,17 @@ Nos clonamos el repositorio arriba mencionado y ejecutamos lo siguiente:
 $ dotnet run ../KeePass.DMP passwordlist 
 ```
 
------
+---
+
 ## Notas
 
 Si recibimos el error del tipo:
 
 _"/usr/share/dotnet/sdk/6.0.400/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.TargetFrameworkInference.targets(144,5): error NETSDK1045: The current .NET SDK does not support targeting .NET 7.0.  Either target .NET 6.0 or lower, or use a version of the .NET SDK that supports .NET 7.0."_
 
-Simplemente editamos el archivo _.csproj_ y en la línea con la etiqueta < TargetFramework > indicamos la versión que tengamos, en mi caso tuve que poner la net6.0
+Simplemente editamos el archivo _.csproj_ y en la línea con la etiqueta < TargetFramework > indicamos la versión que tengamos, en mi caso tuve que poner la `net6.0`
 
----------
+---
 
 Recibiremos la siguiente salida:
 
@@ -210,9 +209,7 @@ Las probamos en nuestra consola y...
 
 ![image](/assets/img/2024-08-23-mortadela---writeup/pasted-image-20240405125511.png)
 
-Enhorabuena! somos root!
-
-Ya podemos registrar las flags!
+Enhorabuena! somos root y podemos registrar las flags!
 
 ![image](/assets/img/2024-08-23-mortadela---writeup/pasted-image-20240405130451.png)
 
