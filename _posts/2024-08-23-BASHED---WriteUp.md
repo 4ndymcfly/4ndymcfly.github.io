@@ -1,7 +1,7 @@
 ---
-title: "Bashed"
+title: "Bashed - WriteUp"
 date: Fri Aug 23 2024 10:13:12 GMT+0200 (Central European Summer Time)
-categories: [WriteUp, HTB]
+categories: [WriteUps, HTB, Linux]
 tags: [fuzzing, gobuster, pspy]
 image: /assets/img/cabeceras/2024-08-23-bashed---writeup.png
 ---
