@@ -1,6 +1,6 @@
 ---
 title: "Mortadela - WriteUp"
-date: Fri Aug 23 2024 10:13:12 GMT (Central European Summer Time)
+date: Fri Aug 23 2024 11:28:12 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, TheHackerLabs, Linux]
 tags: [wordpress, CVE-2020-24186, CVE-2023-32784, dotnet, keepass-password-dumper]
 image: /assets/img/cabeceras/2024-08-23-mortadela---writeup.jpg
