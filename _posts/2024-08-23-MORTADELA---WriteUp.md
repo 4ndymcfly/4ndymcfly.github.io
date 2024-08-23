@@ -67,9 +67,7 @@ $ se wpdiscuz
 
 Probamos el SearSploit pero no nos convence. Vamos a buscar por la web.
 
-Encontramos este y nos funciona perfectamente. Creamos el archivo con la URL y ejecutamos el plugin.
-
-https://github.com/meicookies/CVE-2020-24186
+Encontramos este [CVE-2020-24186](https://github.com/meicookies/CVE-2020-24186) y nos funciona perfectamente. Creamos el archivo con la URL y ejecutamos el plugin.
 
 ![image](/assets/img/2024-08-23-mortadela---writeup/pasted-image-20240405114418.png)
 
