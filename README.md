@@ -1,8 +1,8 @@
 # Hacking Épico Blog
 
 [![Gem Version](https://img.shields.io/gem/v/jekyll-theme-chirpy)][gem]&nbsp;
-[![GitHub license](https://img.shields.io/github/license/cotes2020/chirpy-starter.svg?color=blue)][mit]
 [![Netlify Status](https://api.netlify.com/api/v1/badges/3c72c8bb-4fe9-44f0-8e0f-6bf5c21c5254/deploy-status)](https://app.netlify.com/sites/hackingepico/deploys)
+[![GitHub license](https://img.shields.io/github/license/cotes2020/chirpy-starter.svg?color=blue)][mit]
 
 ## Agreements
 
