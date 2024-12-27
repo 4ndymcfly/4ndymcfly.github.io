@@ -4,7 +4,6 @@ backend:
   branch: main
   auth_scope: repo
   base_url: https://hackingepico.com
-  auth_endpoint: /admin/callback
 
 media_folder: "assets/img"  # Carpeta donde se almacenarán todas las imágenes
 public_folder: "/assets/img"  # Ruta pública para acceder a las imágenes
