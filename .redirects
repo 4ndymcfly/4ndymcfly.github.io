@@ -1,0 +1,5 @@
+# Redirigir tráfico de www.hackingepico.com a hackingepico.com
+https://www.hackingepico.com/*    https://hackingepico.com/:splat    301!
+
+# Asegurarse de que todas las rutas sean redirigidas a la página correcta
+/*    /index.html    200
