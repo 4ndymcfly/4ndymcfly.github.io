@@ -1,7 +1,10 @@
 backend:
   name: github
   repo: 4ndymcfly/4ndymcfly.github.io
-  branch: main  # Reemplaza con la rama que estás utilizando
+  branch: main
+  auth_scope: repo
+  base_url: https://hackingepico.com
+  auth_endpoint: /admin/callback
 
 media_folder: "assets/img"  # Carpeta donde se almacenarán todas las imágenes
 public_folder: "/assets/img"  # Ruta pública para acceder a las imágenes
