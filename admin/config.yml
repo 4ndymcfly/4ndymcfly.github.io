@@ -1,5 +1,5 @@
 backend:
-  name: github
+  name: git-gateway
   repo: 4ndymcfly/4ndymcfly.github.io
   branch: main  # Reemplaza con la rama que estás utilizando
 
