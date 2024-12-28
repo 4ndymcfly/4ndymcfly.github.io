@@ -1,105 +1,107 @@
+/* Estilo general para fondo oscuro y texto claro */
+body, html {
+    background-color: #121212 !important; /* Fondo oscuro */
+    color: #e0e0e0 !important; /* Texto claro */
+}
+
 /* Color Picker */
 [class*="ColorSwatch"] {
-    border-color: var(--btn-gray-default-border);
+    border-color: #666 !important; /* Bordes de color swatch */
 }
 .css-177o7zx-ColorSwatch {
-    color: var(--primary-text-color);
-    background-color: var(--btn-gray-default-bg);
+    color: #fff !important; /* Texto blanco */
+    background-color: #333 !important; /* Fondo oscuro */
 }
 .chrome-picker {
-    background: var(--color-picker-bg-color) !important;
-    border: 1px solid var(--color-picker-border-color);
+    background: #1c1c1c !important; /* Fondo color selector */
+    border: 1px solid #555 !important; /* Borde selector */
     border-radius: 6px !important;
-    box-shadow: var(--color-picker-shadow) !important;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3) !important;
 }
 
 /* Toggle */
 [class*=ToggleContainer-StyledToggle][aria-checked="true"] > span[class*="ToggleBackground"] {
-    background-color: var(--toggle-true-bg-color);
+    background-color: #76c7c0 !important; /* Color de toggle activado */
 }
 [class*=ToggleContainer-StyledToggle][aria-checked="false"] > span[class*="ToggleBackground"] {
-    background-color: var(--toggle-false-bg-color);
+    background-color: #999 !important; /* Color de toggle desactivado */
 }
 [class*=ToggleContainer-StyledToggle] > span[class*="ToggleHandle"] {
-    background-color: var(--toggle-handle-color);
+    background-color: #fff !important; /* Color del handle del toggle */
 }
 
-/* Object List Controls */
+/* Objetos y listas */
 [class*="listControlItem"] {
-    border: 1px solid var(--widgets-border-color);
-    border-radius: 6px;
+    border: 1px solid #444 !important; /* Borde de los items */
+    border-radius: 6px !important;
 }
 [class*="TopBarContainer"], [class*="StyledListItemTopBar"], [class*="NestedObjectLabel"] {
-    background-color: var(--topbar-bg-color);
-    border-top-right-radius: 6px;
+    background-color: #1a1a1a !important; /* Fondo oscuro para las barras */
+    border-top-right-radius: 6px !important;
 }
 .css-1cjg468, .css-55unpk {
-    background-color: var(--widgets-bg-color);
-    color: var(--primary-text-color);
+    background-color: #333 !important; /* Fondo de widgets */
+    color: #e0e0e0 !important; /* Texto claro */
 }
 [class*="TopBarContainer"] button[class*="ExpandButton"],
 [class*="StyledListItemTopBar"] [class*="TopBarButton"] {
-    color: var(--header-button-text);
+    color: #ddd !important; /* Color texto botones */
 }
 [class*="TopBarContainer"] button[class*="ExpandButton"]:hover,
 [class*="StyledListItemTopBar"] [class*="TopBarButton"]:hover {
-    color: var(--header-button-text-hover);
+    color: #76c7c0 !important; /* Color texto hover botones */
 }
 
-/* Markdown */
+/* Editor */
 [class*="cms-editor"] {
-    border: 1px solid var(--widgets-border-color);
-    border-radius: 0 6px 6px;
+    border: 1px solid #444 !important; /* Borde editor */
+    border-radius: 0 6px 6px !important;
+    background-color: #222 !important; /* Fondo editor */
 }
 [class*="cms-editor"] [class*="ToolbarContainer"] {
-    background-color: var(--topbar-bg-color);
+    background-color: #333 !important; /* Fondo barra de herramientas */
 }
 .css-12vfcwo, .css-isnoua {
-    background-color: var(--widgets-bg-color);
-    color: var(--primary-text-color);
+    background-color: #333 !important; /* Fondo widgets */
+    color: #e0e0e0 !important; /* Texto claro */
 }
 .css-189bh5w, .css-f8f1e2 {
-    background-color: var(--widgets-bg-color);
-    color: var(--error-text-color);
+    background-color: #333 !important; /* Fondo error */
+    color: #e74c3c !important; /* Texto error */
 }
 [class*="cms-editor"] blockquote {
-    color: var(--secondary-text-color);
-    border-left: 3px solid var(--secondary-text-color);
+    color: #7f8c8d !important; /* Texto de citas */
+    border-left: 3px solid #7f8c8d !important; /* Borde de cita */
 }
 [class*="cms-editor"] code[class*="StyledCode"] {
-    background-color: var(--short-code-bg-color);
-    border-radius: 6px;
-    padding: 4px 6px;
+    background-color: #444 !important; /* Fondo de código */
+    border-radius: 6px !important;
+    padding: 4px 6px !important;
+    color: #fff !important; /* Texto código */
 }
 
-/* General editor adjustments for dark theme */
-body {
-    background-color: var(--dark-bg-color) !important;
-    color: var(--light-text-color) !important;
-}
-
+/* Código */
 .CodeMirror-vscrollbar, .CodeMirror-hscrollbar {
-    background-color: var(--code-block-bg-color);
+    background-color: #333 !important; /* Fondo de la barra de desplazamiento */
 }
-
 .CodeMirror-gutters {
-    background-color: var(--code-block-bg-color) !important;
+    background-color: #333 !important; /* Fondo del gutter */
+    color: #fff !important; /* Color texto gutter */
 }
-
 .CodeMirror-linenumber {
-    color: var(--code-line-number-color);
+    color: #888 !important; /* Color de los números de línea */
 }
 
-/* Dropdown and settings */
+/* Dropdown y botones */
 [class*="ControlContainer"] [class*="SettingsPaneContainer"] {
-    color: var(--primary-text-color);
-    background-color: var(--dropdownlist-bg);
-    border-left: 1px solid var(--dropdownlist-border);
+    color: #e0e0e0 !important; /* Texto claro */
+    background-color: #333 !important; /* Fondo claro de dropdown */
+    border-left: 1px solid #444 !important; /* Borde dropdown */
 }
 [class*="ControlContainer"] button[class*="StyledSettingsButton-button"] {
-    background-color: transparent;
-    color: var(--header-button-text);
+    background-color: transparent !important;
+    color: #ddd !important; /* Color de texto botones */
 }
 [class*="ControlContainer"] button[class*="StyledSettingsButton-button"]:hover {
-    color: var(--header-button-text-hover);
+    color: #76c7c0 !important; /* Color hover */
 }
