@@ -22,6 +22,10 @@ collections:
       - { label: "Comments", name: "comments", widget: "boolean", default: true }
       - { label: "Table of Contents", name: "toc", widget: "boolean", default: true }
 
+customization:
+  styles:
+    - /admin-dark.css
+
 defaults:
   - scope:
       path: "_posts"
