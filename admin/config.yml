@@ -5,6 +5,7 @@ backend:
 
 media_folder: "assets/img"
 public_folder: "/assets/img"
+publish_mode: editorial_workflow
 
 collections:
   - name: "posts"
@@ -21,10 +22,6 @@ collections:
       - { label: "Body", name: "body", widget: "markdown" }
       - { label: "Comments", name: "comments", widget: "boolean", default: true }
       - { label: "Table of Contents", name: "toc", widget: "boolean", default: true }
-
-customization:
-  styles:
-    - /admin/dark.css
 
 defaults:
   - scope:
