@@ -1,92 +1,100 @@
-/* Estilo general para fondo oscuro y texto claro */
+/* Fondo y texto general */
 body, html {
-    background-color: #121212 !important; /* Fondo oscuro */
+    background-color: #1f1f1f !important; /* Fondo suave oscuro */
     color: #e0e0e0 !important; /* Texto claro */
 }
 
 /* Color Picker */
 [class*="ColorSwatch"] {
-    border-color: #666 !important; /* Bordes de color swatch */
+    border-color: #666 !important; /* Bordes de los swatches */
 }
 .css-177o7zx-ColorSwatch {
     color: #fff !important; /* Texto blanco */
-    background-color: #333 !important; /* Fondo oscuro */
+    background-color: #444 !important; /* Fondo más suave */
 }
 .chrome-picker {
-    background: #1c1c1c !important; /* Fondo color selector */
-    border: 1px solid #555 !important; /* Borde selector */
+    background: #2a2a2a !important; /* Fondo selector más suave */
+    border: 1px solid #666 !important; /* Borde selector */
     border-radius: 6px !important;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3) !important;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2) !important; /* Sombra más suave */
+}
+
+/* Ajustes de los inputs del color picker */
+[id^="rc-editable-input-"] {
+    background-color: #444 !important; /* Fondo de los inputs */
+    border: 1px solid #666 !important; /* Borde de los inputs */
+    color: #fff !important; /* Texto blanco */
 }
 
 /* Toggle */
 [class*=ToggleContainer-StyledToggle][aria-checked="true"] > span[class*="ToggleBackground"] {
-    background-color: #76c7c0 !important; /* Color de toggle activado */
+    background-color: #76c7c0 !important; /* Fondo toggle activado */
 }
 [class*=ToggleContainer-StyledToggle][aria-checked="false"] > span[class*="ToggleBackground"] {
-    background-color: #999 !important; /* Color de toggle desactivado */
+    background-color: #aaa !important; /* Fondo toggle desactivado */
 }
 [class*=ToggleContainer-StyledToggle] > span[class*="ToggleHandle"] {
-    background-color: #fff !important; /* Color del handle del toggle */
+    background-color: #fff !important; /* Color del handle */
 }
 
-/* Objetos y listas */
+/* Listas y objetos */
 [class*="listControlItem"] {
-    border: 1px solid #444 !important; /* Borde de los items */
+    border: 1px solid #555 !important; /* Bordes de los items */
     border-radius: 6px !important;
+    background-color: #444 !important; /* Fondo de los items */
 }
 [class*="TopBarContainer"], [class*="StyledListItemTopBar"], [class*="NestedObjectLabel"] {
-    background-color: #1a1a1a !important; /* Fondo oscuro para las barras */
+    background-color: #333 !important; /* Fondo topbar */
     border-top-right-radius: 6px !important;
 }
 .css-1cjg468, .css-55unpk {
-    background-color: #333 !important; /* Fondo de widgets */
+    background-color: #444 !important; /* Fondo de widgets */
     color: #e0e0e0 !important; /* Texto claro */
 }
 [class*="TopBarContainer"] button[class*="ExpandButton"],
 [class*="StyledListItemTopBar"] [class*="TopBarButton"] {
-    color: #ddd !important; /* Color texto botones */
+    color: #ddd !important; /* Color de texto de los botones */
 }
 [class*="TopBarContainer"] button[class*="ExpandButton"]:hover,
 [class*="StyledListItemTopBar"] [class*="TopBarButton"]:hover {
-    color: #76c7c0 !important; /* Color texto hover botones */
+    color: #76c7c0 !important; /* Color de texto al hover */
 }
 
 /* Editor */
 [class*="cms-editor"] {
-    border: 1px solid #444 !important; /* Borde editor */
+    border: 1px solid #555 !important; /* Borde del editor */
     border-radius: 0 6px 6px !important;
-    background-color: #222 !important; /* Fondo editor */
+    background-color: #333 !important; /* Fondo del editor */
 }
 [class*="cms-editor"] [class*="ToolbarContainer"] {
-    background-color: #333 !important; /* Fondo barra de herramientas */
+    background-color: #444 !important; /* Fondo de la barra de herramientas */
 }
 .css-12vfcwo, .css-isnoua {
-    background-color: #333 !important; /* Fondo widgets */
+    background-color: #444 !important; /* Fondo de widgets */
     color: #e0e0e0 !important; /* Texto claro */
 }
 .css-189bh5w, .css-f8f1e2 {
-    background-color: #333 !important; /* Fondo error */
+    background-color: #444 !important; /* Fondo error */
     color: #e74c3c !important; /* Texto error */
 }
 [class*="cms-editor"] blockquote {
     color: #7f8c8d !important; /* Texto de citas */
-    border-left: 3px solid #7f8c8d !important; /* Borde de cita */
+    border-left: 3px solid #7f8c8d !important; /* Borde izquierdo de la cita */
 }
 [class*="cms-editor"] code[class*="StyledCode"] {
-    background-color: #444 !important; /* Fondo de código */
+    background-color: #555 !important; /* Fondo de código */
     border-radius: 6px !important;
     padding: 4px 6px !important;
-    color: #fff !important; /* Texto código */
+    color: #fff !important; /* Texto del código */
 }
 
 /* Código */
 .CodeMirror-vscrollbar, .CodeMirror-hscrollbar {
-    background-color: #333 !important; /* Fondo de la barra de desplazamiento */
+    background-color: #444 !important; /* Fondo de la barra de desplazamiento */
 }
 .CodeMirror-gutters {
-    background-color: #333 !important; /* Fondo del gutter */
-    color: #fff !important; /* Color texto gutter */
+    background-color: #444 !important; /* Fondo del gutter */
+    color: #fff !important; /* Color del texto del gutter */
 }
 .CodeMirror-linenumber {
     color: #888 !important; /* Color de los números de línea */
@@ -95,13 +103,13 @@ body, html {
 /* Dropdown y botones */
 [class*="ControlContainer"] [class*="SettingsPaneContainer"] {
     color: #e0e0e0 !important; /* Texto claro */
-    background-color: #333 !important; /* Fondo claro de dropdown */
-    border-left: 1px solid #444 !important; /* Borde dropdown */
+    background-color: #444 !important; /* Fondo de dropdown */
+    border-left: 1px solid #555 !important; /* Borde de dropdown */
 }
 [class*="ControlContainer"] button[class*="StyledSettingsButton-button"] {
     background-color: transparent !important;
-    color: #ddd !important; /* Color de texto botones */
+    color: #ddd !important; /* Color de texto de los botones */
 }
 [class*="ControlContainer"] button[class*="StyledSettingsButton-button"]:hover {
-    color: #76c7c0 !important; /* Color hover */
+    color: #76c7c0 !important; /* Color de texto al hover */
 }
