@@ -1,0 +1,29 @@
+body {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.nc-app-header {
+  background-color: #1f1f1f;
+}
+
+.nc-entryListing {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+button,
+input,
+textarea {
+  background-color: #2e2e2e;
+  color: #ffffff;
+  border: 1px solid #3e3e3e;
+}
+
+a {
+  color: #bb86fc;
+}
+
+a:hover {
+  color: #ff79c6;
+}
