@@ -3,30 +3,30 @@ backend:
   repo: 4ndymcfly/4ndymcfly.github.io
   branch: main
 
-media_folder: "assets/img"  # Carpeta donde se almacenarán todas las imágenes
-public_folder: "/assets/img"  # Ruta pública para acceder a las imágenes
+media_folder: "assets/img"
+public_folder: "/assets/img"
 
 collections:
   - name: "posts"
     label: "Posts"
-    folder: "_posts"  # Carpeta donde se encuentran los posts en formato markdown
+    folder: "_posts"  # Carpeta para posts en formato Markdown
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"  # Formato del slug para los posts
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"  # Formato de slug
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Categories", name: "categories", widget: "list" }
       - { label: "Tags", name: "tags", widget: "list" }
-      - { label: "Image", name: "image", widget: "image" }  # Imagen de cabecera
-      - { label: "Body", name: "body", widget: "markdown" }
-      - { label: "Comments", name: "comments", widget: "boolean", default: true }  # Para habilitar comentarios
-      - { label: "Table of Contents", name: "toc", widget: "boolean", default: true }  # Para habilitar TOC
+      - { label: "Image", name: "image", widget: "image", media_folder: "assets/img/cabeceras", public_folder: "/assets/img/cabeceras" }
+      - { label: "Body", name: "body", widget: "markdown", modes: ["markdown"] }
+      - { label: "Comments", name: "comments", widget: "boolean", default: true }
+      - { label: "Table of Contents", name: "toc", widget: "boolean", default: true }
 
 defaults:
   - scope:
       path: "_posts"
     values:
       layout: post
-      comments: true  # Habilitar comentarios por defecto
-      toc: true  # Habilitar TOC por defecto
+      comments: true
+      toc: true
       permalink: /posts/:title/
