@@ -17,8 +17,8 @@ collections:
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Categories", name: "categories", widget: "list" }
       - { label: "Tags", name: "tags", widget: "list" }
-      - { label: "Image", name: "image", widget: "image" }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Image", name: "image", widget: "image", media_folder: "/cabeceras", public_folder: "/assets/img/cabeceras"  }
+      - { label: "Body", name: "body", widget: "markdown", media_folder: "/{{slug}}", public_folder: "/assets/img/{{slug}}" }
       - { label: "Comments", name: "comments", widget: "boolean", default: true }
       - { label: "Table of Contents", name: "toc", widget: "boolean", default: true }
 
