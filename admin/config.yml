@@ -3,13 +3,13 @@ backend:
   repo: 4ndymcfly/4ndymcfly.github.io
   branch: main
 
-media_folder: "assets/img"
+media_folder: "static/assets/img"
 public_folder: "/assets/img"
 
 collections:
   - name: "posts"
     label: "Posts"
-    folder: "_posts"  # Carpeta para posts en formato Markdown
+    folder: "_posts"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"  # Formato de slug
     fields:
@@ -20,14 +20,14 @@ collections:
       - label: "Header Image"
         name: "header_image"
         widget: "image"
-        media_folder: "assets/img/cabeceras"
+        media_folder: "static/assets/img/cabeceras"
         public_folder: "/assets/img/cabeceras"
       - label: "Body"
         name: "body"
         widget: "markdown"
-        media_folder: "assets/img/{{slug}}"
+        media_folder: "static/assets/img/{{slug}}"
         public_folder: "/assets/img/{{slug}}"
-      - { label: "Comments", name: "comments", widget: "boolean", default: true }
+        - { label: "Comments", name: "comments", widget: "boolean", default: true }
       - { label: "Table of Contents", name: "toc", widget: "boolean", default: true }
 
 defaults:
@@ -38,3 +38,4 @@ defaults:
       comments: true
       toc: true
       permalink: /posts/:title/
+  
