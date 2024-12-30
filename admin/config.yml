@@ -3,7 +3,7 @@ backend:
   repo: 4ndymcfly/4ndymcfly.github.io
   branch: main
 
-media_folder: "static/assets/img"
+media_folder: "assets/img"
 public_folder: "/assets/img"
 
 collections:
@@ -17,16 +17,8 @@ collections:
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Categories", name: "categories", widget: "list" }
       - { label: "Tags", name: "tags", widget: "list" }
-      - label: "Header Image"
-        name: "header_image"
-        widget: "image"
-        media_folder: "static/assets/img/cabeceras"
-        public_folder: "/assets/img/cabeceras"
-      - label: "Body"
-        name: "body"
-        widget: "markdown"
-        media_folder: "static/assets/img/{{slug}}"
-        public_folder: "/assets/img/{{slug}}"
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Body", name: "body", widget: "markdown" }
       - { label: "Comments", name: "comments", widget: "boolean", default: true }
       - { label: "Table of Contents", name: "toc", widget: "boolean", default: true }
 
@@ -38,4 +30,3 @@ defaults:
       comments: true
       toc: true
       permalink: /posts/:title/
-
