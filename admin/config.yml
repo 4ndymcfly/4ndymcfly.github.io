@@ -20,12 +20,12 @@ collections:
       - label: "Header Image"
         name: "header_image"
         widget: "image"
-        media_folder: "assets/img/cabeceras"
-        public_folder: "/assets/img/cabeceras"
+        media_folder: "/assets/img/cabeceras/{{slug}}"
+        public_folder: "/assets/img/cabeceras/{{slug}}"
       - label: "Body"
         name: "body"
         widget: "markdown"
-        media_folder: "assets/img/{{slug}}"
+        media_folder: "/assets/img/{{slug}}"
         public_folder: "/assets/img/{{slug}}"
       - { label: "Comments", name: "comments", widget: "boolean", default: true }
       - { label: "Table of Contents", name: "toc", widget: "boolean", default: true }
