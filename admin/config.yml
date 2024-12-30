@@ -27,7 +27,7 @@ collections:
         widget: "markdown"
         media_folder: "static/assets/img/{{slug}}"
         public_folder: "/assets/img/{{slug}}"
-        - { label: "Comments", name: "comments", widget: "boolean", default: true }
+      - { label: "Comments", name: "comments", widget: "boolean", default: true }
       - { label: "Table of Contents", name: "toc", widget: "boolean", default: true }
 
 defaults:
