@@ -38,4 +38,4 @@ defaults:
       comments: true
       toc: true
       permalink: /posts/:title/
-  
+
