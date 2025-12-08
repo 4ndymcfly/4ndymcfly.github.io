@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-gem "sass-embedded", ">= 1.95.0"
+gem "sass-embedded", ">= 1.94.0"
 
 source "https://rubygems.org"
 
