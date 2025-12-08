@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+gem "sass-embedded", ">= 1.95.0"
+
 source "https://rubygems.org"
 
 gem "jekyll", "~> 4.0" # Jekyll principal, requerido para construir el sitio
