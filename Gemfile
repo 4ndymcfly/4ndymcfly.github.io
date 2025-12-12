@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-gem "sass-embedded", ">= 1.94.0"
+gem "sass-embedded", "= 1.94.0"
 
 gem 'json', '>= 2.6.3'
 
