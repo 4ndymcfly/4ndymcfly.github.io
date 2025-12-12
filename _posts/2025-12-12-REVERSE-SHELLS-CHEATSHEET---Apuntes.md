@@ -8,21 +8,6 @@ image: /assets/img/cabeceras/2025-12-12-reverse-shells-cheatsheet.png
 
 # Reverse Shells Cheatsheet - Guía Completa
 
-## 📋 Índice de Contenidos
-
-1. [Conceptos Fundamentales](#conceptos-fundamentales)
-2. [Listeners](#listeners)
-3. [Bash y Netcat](#bash-y-netcat)
-4. [Python](#python)
-5. [PHP](#php)
-6. [PowerShell](#powershell)
-7. [Windows (C/C++, Meterpreter)](#windows-ccmeterpreter)
-8. [MSSQL Server](#mssql-server)
-9. [ELF Binaries](#elf-binaries)
-10. [Evasión y Ofuscación](#evasión-y-ofuscación)
-
----
-
 ## 🎯 Conceptos Fundamentales
 
 ### ¿Qué es una Reverse Shell?
@@ -689,8 +674,8 @@ socat TCP-LISTEN:443,reuseaddr FILE:`tty`,raw,echo=0
 ### Herramientas
 
 - [MSFVenom](https://www.offensive-security.com/metasploit-unleashed/msfvenom/)
-- [Netcat](http://netcat.sourceforge.net/)
-- [Socat](http://www.dest-unreach.org/socat/)
+- [Netcat](https://sourceforge.net/projects/netcat/)
+- [Socat](https://repo.or.cz/socat.git)
 
 ---
 
