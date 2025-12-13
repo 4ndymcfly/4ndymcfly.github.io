@@ -149,13 +149,14 @@
 
 .stats-list .count {
   font-weight: 700;
-  color: var(--link-color);
+  color: #3498db;
   text-decoration: none;
   transition: all 0.2s;
 }
 
 .stats-list .count:hover {
-  color: var(--link-underline-color);
+  color: #2980b9;
+  text-decoration: underline;
   transform: translateX(3px);
 }
 
