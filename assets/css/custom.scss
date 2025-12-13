@@ -149,15 +149,24 @@
 
 .stats-list .count {
   font-weight: 700;
-  color: #3498db;
+  color: #3498db !important;
   text-decoration: none;
   transition: all 0.2s;
 }
 
 .stats-list .count:hover {
-  color: #2980b9;
+  color: #2980b9 !important;
   text-decoration: underline;
   transform: translateX(3px);
+}
+
+.stats-section .stats-list a.count {
+  color: #3498db !important;
+}
+
+.stats-section .stats-list a.count:hover {
+  color: #2980b9 !important;
+  text-decoration: underline;
 }
 
 /* Footer Customization */
