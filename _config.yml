@@ -16,7 +16,7 @@ timezone: Europe/Madrid
 
 title: Hacking Épico # the main title
 
-tagline: Blog de Ciberseguridad | Guías | Writeups # it will display as the sub-title
+tagline: Ciberseguridad | Guías | Writeups # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   Hacking Épico | Un blog dedicado al pentesting y el Hacking Ético. Por 4ndymcfly.
