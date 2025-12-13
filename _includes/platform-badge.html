@@ -1,0 +1,9 @@
+{% comment %}
+  Usage: {% include platform-badge.html platform="HTB|THM|PG|VulnHub" %}
+{% endcomment %}
+
+{% assign platform_lower = include.platform | downcase %}
+
+<span class="platform-badge platform-{{ platform_lower }}">
+  {{ include.platform }}
+</span>

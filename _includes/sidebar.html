@@ -40,12 +40,40 @@
     </ul>
   </nav>
 
+  <!-- Certifications Section -->
+  <div class="certifications-section">
+    <h5>🎓 Certificaciones</h5>
+    <div>
+      <span class="cert-badge completed">eJPTv2</span>
+      <span class="cert-badge in-progress">OSCP</span>
+    </div>
+  </div>
+
+  <!-- Stats Section -->
+  <div class="stats-section">
+    <h5>📊 Estadísticas</h5>
+    <ul class="stats-list">
+      <li>
+        <span>WriteUps</span>
+        <span class="count">{{ site.categories['WriteUps'] | size }}</span>
+      </li>
+      <li>
+        <span>Apuntes</span>
+        <span class="count">{{ site.categories['Apuntes'] | size }}</span>
+      </li>
+      <li>
+        <span>Noticias</span>
+        <span class="count">{{ site.categories['Noticias'] | size }}</span>
+      </li>
+    </ul>
+  </div>
+
   <div class="sidebar-bottom d-flex flex-wrap flex-column align-items-center w-100">
     <!-- Contact label -->
-    <div class="contact-label mb-2">
+    <div class="contact-label mb-3 w-100 text-start ps-2">
       <small class="text-muted">Info y contacto:</small>
     </div>
-    
+
     <div class="d-flex flex-wrap align-items-center justify-content-center w-100">
       {% unless site.theme_mode %}
         <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle">

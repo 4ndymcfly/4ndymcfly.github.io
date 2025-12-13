@@ -1,0 +1,57 @@
+{% comment %}
+  Usage: {% include machine-info.html 
+    machine="Machine Name"
+    os="Linux|Windows"
+    difficulty="Easy|Medium|Hard|Insane"
+    platform="HTB|THM|PG|VulnHub"
+    points="20"
+    release="2025-01"
+  %}
+{% endcomment %}
+
+<div class="machine-info-card">
+  <h4>🎯 Machine Info</h4>
+  <div class="machine-info-grid">
+    {% if include.machine %}
+    <div class="machine-info-item">
+      <span class="machine-info-label">Machine</span>
+      <span class="machine-info-value">{{ include.machine }}</span>
+    </div>
+    {% endif %}
+    
+    {% if include.platform %}
+    <div class="machine-info-item">
+      <span class="machine-info-label">Platform</span>
+      <span class="machine-info-value">{% include platform-badge.html platform=include.platform %}</span>
+    </div>
+    {% endif %}
+    
+    {% if include.os %}
+    <div class="machine-info-item">
+      <span class="machine-info-label">OS</span>
+      <span class="machine-info-value">{{ include.os }}</span>
+    </div>
+    {% endif %}
+    
+    {% if include.difficulty %}
+    <div class="machine-info-item">
+      <span class="machine-info-label">Difficulty</span>
+      <span class="machine-info-value">{% include difficulty-badge.html difficulty=include.difficulty %}</span>
+    </div>
+    {% endif %}
+    
+    {% if include.points %}
+    <div class="machine-info-item">
+      <span class="machine-info-label">Points</span>
+      <span class="machine-info-value">{{ include.points }}</span>
+    </div>
+    {% endif %}
+    
+    {% if include.release %}
+    <div class="machine-info-item">
+      <span class="machine-info-label">Release</span>
+      <span class="machine-info-value">{{ include.release }}</span>
+    </div>
+    {% endif %}
+  </div>
+</div>
