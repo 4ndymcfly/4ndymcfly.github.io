@@ -110,7 +110,7 @@ El uso indebido de esta información es **ilegal** y va contra la ética del hac
 
 ## 📫 Contacto
 
-- 🌐 Blog: [4ndymcfly.github.io](https://4ndymcfly.github.io)
+- 🌐 Blog: [hackingepico](https://hackingepico.com)
 - 💼 GitHub: [@4ndymcfly](https://github.com/4ndymcfly)
 - 📧 Email: info@hackingepico.com
 
