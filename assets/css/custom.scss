@@ -119,51 +119,10 @@
   margin-right: 0.3rem;
 }
 
-/* Certification Section in Sidebar */
-.certifications-section {
-  width: 100%;
-  padding: 1rem 0.75rem;
-  border-top: 1px solid var(--sidebar-border-color);
-  margin-top: 1rem;
-}
-
-.certifications-section h5 {
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 0.75rem;
-  color: var(--sidebar-muted-color);
-}
-
-.cert-badge {
-  display: inline-block;
-  background: var(--sidebar-btn-bg);
-  padding: 0.4rem 0.7rem;
-  border-radius: 0.25rem;
-  margin: 0.25rem 0.25rem 0.25rem 0;
-  font-size: 0.75rem;
-  font-weight: 600;
-  transition: all 0.2s;
-}
-
-.cert-badge:hover {
-  background: var(--sidebar-active-color);
-  transform: translateY(-2px);
-}
-
-.cert-badge.completed {
-  border-left: 3px solid #2ecc71;
-}
-
-.cert-badge.in-progress {
-  border-left: 3px solid #f39c12;
-}
-
 /* Stats Counter in Sidebar */
 .stats-section {
   width: 100%;
   padding: 1rem 0.75rem;
-  border-top: 1px solid var(--sidebar-border-color);
 }
 
 .stats-section h5 {
@@ -191,6 +150,13 @@
 .stats-list .count {
   font-weight: 700;
   color: var(--link-color);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.stats-list .count:hover {
+  color: var(--link-underline-color);
+  transform: translateX(3px);
 }
 
 /* Footer Customization */
