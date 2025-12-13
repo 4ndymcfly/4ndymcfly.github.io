@@ -19,8 +19,8 @@
 Hola, soy **Andrés** (también conocido como **4ndymcfly**) y este es mi rincón personal en internet donde comparto todo lo que voy aprendiendo sobre **ciberseguridad**, **hacking ético** y **pentesting**.
 
 Si estás aquí probablemente sea porque:
-- 🎯 Estás preparando el **OSCP** (o alguna certificación similar) y buscas apuntes
-- 💻 Te gustan los **writeups de máquinas** de HackTheBox, TryHackMe, etc.
+- 🎯 Estás preparando el **OSCP**, **eJPTv2** (o alguna certificación similar) y buscas apuntes
+- 💻 Te gustan los **writeups de máquinas** de HackTheBox, Proving Grounds, TryHackMe, etc.
 - 🛠️ Necesitas un **cheatsheet rápido** de alguna herramienta o técnica
 - 🤓 Simplemente te apasiona la seguridad informática como a mí
 
@@ -28,7 +28,7 @@ Si estás aquí probablemente sea porque:
 
 ## 🎯 ¿Qué encontrarás aquí?
 
-### 📚 Apuntes Técnicos
+### 📚 Apuntes Técnicos y trucos
 
 Guías completas y cheatsheets sobre diferentes aspectos del pentesting:
 
@@ -43,6 +43,7 @@ Guías completas y cheatsheets sobre diferentes aspectos del pentesting:
 
 Soluciones detalladas de máquinas que he resuelto:
 - HackTheBox
+- Proving Grounds (Offsec)
 - TryHackMe
 - VulnHub
 - Y cualquier otra plataforma que me cruce
