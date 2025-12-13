@@ -340,7 +340,828 @@ crackmapexec mssql 10.10.10.10 -u sa -p passwords.txt
 
 ---
 
-## 3. Manipulación de Texto y Datos
+## 3. Web Application Testing Tools
+
+### 3.1 Burp Suite - Proxy HTTP Interceptor
+
+**Burp Suite** es el **estándar de la industria** para pentesting de aplicaciones web. Es una plataforma integrada que permite interceptar, modificar y analizar tráfico HTTP/HTTPS.
+
+**Página oficial**: [https://portswigger.net/burp](https://portswigger.net/burp)
+
+#### ¿Por qué usar Burp Suite?
+
+**Ventajas**:
+- ✅ **Proxy HTTP interceptor**: Captura y modifica requests en tiempo real
+- ✅ **Repeater**: Modifica y reenvía requests manualmente
+- ✅ **Intruder**: Automatiza fuzzing con 4 modos de ataque
+- ✅ **Scanner** (Pro): Escaneo automatizado de vulnerabilidades
+- ✅ **Extensible**: BApp Store con cientos de extensiones
+- ✅ **Decoder/Encoder**: Base64, URL, HTML, hex, etc.
+- ✅ **Comparer**: Compara responses para detectar diferencias
+- ✅ **Integración perfecta**: Todos los módulos comparten la misma sesión
+
+**Desventajas**:
+- ❌ Versión Community no tiene Scanner automático
+- ❌ Intruder en Community es lento (throttled)
+- ❌ Licencia Professional es cara ($449/año)
+- ❌ Consume bastante RAM con proyectos grandes
+
+#### Instalación
+
+**Opción 1: Kali Linux (ya incluido)**
+
+```bash
+# Ejecutar Burp Suite
+burpsuite
+
+# O desde aplicaciones
+Applications > Web Application Analysis > burpsuite
+```
+
+**Opción 2: Descarga manual**
+
+```bash
+# Descargar desde oficial
+wget https://portswigger.net/burp/releases/download?product=community&version=latest&type=Linux
+
+# Ejecutar JAR
+java -jar burpsuite_community.jar
+```
+
+**Opción 3: Burp Suite Professional (con licencia)**
+
+```bash
+# Con licencia válida
+java -jar burpsuite_pro.jar
+```
+
+#### Configuración Inicial del Proxy
+
+**1. Configurar Burp como proxy (por defecto: 127.0.0.1:8080)**
+
+```
+Proxy > Options > Proxy Listeners
+- Running: ✓
+- Bind to address: 127.0.0.1:8080
+```
+
+**2. Configurar navegador para usar el proxy**
+
+**Firefox (Recomendado)**:
+```
+Settings > Network Settings > Manual Proxy Configuration
+HTTP Proxy: 127.0.0.1
+Port: 8080
+✓ Also use this proxy for HTTPS
+```
+
+**O usa extensión FoxyProxy**:
+```
+1. Instalar FoxyProxy Standard
+2. Añadir proxy: 127.0.0.1:8080
+3. Activar con un clic
+```
+
+**3. Instalar certificado CA de Burp (para interceptar HTTPS)**
+
+```
+1. Con proxy activado, ir a: http://burp
+2. Descargar "CA Certificate"
+3. Firefox > Settings > Privacy & Security > Certificates > View Certificates
+4. Authorities > Import > Seleccionar cacert.der
+5. ✓ Trust this CA to identify websites
+```
+
+#### Proxy - Interceptar y Modificar Requests
+
+**Interceptar request**:
+
+```
+1. Proxy > Intercept > Intercept is on
+2. Hacer request desde navegador
+3. Request aparece en Burp
+4. Modificar headers, parámetros, body
+5. Forward para enviar / Drop para descartar
+```
+
+**Ejemplo práctico - Bypass de validación client-side**:
+
+```http
+POST /login HTTP/1.1
+Host: vulnerable.com
+Content-Type: application/x-www-form-urlencoded
+
+username=admin&password=short
+
+# Interceptar y modificar password (bypass JS validation)
+username=admin&password=a
+```
+
+**HTTP History**:
+```
+Proxy > HTTP History
+- Ver todas las requests/responses
+- Filtrar por extensión, status code, búsqueda
+- Click derecho > Send to Repeater/Intruder
+```
+
+#### Repeater - Testing Manual
+
+**Repeater** permite modificar y reenviar requests múltiples veces.
+
+**Workflow**:
+```
+1. Proxy > HTTP History > Click derecho en request > Send to Repeater
+2. Repeater > Modificar request
+3. Click "Send"
+4. Analizar response
+5. Repetir el proceso
+```
+
+**Casos de uso**:
+- **SQL Injection manual**: Probar payloads uno por uno
+- **XSS**: Testar diferentes bypasses
+- **IDOR**: Cambiar IDs para ver recursos de otros usuarios
+- **Authentication bypass**: Modificar tokens, cookies, headers
+
+**Ejemplo - IDOR (Insecure Direct Object Reference)**:
+
+```http
+GET /api/user/profile?id=123 HTTP/1.1
+Host: app.com
+Cookie: session=abc123
+
+# Cambiar id=123 a id=124 para ver perfil de otro usuario
+GET /api/user/profile?id=124 HTTP/1.1
+```
+
+#### Intruder - Fuzzing Automatizado
+
+**Intruder** automatiza fuzzing de parámetros con wordlists.
+
+**4 Tipos de Ataque**:
+
+| Tipo | Descripción | Uso |
+|------|-------------|-----|
+| **Sniper** | 1 posición, 1 payload set | Fuzzear 1 parámetro (usernames, IDs) |
+| **Battering Ram** | N posiciones, 1 payload set (mismo valor) | Username=admin&password=admin |
+| **Pitchfork** | N posiciones, N payload sets (paralelo) | user1+pass1, user2+pass2 |
+| **Cluster Bomb** | N posiciones, N sets (combinaciones) | Brute force completo |
+
+**Workflow básico**:
+
+```
+1. Send to Intruder
+2. Positions > Clear §
+3. Seleccionar parámetro a fuzzear > Add §
+   Ejemplo: GET /api/user/§1§ HTTP/1.1
+4. Payloads > Payload set 1
+5. Cargar wordlist o añadir payloads manualmente
+6. Options > Configurar threads, redirects, etc
+7. Start attack
+8. Analizar results por status code, length, response
+```
+
+**Ejemplo 1: Directory bruteforce**
+
+```http
+GET /§admin§ HTTP/1.1
+Host: target.com
+
+Payload set 1:
+admin
+login
+dashboard
+api
+```
+
+**Ejemplo 2: Username enumeration**
+
+```http
+POST /login HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+username=§admin§&password=test123
+
+Payloads: admin, root, user, test
+Analizar: Response length diferente = usuario válido
+```
+
+**Ejemplo 3: IDOR Fuzzing (Sniper)**
+
+```http
+GET /api/order/§1§ HTTP/1.1
+
+Payload type: Numbers
+From: 1
+To: 1000
+Step: 1
+```
+
+**Ejemplo 4: Credential Stuffing (Pitchfork)**
+
+```http
+POST /login HTTP/1.1
+
+username=§user§&password=§pass§
+
+Payload set 1: admin, root, user
+Payload set 2: password123, admin, 12345
+```
+
+**⚠️ Limitación en Community**: Intruder está throttled (lento intencionalmente). Para velocidad, usa Turbo Intruder extension o ffuf.
+
+#### Decoder - Encode/Decode
+
+**Decoder** convierte entre diferentes formatos.
+
+```
+Decoder > Paste text
+
+Decode as:
+- URL
+- HTML
+- Base64
+- ASCII Hex
+- Hex
+- Octal
+- Binary
+- GZIP
+
+Encode as:
+- Los mismos formatos
+```
+
+**Ejemplo práctico**:
+
+```
+Input: <script>alert(1)</script>
+
+URL encode: %3Cscript%3Ealert%281%29%3C%2Fscript%3E
+HTML encode: &lt;script&gt;alert(1)&lt;/script&gt;
+Base64: PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==
+Hex: 3c7363726970743e616c6572742831293c2f7363726970743e
+```
+
+**Uso en pentesting**:
+- Decodear tokens JWT (base64)
+- Decodear cookies ofuscadas
+- Encodear payloads para bypass WAF
+
+#### Comparer - Comparar Responses
+
+**Comparer** encuentra diferencias entre responses.
+
+```
+1. Seleccionar 2 responses en HTTP History
+2. Click derecho > Send to Comparer
+3. Comparer > Click en ambos items
+4. Words / Bytes comparison
+```
+
+**Casos de uso**:
+- **Timing attacks**: Comparar response times
+- **Error-based SQLi**: Detectar diferencias sutiles en errores
+- **A/B testing**: Ver cambios entre usuarios autenticados/no autenticados
+
+#### Sequencer - Analizar Aleatoriedad de Tokens
+
+**Sequencer** analiza la calidad de tokens de sesión o CSRF.
+
+```
+1. Proxy > HTTP History > Request que genera token
+2. Send to Sequencer
+3. Sequencer > Select token location
+4. Start live capture (recomendado 10,000 samples)
+5. Analyze now
+```
+
+**Resultado**:
+- **Overall quality**: Excellent, Good, Poor
+- **Effective entropy**: Bits de entropía efectiva
+- Si es "Poor" → tokens predecibles → posible session hijacking
+
+#### Extensions - BApp Store
+
+**Extensions recomendadas**:
+
+| Extensión | Función |
+|-----------|---------|
+| **Autorize** | Detectar IDOR y broken access control |
+| **Logger++** | Logs avanzados, filtrado, búsqueda |
+| **Turbo Intruder** | Intruder sin throttling, muy rápido |
+| **JWT Editor** | Manipular JSON Web Tokens |
+| **Param Miner** | Descubrir parámetros ocultos |
+| **Retire.js** | Detectar librerías JS vulnerables |
+| **Active Scan++** | Checks adicionales para scanner |
+| **Upload Scanner** | Detectar vulnerabilidades en file upload |
+| **Collaborator Everywhere** | SSRF, XXE, blind injection detection |
+
+**Instalar extensiones**:
+
+```
+Extender > BApp Store > Buscar > Install
+```
+
+#### Shortcuts de Teclado
+
+| Acción | Shortcut |
+|--------|----------|
+| Send to Repeater | Ctrl+R |
+| Send to Intruder | Ctrl+I |
+| Forward (Proxy) | Ctrl+F |
+| Drop (Proxy) | Ctrl+D |
+| Toggle Intercept | Ctrl+T |
+| Switch to Repeater | Ctrl+Shift+R |
+| Switch to Proxy | Ctrl+Shift+P |
+| Switch to Intruder | Ctrl+Shift+I |
+| Send request (Repeater) | Ctrl+Space |
+| Clear marks (Intruder) | Ctrl+Shift+C |
+
+#### Workflows Prácticos
+
+**Workflow 1: Testing de SQL Injection**
+
+```
+1. Capturar request con parámetro vulnerable
+2. Send to Repeater
+3. Probar payloads manualmente:
+   - ' OR 1=1-- -
+   - ' UNION SELECT NULL-- -
+   - ' AND SLEEP(5)-- -
+4. Si funciona, Send to Intruder para enumerar
+5. O usar SQLMap desde request guardada
+```
+
+**Workflow 2: Session Management Testing**
+
+```
+1. Capturar login request
+2. Analizar cookies de sesión
+3. Send cookie a Sequencer para analizar aleatoriedad
+4. Si predecible, intentar session hijacking
+```
+
+**Workflow 3: Authorization Testing con Autorize**
+
+```
+1. Instalar Autorize extension
+2. Configurar sesión de usuario de bajos privilegios
+3. Configurar sesión de usuario sin autenticar
+4. Navegar como admin
+5. Autorize detecta automáticamente IDOR/broken access control
+```
+
+#### Burp Suite vs Alternativas
+
+| Característica | Burp Suite | OWASP ZAP | mitmproxy |
+|----------------|------------|-----------|-----------|
+| Proxy | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
+| Fuzzing | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ |
+| Scanner | ⭐⭐⭐⭐⭐ (Pro) | ⭐⭐⭐⭐ (Free) | ❌ |
+| UI/UX | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ (CLI) |
+| Extensiones | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ |
+| Precio | $449/año (Pro) | Gratis | Gratis |
+| Documentación | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ |
+
+**Conclusión**: Burp Suite Community + ffuf (fuzzing rápido) es la mejor combinación para OSCP.
+
+#### Tips y Trucos
+
+**1. Scope Control (evitar ruido)**
+
+```
+Target > Scope > Add
+- Include: ^https?://target\.com.*
+Proxy > Options > Intercept Client Requests
+- ✓ And URL is in target scope
+```
+
+**2. Match and Replace (automatizar modificaciones)**
+
+```
+Proxy > Options > Match and Replace > Add
+Type: Request header
+Match: User-Agent: .*
+Replace: User-Agent: Custom-Agent
+```
+
+**3. Proyecto guardado**
+
+```
+Burp > Save project
+- Guarda todo: history, scope, configuración
+- Útil para documentar pentests
+```
+
+**4. Exportar requests para SQLMap**
+
+```
+1. HTTP History > Click derecho > Copy as curl command
+2. O: Save item > Guardar como .txt
+3. sqlmap -r request.txt
+```
+
+**5. Intruder con Grep - Extract**
+
+```
+Options > Grep - Extract > Add
+- Extraer valores de responses (tokens, IDs, etc)
+- Útil para chaining de requests
+```
+
+#### Limitaciones y Consideraciones
+
+1. **Community no tiene Scanner** - Usa ZAP, Nikto, o manual testing
+2. **Intruder es lento** - Usa Turbo Intruder extension o ffuf
+3. **Consume RAM** - Limita history size en proyectos grandes
+4. **No reemplaza testing manual** - Es una herramienta, no una solución mágica
+
+#### Recursos Adicionales
+
+- **Web Security Academy**: [https://portswigger.net/web-security](https://portswigger.net/web-security) (Labs gratuitos de Burp)
+- **Documentación oficial**: [https://portswigger.net/burp/documentation](https://portswigger.net/burp/documentation)
+- **BApp Store**: [https://portswigger.net/bappstore](https://portswigger.net/bappstore)
+- **YouTube - Rana Khalil**: Tutoriales de Burp Suite para OSCP
+
+---
+
+### 3.2 ffuf - Fast Web Fuzzer
+
+**ffuf** (Fuzz Faster U Fool) es el fuzzer web **MÁS RÁPIDO** disponible, escrito en Go. Es la alternativa perfecta a Burp Intruder.
+
+**Repositorio oficial**: [https://github.com/ffuf/ffuf](https://github.com/ffuf/ffuf)
+
+#### ¿Por qué usar ffuf?
+
+**Ventajas**:
+- ✅ **Velocísimo**: Escrito en Go con concurrencia nativa
+- ✅ **Versátil**: Fuzzing de directorios, parámetros, headers, POST data, etc.
+- ✅ **Múltiples keywords**: FUZZ, FUZZFILE, FUZZ1, FUZZ2, etc.
+- ✅ **Filtrado avanzado**: Por status, size, words, lines, regex
+- ✅ **Match patterns**: Detectar patrones de éxito
+- ✅ **Recursivo**: Fuzzing de subdirectorios automático
+- ✅ **Output formats**: JSON, CSV, Markdown, HTML
+
+**Desventajas**:
+- ❌ CLI only (no GUI como Burp)
+- ❌ Curva de aprendizaje de filtros
+- ❌ No intercepta/modifica requests como proxy
+
+#### Instalación
+
+```bash
+# Opción 1: apt (Kali ya lo incluye)
+sudo apt install ffuf
+
+# Opción 2: Go install
+go install github.com/ffuf/ffuf/v2@latest
+
+# Opción 3: Desde releases
+wget https://github.com/ffuf/ffuf/releases/download/v2.1.0/ffuf_2.1.0_linux_amd64.tar.gz
+tar -xzf ffuf_2.1.0_linux_amd64.tar.gz
+sudo mv ffuf /usr/local/bin/
+
+# Verificar instalación
+ffuf -V
+```
+
+#### Sintaxis Básica
+
+```bash
+ffuf -u https://target.com/FUZZ -w wordlist.txt [options]
+```
+
+**Keywords**:
+- `FUZZ`: Placeholder principal
+- `FUZZ1`, `FUZZ2`, etc.: Múltiples posiciones
+- `FUZZFILE`: Fuzzing de nombres de archivo
+
+#### Directory/File Fuzzing
+
+**Fuzzing básico de directorios**:
+
+```bash
+# Directorios comunes
+ffuf -u https://target.com/FUZZ -w /usr/share/wordlists/dirb/common.txt
+
+# Con extensiones específicas
+ffuf -u https://target.com/FUZZ -w wordlist.txt -e .php,.html,.txt,.bak
+
+# Recursivo (directorios dentro de directorios)
+ffuf -u https://target.com/FUZZ -w wordlist.txt -recursion -recursion-depth 2
+
+# Con velocidad controlada
+ffuf -u https://target.com/FUZZ -w wordlist.txt -rate 100
+```
+
+**Ejemplos prácticos**:
+
+```bash
+# Directorios con wordlist grande
+ffuf -u https://example.com/FUZZ -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt
+
+# Archivos con múltiples extensiones
+ffuf -u https://example.com/FUZZ -w common.txt -e .php,.bak,.txt,.zip -v
+
+# Buscar backups
+ffuf -u https://example.com/FUZZ -w backups.txt -mc 200
+```
+
+#### Filtrado de Resultados
+
+**Filtrar por status code**:
+
+```bash
+# Mostrar solo 200 OK
+ffuf -u https://target.com/FUZZ -w wordlist.txt -mc 200
+
+# Mostrar 200 y 301
+ffuf -u https://target.com/FUZZ -w wordlist.txt -mc 200,301
+
+# Filtrar 404 (mostrar todo excepto 404)
+ffuf -u https://target.com/FUZZ -w wordlist.txt -fc 404
+```
+
+**Filtrar por tamaño de response**:
+
+```bash
+# Filtrar responses de 0 bytes
+ffuf -u https://target.com/FUZZ -w wordlist.txt -fs 0
+
+# Filtrar tamaño específico (ej: página de error siempre pesa 1234 bytes)
+ffuf -u https://target.com/FUZZ -w wordlist.txt -fs 1234
+
+# Mostrar solo responses de tamaño específico
+ffuf -u https://target.com/FUZZ -w wordlist.txt -ms 5000
+```
+
+**Filtrar por número de palabras/líneas**:
+
+```bash
+# Filtrar por palabras (útil si error page tiene siempre X palabras)
+ffuf -u https://target.com/FUZZ -w wordlist.txt -fw 10
+
+# Filtrar por líneas
+ffuf -u https://target.com/FUZZ -w wordlist.txt -fl 50
+```
+
+**Filtrar por regex**:
+
+```bash
+# Mostrar solo si response contiene patrón
+ffuf -u https://target.com/FUZZ -w wordlist.txt -mr "Admin Panel"
+
+# Filtrar si response contiene patrón
+ffuf -u https://target.com/FUZZ -w wordlist.txt -fr "Not Found"
+```
+
+#### Fuzzing de Parámetros GET
+
+```bash
+# Fuzzear nombre de parámetro
+ffuf -u "https://target.com/api?FUZZ=test" -w params.txt
+
+# Fuzzear valor de parámetro
+ffuf -u "https://target.com/api?id=FUZZ" -w numbers.txt
+
+# Múltiples parámetros
+ffuf -u "https://target.com/api?param1=FUZZ1&param2=FUZZ2" -w wordlist1.txt:FUZZ1 -w wordlist2.txt:FUZZ2
+```
+
+**Ejemplo práctico - IDOR fuzzing**:
+
+```bash
+# Fuzzear IDs de 1 a 1000
+ffuf -u "https://target.com/api/user?id=FUZZ" -w <(seq 1 1000) -mc 200
+```
+
+#### Fuzzing de POST Data
+
+```bash
+# POST form data
+ffuf -u https://target.com/login -w users.txt -X POST -d "username=FUZZ&password=admin" -H "Content-Type: application/x-www-form-urlencoded"
+
+# POST JSON
+ffuf -u https://target.com/api/login -w users.txt -X POST -d '{"username":"FUZZ","password":"test"}' -H "Content-Type: application/json"
+
+# Credential stuffing (pitchfork mode)
+ffuf -u https://target.com/login -w users.txt:USER -w passwords.txt:PASS -X POST -d "username=USER&password=PASS" -mode pitchfork
+```
+
+#### Fuzzing de Headers
+
+```bash
+# Fuzzear User-Agent
+ffuf -u https://target.com/ -w user-agents.txt -H "User-Agent: FUZZ"
+
+# Fuzzear custom headers
+ffuf -u https://target.com/api -w headers.txt -H "X-Custom-Header: FUZZ"
+
+# Fuzzear Authorization header
+ffuf -u https://target.com/api -w tokens.txt -H "Authorization: Bearer FUZZ"
+```
+
+#### Subdomain Fuzzing
+
+```bash
+# Fuzzear subdominios
+ffuf -u https://FUZZ.target.com -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt
+
+# Fuzzear subdominios con filtrado de false positives
+ffuf -u https://FUZZ.target.com -w subdomains.txt -fs 0 -mc 200
+
+# Fuzzear virtual hosts (VHOST)
+ffuf -u https://target.com -w vhosts.txt -H "Host: FUZZ.target.com"
+```
+
+#### Recursión Automática
+
+```bash
+# Recursión simple (1 nivel de profundidad)
+ffuf -u https://target.com/FUZZ -w wordlist.txt -recursion -recursion-depth 1
+
+# Recursión profunda (3 niveles)
+ffuf -u https://target.com/FUZZ -w wordlist.txt -recursion -recursion-depth 3
+
+# Recursión con extensiones
+ffuf -u https://target.com/FUZZ -w wordlist.txt -e .php,.html -recursion -recursion-depth 2
+```
+
+#### Modos de Fuzzing
+
+```bash
+# Clusterbomb (todas las combinaciones)
+ffuf -u https://target.com/FUZZ1/FUZZ2 -w dirs.txt:FUZZ1 -w files.txt:FUZZ2 -mode clusterbomb
+
+# Pitchfork (paralelo)
+ffuf -u https://target.com/api -w users.txt:USER -w passwords.txt:PASS -X POST -d "user=USER&pass=PASS" -mode pitchfork
+
+# Sniper (por defecto)
+ffuf -u https://target.com/FUZZ -w wordlist.txt
+```
+
+#### Output y Reporting
+
+```bash
+# Guardar resultados en archivo
+ffuf -u https://target.com/FUZZ -w wordlist.txt -o results.json
+
+# Formato JSON
+ffuf -u https://target.com/FUZZ -w wordlist.txt -o results.json -of json
+
+# Formato CSV
+ffuf -u https://target.com/FUZZ -w wordlist.txt -o results.csv -of csv
+
+# Formato HTML
+ffuf -u https://target.com/FUZZ -w wordlist.txt -o results.html -of html
+
+# Markdown
+ffuf -u https://target.com/FUZZ -w wordlist.txt -o results.md -of md
+```
+
+#### Opciones de Performance
+
+```bash
+# Threads (por defecto: 40)
+ffuf -u https://target.com/FUZZ -w wordlist.txt -t 100
+
+# Rate limiting (requests por segundo)
+ffuf -u https://target.com/FUZZ -w wordlist.txt -rate 50
+
+# Timeout personalizado
+ffuf -u https://target.com/FUZZ -w wordlist.txt -timeout 10
+
+# Delay entre requests
+ffuf -u https://target.com/FUZZ -w wordlist.txt -p 0.5
+```
+
+#### Autenticación y Cookies
+
+```bash
+# Basic Auth
+ffuf -u https://target.com/FUZZ -w wordlist.txt -H "Authorization: Basic YWRtaW46cGFzcw=="
+
+# Cookie-based auth
+ffuf -u https://target.com/admin/FUZZ -w wordlist.txt -b "session=abc123; token=xyz789"
+
+# Custom headers + auth
+ffuf -u https://target.com/api/FUZZ -w wordlist.txt -H "Authorization: Bearer TOKEN" -H "X-API-Key: KEY"
+```
+
+#### Proxy con Burp Suite
+
+```bash
+# Enviar requests a través de Burp
+ffuf -u https://target.com/FUZZ -w wordlist.txt -x http://127.0.0.1:8080
+
+# Con replay proxy (útil para debugging)
+ffuf -u https://target.com/FUZZ -w wordlist.txt -replay-proxy http://127.0.0.1:8080
+```
+
+#### Workflows Prácticos
+
+**Workflow 1: Directory Brute-force Completo**
+
+```bash
+# Paso 1: Escaneo rápido con wordlist pequeña
+ffuf -u https://target.com/FUZZ -w /usr/share/wordlists/dirb/common.txt -mc 200,301,302,403 -o quick-scan.json -of json
+
+# Paso 2: Si hay resultados, escaneo profundo
+ffuf -u https://target.com/FUZZ -w /usr/share/seclists/Discovery/Web-Content/raft-large-directories.txt -mc 200,301,302,403 -recursion -recursion-depth 2
+
+# Paso 3: Buscar archivos interesantes
+ffuf -u https://target.com/FUZZ -w interesting-files.txt -e .php,.bak,.txt,.zip,.sql -mc 200
+```
+
+**Workflow 2: API Endpoint Discovery**
+
+```bash
+# Fuzzear endpoints de API
+ffuf -u https://api.target.com/v1/FUZZ -w api-endpoints.txt -mc 200,201,400,401,403,500
+
+# Fuzzear IDs de recursos
+ffuf -u https://api.target.com/v1/users/FUZZ -w <(seq 1 10000) -mc 200 -fc 404
+
+# Fuzzear parámetros de API
+ffuf -u "https://api.target.com/v1/search?FUZZ=test" -w api-params.txt -mc 200 -fr "error"
+```
+
+**Workflow 3: Credential Stuffing**
+
+```bash
+# Pitchfork mode (user1:pass1, user2:pass2)
+ffuf -u https://target.com/login -w users.txt:USER -w passwords.txt:PASS -X POST -d "username=USER&password=PASS" -H "Content-Type: application/x-www-form-urlencoded" -mode pitchfork -mc 200,302 -fr "Invalid credentials"
+
+# Filtrar por size (éxito tiene response diferente)
+ffuf -u https://target.com/login -w creds.txt:CREDS -X POST -d "credentials=CREDS" -fs 1234
+```
+
+#### Comparación: ffuf vs Gobuster vs Burp Intruder
+
+| Característica | ffuf | Gobuster | Burp Intruder |
+|----------------|------|----------|---------------|
+| Velocidad | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐ (Community) |
+| Fuzzing versátil | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| Filtrado | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ |
+| Recursión | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ❌ |
+| UI/UX | ⭐⭐⭐ (CLI) | ⭐⭐⭐ (CLI) | ⭐⭐⭐⭐⭐ (GUI) |
+| Output formats | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ |
+
+**Conclusión**: **ffuf es la mejor opción para fuzzing rápido en OSCP**. Gobuster es bueno para simplicidad. Burp Intruder es mejor para fuzzing complejo con GUI.
+
+#### Tips y Trucos
+
+**1. Autocalibración (filtrar false positives automáticamente)**
+
+```bash
+# ffuf detecta automáticamente respuestas comunes y las filtra
+ffuf -u https://target.com/FUZZ -w wordlist.txt -ac
+```
+
+**2. Generar wordlist personalizada on-the-fly**
+
+```bash
+# Números del 1 al 1000
+ffuf -u https://target.com/api/user/FUZZ -w <(seq 1 1000)
+
+# Combinación de prefijos
+ffuf -u https://target.com/FUZZ -w <(echo "admin"; echo "api"; echo "test")
+```
+
+**3. Colorear output**
+
+```bash
+# Output coloreado (por defecto)
+ffuf -u https://target.com/FUZZ -w wordlist.txt -c
+
+# Sin colores
+ffuf -u https://target.com/FUZZ -w wordlist.txt -c=false
+```
+
+**4. Verbose mode (debugging)**
+
+```bash
+# Ver todas las requests/responses
+ffuf -u https://target.com/FUZZ -w wordlist.txt -v
+```
+
+**5. Stop on errors**
+
+```bash
+# Parar si hay X cantidad de errores
+ffuf -u https://target.com/FUZZ -w wordlist.txt -se
+```
+
+#### Recursos Adicionales
+
+- **GitHub**: [https://github.com/ffuf/ffuf](https://github.com/ffuf/ffuf)
+- **Wiki**: [https://github.com/ffuf/ffuf/wiki](https://github.com/ffuf/ffuf/wiki)
+- **Seclists (wordlists)**: [https://github.com/danielmiessler/SecLists](https://github.com/danielmiessler/SecLists)
+
+---
+
+## 4. Manipulación de Texto y Datos
 
 ### 3.1 Grep y Alternativas
 
