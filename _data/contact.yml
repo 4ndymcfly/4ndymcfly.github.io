@@ -14,9 +14,9 @@
   icon: "fa-brands fa-linkedin"
   url:  "https://www.linkedin.com/in/andres-lorente/"               
 
-# - type: email
-#   icon: "fas fa-envelope"
-#   noblank: true # open link in current tab
+- type: email
+  icon: "fas fa-envelope"
+  noblank: true # open link in current tab
 
 #- type: rss
 #  icon: "fas fa-rss"
