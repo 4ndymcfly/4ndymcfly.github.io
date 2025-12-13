@@ -1,0 +1,9 @@
+{% comment %}
+  Usage: {% include difficulty-badge.html difficulty="Easy|Medium|Hard|Insane" %}
+{% endcomment %}
+
+{% assign difficulty_lower = include.difficulty | downcase %}
+
+<span class="difficulty-badge difficulty-{{ difficulty_lower }}">
+  {{ include.difficulty }}
+</span>

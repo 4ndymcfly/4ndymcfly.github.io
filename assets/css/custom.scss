@@ -1,0 +1,279 @@
+---
+---
+
+/* Custom styles for Hacking Épico */
+
+/* Difficulty Badges */
+.difficulty-badge {
+  display: inline-block;
+  padding: 0.35em 0.65em;
+  font-size: 0.85em;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.375rem;
+  margin-right: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.difficulty-easy {
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  box-shadow: 0 2px 4px rgba(46, 204, 113, 0.3);
+}
+
+.difficulty-medium {
+  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+  box-shadow: 0 2px 4px rgba(243, 156, 18, 0.3);
+}
+
+.difficulty-hard {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  box-shadow: 0 2px 4px rgba(231, 76, 60, 0.3);
+}
+
+.difficulty-insane {
+  background: linear-gradient(135deg, #8e44ad 0%, #6c3483 100%);
+  box-shadow: 0 2px 4px rgba(142, 68, 173, 0.3);
+}
+
+/* Machine Info Card */
+.machine-info-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border-color);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.machine-info-card h4 {
+  margin-bottom: 1rem;
+  color: var(--heading-color);
+  font-size: 1.1rem;
+  border-bottom: 2px solid var(--main-border-color);
+  padding-bottom: 0.5rem;
+}
+
+.machine-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.machine-info-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.machine-info-label {
+  font-size: 0.8rem;
+  color: var(--text-muted-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+}
+
+.machine-info-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+/* Platform Badges */
+.platform-badge {
+  display: inline-block;
+  padding: 0.25em 0.6em;
+  font-size: 0.75em;
+  font-weight: 600;
+  border-radius: 0.25rem;
+  margin-right: 0.5rem;
+  text-transform: uppercase;
+}
+
+.platform-htb {
+  background-color: #9fef00;
+  color: #000;
+}
+
+.platform-thm {
+  background-color: #212c42;
+  color: #fff;
+}
+
+.platform-pg {
+  background-color: #e83030;
+  color: #fff;
+}
+
+.platform-vulnhub {
+  background-color: #4a90e2;
+  color: #fff;
+}
+
+/* Tags with Icons */
+.tag-icon {
+  margin-right: 0.3rem;
+}
+
+/* Certification Section in Sidebar */
+.certifications-section {
+  width: 100%;
+  padding: 1rem 0.75rem;
+  border-top: 1px solid var(--sidebar-border-color);
+  margin-top: 1rem;
+}
+
+.certifications-section h5 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+  color: var(--sidebar-muted-color);
+}
+
+.cert-badge {
+  display: inline-block;
+  background: var(--sidebar-btn-bg);
+  padding: 0.4rem 0.7rem;
+  border-radius: 0.25rem;
+  margin: 0.25rem 0.25rem 0.25rem 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.cert-badge:hover {
+  background: var(--sidebar-active-color);
+  transform: translateY(-2px);
+}
+
+.cert-badge.completed {
+  border-left: 3px solid #2ecc71;
+}
+
+.cert-badge.in-progress {
+  border-left: 3px solid #f39c12;
+}
+
+/* Stats Counter in Sidebar */
+.stats-section {
+  width: 100%;
+  padding: 1rem 0.75rem;
+  border-top: 1px solid var(--sidebar-border-color);
+}
+
+.stats-section h5 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+  color: var(--sidebar-muted-color);
+}
+
+.stats-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.stats-list li {
+  padding: 0.3rem 0;
+  font-size: 0.85rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stats-list .count {
+  font-weight: 700;
+  color: var(--link-color);
+}
+
+/* Footer Customization */
+footer.site-footer {
+  border-top: 2px solid var(--main-border-color);
+  padding-top: 2rem;
+}
+
+.footer-disclaimer {
+  background: var(--card-bg);
+  border-left: 4px solid #e74c3c;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  border-radius: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.footer-resources h5 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: var(--heading-color);
+}
+
+.footer-resources ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.5rem;
+}
+
+.footer-resources li a {
+  color: var(--link-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.footer-resources li a:hover {
+  color: var(--link-underline-color);
+  padding-left: 0.5rem;
+}
+
+/* OS Tags with Icons */
+.tag-linux::before {
+  content: "🐧 ";
+}
+
+.tag-windows::before {
+  content: "🪟 ";
+}
+
+.tag-web::before {
+  content: "🌐 ";
+}
+
+.tag-active-directory::before,
+.tag-ad::before {
+  content: "📊 ";
+}
+
+.tag-oscp::before {
+  content: "🔴 ";
+}
+
+/* Post Preview Enhancements */
+.post-preview {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.post-preview:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Reading Progress Bar */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, #2ecc71 0%, #3498db 100%);
+  z-index: 9999;
+  transition: width 0.1s;
+}
