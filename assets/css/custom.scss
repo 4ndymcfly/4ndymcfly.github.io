@@ -295,7 +295,15 @@ article {
 /* Footer with same color as content area */
 footer,
 footer.site-footer,
-#footer-wrapper {
+#footer-wrapper,
+.footer-wrapper,
+body > footer,
+#main > footer {
   background-color: #282828 !important;
   border-top-color: #3a3a3a !important;
+}
+
+/* Ensure entire body background matches */
+body {
+  background-color: #282828 !important;
 }
