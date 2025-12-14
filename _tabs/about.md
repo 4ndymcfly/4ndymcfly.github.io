@@ -1,27 +1,34 @@
 ---
 # the default layout is 'page'
-icon: fas fa-info-circle
+icon: fas fa-user
 order: 4
+description: Blog personal de ciberseguridad, pentesting y hacking ético. Writeups de máquinas CTF, tutoriales y análisis técnicos.
 ---
 
-¡Hola a todos! 
+Hola,
 
-Me llamo Andrés Lorente y soy un apasionado de la ciberseguridad. Este blog es mi pequeño rincón en Internet donde puedo compartir con vosotros todo lo que he ido aprendiendo a lo largo de mi trayectoria en este fascinante mundo.
+Mi nombre es **Andrés Lorente** y soy un apasionado de la **ciberseguridad** y la **tecnología**. Este blog es un espacio personal donde comparto conocimientos, experiencias y aprendizajes adquiridos a lo largo de mi trayectoria en este ámbito.
 
-Desde que era un niño, siempre me ha encantado todo lo relacionado con la tecnología y los ordenadores. Recuerdo pasar horas y horas frente a la pantalla, intentando entender cómo funcionaban esas máquinas que me parecían tan mágicas. Durante mucho tiempo, me he dedicado a la Administración de Sistemas, pero desde hace un par de años, he terminado por caer en las garras de este mundo de la ciberseguridad, tan complejo como satisfactorio.
+Desde muy joven me ha interesado el funcionamiento de los ordenadores y los sistemas informáticos. Esa curiosidad inicial me llevó a formarme y a trabajar durante años en **Administración de Sistemas**, una base sólida que más adelante me permitió dar el salto al mundo de la **ciberseguridad**, un sector tan exigente como estimulante.
 
-Mi curiosidad me llevó a querer saber más sobre cómo proteger esos sistemas de posibles ataques o intrusiones. Así fue como me adentré en el mundo de la ciberseguridad. Empecé a leer todo lo que caía en mis manos, a probar herramientas de pentesting, a participar en retos de hacking ético, máquinas CTF, estudiar certificaciones (eJPT, OSCP, Hack4You, etc) y poco a poco fui adquiriendo los conocimientos y a responder a la mayoría de las preguntas, pero te das cuenta que, cuanto más sabes, más te falta por aprender...
+El interés por comprender cómo se protegen los sistemas, cómo se producen los ataques y cómo anticiparse a ellos me llevó a profundizar en disciplinas como el **pentesting**, el **análisis de vulnerabilidades** y el **hacking ético**. En ese proceso he estudiado distintas certificaciones y metodologías (eJPT, OSCP, Hack4You, entre otras), participado en retos y máquinas **CTF** y trabajado con numerosas herramientas, siempre con la idea de seguir mejorando y aprendiendo de forma continua.
 
-En este blog, encontrarás todo tipo de contenido relacionado con la ciberseguridad: noticias, análisis de incidentes, writeups de máquinas CTF, tutoriales sobre uso de herramientas, técnicas de pentesting y mucho más. 
+En este blog encontrarás contenido relacionado con la ciberseguridad, como:
 
-Mi objetivo es que este humilde espacio se convierta en una fuente de información y aprendizaje para mi y para todos aquellos que, como yo, están interesados en este apasionante mundo.
+- Análisis de incidentes.
+- Writeups de máquinas CTF.
+- Tutoriales y guías de herramientas.
+- Técnicas y conceptos de pentesting.
 
-Así que, si eres un "friki" de la seguridad como yo, espero que disfrutes del contenido y que te sirva para seguir aprendiendo en este campo tan emocionante.
+El objetivo de este espacio es servir como fuente de aprendizaje, tanto para mí como para cualquier persona interesada en la **seguridad informática**, desde quienes están empezando hasta perfiles más avanzados.
 
+Si te interesa la ciberseguridad, el aprendizaje práctico y el enfoque técnico, este espacio es para ti.
 
 ¡Bienvenido!
 
+---
 
-Andrés Lorente - 4ndymcfly
+**Andrés Lorente**
+`4ndymcfly`
 
 
