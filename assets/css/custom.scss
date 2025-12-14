@@ -291,3 +291,11 @@ article {
   background-color: #282828 !important;
   border-bottom-color: #3a3a3a !important;
 }
+
+/* Footer with same color as content area */
+footer,
+footer.site-footer,
+#footer-wrapper {
+  background-color: #282828 !important;
+  border-top-color: #3a3a3a !important;
+}
