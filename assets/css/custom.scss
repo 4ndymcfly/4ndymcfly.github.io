@@ -270,3 +270,17 @@ footer.site-footer {
   z-index: 9999;
   transition: width 0.1s;
 }
+
+/* Custom Background for Main Content Area */
+#main-wrapper,
+#core-wrapper {
+  background-color: #1e1e1e !important;
+}
+
+/* Ensure post cards have better contrast */
+.card,
+.post-preview,
+article {
+  background-color: #242424 !important;
+  border-color: #333 !important;
+}
