@@ -4,7 +4,6 @@
 
 ### Tu dosis diaria de ciberseguridad, pentesting y café ☕
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/3c72c8bb-4fe9-44f0-8e0f-6bf5c21c5254/deploy-status)](https://app.netlify.com/sites/hackingepico/deploys)
 [![Jekyll](https://img.shields.io/badge/Jekyll-4.3-CC0000?logo=jekyll&logoColor=white)](https://jekyllrb.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
