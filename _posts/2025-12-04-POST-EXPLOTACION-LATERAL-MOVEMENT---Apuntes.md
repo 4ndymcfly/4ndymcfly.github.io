@@ -620,4 +620,6 @@ La post-explotación requiere:
 
 ---
 
-**Última actualización**: 2025-01-10
+**Última actualización**: 2025-01-10<br>
+**Autor**: A. Lorente<br>
+**Licencia**: Creative Commons BY-NC-SA 4.0
