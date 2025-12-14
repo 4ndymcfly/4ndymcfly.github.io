@@ -284,3 +284,10 @@ article {
   background-color: #2d2d2d !important;
   border-color: #3a3a3a !important;
 }
+
+/* Topbar with same color as content area */
+#topbar-wrapper,
+#topbar {
+  background-color: #282828 !important;
+  border-bottom-color: #3a3a3a !important;
+}
