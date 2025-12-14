@@ -24,3 +24,6 @@ package-lock.json
 # Misc
 _sass/dist
 assets/js/dist
+
+# Internal documentation (confidential)
+info_blog/
