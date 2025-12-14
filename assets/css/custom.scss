@@ -316,14 +316,22 @@ body {
   background-color: #282828 !important;
 }
 
-/* Remove dark shadows/boxes in sidebar */
+/* Remove dark shadows/boxes in right panel only */
 #panel-wrapper,
 .panel-wrapper,
 #access-lastmod,
-.access-lastmod,
-aside,
-.sidebar-bottom {
-  background-color: #282828 !important;
+.access-lastmod {
+  background-color: transparent !important;
   box-shadow: none !important;
   border: none !important;
+}
+
+/* Fix article and post content background */
+article,
+.post,
+#post-wrapper article,
+.post-content,
+main article {
+  background-color: #282828 !important;
+  box-shadow: none !important;
 }
