@@ -679,7 +679,8 @@ socat TCP-LISTEN:443,reuseaddr FILE:`tty`,raw,echo=0
 
 ---
 
-**Última actualización**: 2025-12-12
+**Última actualización**: 2025-12-12<br>
+**Autor**: A. Lorente<br>
 **Licencia**: Creative Commons BY-NC-SA 4.0
 
 **⚠️ Disclaimer**: Usar solo en entornos autorizados. El uso no autorizado es ilegal.

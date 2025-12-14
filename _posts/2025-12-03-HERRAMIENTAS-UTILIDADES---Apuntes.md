@@ -2299,7 +2299,6 @@ Esta guía consolida las herramientas y utilidades más importantes para pentest
 
 ---
 
-**Última actualización**: 2025-01-10
-**Versión**: 1.0
-
-*Este documento es parte de una serie de guías de pentesting. Consulta los otros documentos para información específica por área.*
+**Última actualización**: 2025-01-10<br>
+**Autor**: A. Lorente<br>
+**Licencia**: Creative Commons BY-NC-SA 4.0
