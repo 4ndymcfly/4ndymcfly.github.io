@@ -285,6 +285,14 @@ article {
   border-color: #3a3a3a !important;
 }
 
+/* Post content area when viewing a full post */
+#post-wrapper,
+.post-content,
+#main-wrapper > .row,
+#core-wrapper > .row {
+  background-color: #1f1f1f !important;
+}
+
 /* Topbar with same color as content area */
 #topbar-wrapper,
 #topbar {
