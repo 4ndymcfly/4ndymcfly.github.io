@@ -315,3 +315,15 @@ body > footer,
 body {
   background-color: #282828 !important;
 }
+
+/* Remove dark shadows/boxes in sidebar */
+#panel-wrapper,
+.panel-wrapper,
+#access-lastmod,
+.access-lastmod,
+aside,
+.sidebar-bottom {
+  background-color: #282828 !important;
+  box-shadow: none !important;
+  border: none !important;
+}
