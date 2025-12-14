@@ -907,5 +907,5 @@ gobuster dir -u http://10.10.10.x -w /usr/share/wordlists/dirbuster/directory-li
 ---
 
 **Última actualización**: 2025-01-10
-**Autor**: alorente
+**Autor**: A. Lorente
 **Licencia**: Creative Commons BY-NC-SA 4.0

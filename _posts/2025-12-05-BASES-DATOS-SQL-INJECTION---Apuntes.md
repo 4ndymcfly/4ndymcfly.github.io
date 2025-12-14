@@ -901,7 +901,7 @@ $query = "SELECT * FROM users WHERE username = '$username' AND password = '$pass
 ---
 
 **Última actualización**: 2025-01-10
-**Autor**: alorente
+**Autor**: A. Lorente
 **Licencia**: Creative Commons BY-NC-SA 4.0
 
 **Créditos**: Basado en contenido de [cyberteach360](https://github.com/cyberteach360/sql-injection)
