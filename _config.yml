@@ -14,19 +14,16 @@ timezone: Europe/Madrid
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: Hacking Épico # the main title
+title: Hacking Épico
 
-tagline: Ciberseguridad | Guías | Writeups # it will display as the sub-title
+tagline: Ciberseguridad | Guías | Writeups
 
-description: >- # used by seo meta and the atom feed
-  Hacking Épico | Un blog dedicado al pentesting y el Hacking Ético. Por 4ndymcfly.
+description: Hacking Épico | Un blog dedicado al pentesting y el Hacking Ético. Writeups de máquinas CTF y tutoriales. Por 4ndymcfly.
 
-# Fill in the protocol & hostname for your site.
-# e.g. 'https://username.github.io', note that it does not end with a '/'.
-url: "https://hackingepico.com"
+url: https://hackingepico.com
 
 github:
-  username: 4ndymcfly # change to your github username
+  username: 4ndymcfly
 
 #twitter:
 #  username: 4ndymcfly # change to your twitter username
