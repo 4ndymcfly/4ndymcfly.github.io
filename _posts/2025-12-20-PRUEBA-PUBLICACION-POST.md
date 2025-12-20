@@ -5,6 +5,7 @@ categories: []
 tags: []
 image: /assets/img/cabeceras/2025-12-20-PRUEBA-PUBLICACION-POST.jpg
 description: Esto es una descripción
+published: false
 ---
 # Nuevo Post
 
