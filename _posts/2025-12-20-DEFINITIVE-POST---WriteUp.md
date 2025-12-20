@@ -9,6 +9,7 @@ tags:
   - linux
 image: /assets/img/cabeceras/2025-12-20-DEFINITIVE-POST.jpg
 description: Esto es un post de prueba
+published: false
 ---
 # Nuevo Post
 
