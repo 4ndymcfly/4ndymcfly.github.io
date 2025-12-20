@@ -8,7 +8,6 @@ tags:
   - bash
   - linux
 image: /assets/img/cabeceras/2025-12-20-POST-DE-PRUEBA-DE-WRITEUP-DE-PRUEBA.jpg
-published: false
 ---
 # Post de prueba
 
