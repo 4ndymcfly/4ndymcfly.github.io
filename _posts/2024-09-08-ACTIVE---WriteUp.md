@@ -1,20 +1,8 @@
 ---
 title: Active - WriteUp
 date: 'Sun, 08 Sep 2024 00:00:00 GMT'
-categories:
-  - WriteUps
-  - HTB
-  - Windows
-tags:
-  - active-directory
-  - smb
-  - gpp
-  - kerberoasting
-  - crackmapexec
-  - impacket
-  - htb
-  - ctf
-  - windows
+categories: [WriteUps, HTB, Windows]
+tags: [active-directory, smb, gpp, kerberoasting, crackmapexec, impacket, htb, ctf, windows, gpp-decrypt]
 image: /assets/img/cabeceras/2024-09-08-ACTIVE-WRITEUP.png
 description: >-
   Active es una máquina de dificultad fácil a media, que cuenta con dos técnicas

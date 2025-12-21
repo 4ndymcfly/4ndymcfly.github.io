@@ -2,7 +2,7 @@
 title: "Wifinetic - WriteUp"
 date: Sun Feb 02 2025 11:30:00 GMT+0100 (Central European Standard Time)
 categories: [WriteUps, HTB, Linux]
-tags: [ctf, nmap, htb, ftp, linux]
+tags: [ctf, nmap, htb, ftp, linux, wireless, wifi, anonymous, easy, privesc]
 image: /assets/img/htb-writeups/Pasted-image-20240103125542.png
 ---
 

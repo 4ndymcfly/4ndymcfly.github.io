@@ -1,20 +1,8 @@
 ---
 title: Devvortex - WriteUp
 date: 'Tue, 03 Dec 2024 00:00:00 GMT'
-categories:
-  - WriteUps
-  - HTB
-  - Linux
-tags:
-  - joomla
-  - cve-2023-23752
-  - mysql
-  - john
-  - apport-cli
-  - cve-2023-1326
-  - htb
-  - ctf
-  - linux
+categories: [WriteUps, HTB, Linux]
+tags: [joomla, cve-2023-23752, mysql, john, apport-cli, cve-2023-1326, htb, ctf, linux, privesc]
 image: /assets/img/cabeceras/2024-12-03-DEVVORTEX-WRITEUP.png
 description: >-
   Devvortex es una máquina Linux de fácil dificultad que cuenta con un CMS de

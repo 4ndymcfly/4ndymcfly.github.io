@@ -1,14 +1,8 @@
 ---
 title: Bashed - WriteUp
 date: 'Fri, 23 Aug 2024 00:00:00 GMT'
-categories:
-  - WriteUps
-  - HTB
-  - Linux
-tags:
-  - fuzzing
-  - gobuster
-  - pspy
+categories: [WriteUps, HTB, Linux]
+tags: [fuzzing, gobuster, pspy, htb, ctf, linux, phpbash, reverse-shell, privesc, cron]
 image: /assets/img/cabeceras/2024-08-23-BASHED-WRITEUP.png
 description: >-
   Bashed es una máquina bastante fácil que se centra principalmente en difuminar
