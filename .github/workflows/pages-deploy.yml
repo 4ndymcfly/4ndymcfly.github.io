@@ -8,7 +8,6 @@ on:
       - .gitignore
       - README.md
       - LICENSE
-
   workflow_dispatch:
 
 permissions:
@@ -23,7 +22,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -50,8 +48,9 @@ jobs:
           bundle exec htmlproofer _site \
             --disable-external \
             --ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/,/^x$/,/^javascript:/,/^data:/" \
-            --ignore-missing-alt \
-            --allow-missing-href
+            --ignore-empty-alt \
+            --allow-hash-href \
+            --no-enforce-https
 
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
