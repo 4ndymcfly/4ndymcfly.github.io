@@ -17,8 +17,9 @@ tags:
   - windows
 image: /assets/img/cabeceras/2024-09-08-ACTIVE-WRITEUP.png
 description: >-
-  Devvortex es una máquina Linux de fácil dificultad que cuenta con un CMS de
-  Joomla que es vulnerable a la divulgación de información.
+  Active es una máquina de dificultad fácil a media, que cuenta con dos técnicas
+  muy frecuentes para obtener privilegios dentro de un entorno de Active
+  Directory.
 ---
 
 {% include machine-info.html
