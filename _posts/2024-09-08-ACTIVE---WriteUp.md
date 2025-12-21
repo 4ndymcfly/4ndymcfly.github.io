@@ -1,9 +1,24 @@
 ---
-title: "Active - WriteUp"
-date: Sun Sep 08 2024 11:45:00 GMT+0200 (Central European Summer Time)
-categories: [WriteUps, HTB, Windows]
-tags: [active-directory, smb, gpp, kerberoasting, crackmapexec, impacket, htb, ctf, windows]
-image: /assets/img/htb-writeups/Pasted image 20240226101504.png
+title: Active - WriteUp
+date: 'Sun, 08 Sep 2024 00:00:00 GMT'
+categories:
+  - WriteUps
+  - HTB
+  - Windows
+tags:
+  - active-directory
+  - smb
+  - gpp
+  - kerberoasting
+  - crackmapexec
+  - impacket
+  - htb
+  - ctf
+  - windows
+image: /assets/img/cabeceras/2024-09-08-ACTIVE-WRITEUP.png
+description: >-
+  Devvortex es una máquina Linux de fácil dificultad que cuenta con un CMS de
+  Joomla que es vulnerable a la divulgación de información.
 ---
 
 {% include machine-info.html
