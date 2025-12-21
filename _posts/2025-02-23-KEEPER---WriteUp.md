@@ -3,7 +3,7 @@ title: "Keeper - WriteUp"
 date: Sun Feb 23 2025 12:45:00 GMT+0100 (Central European Standard Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, cve, exploit, nginx, linux, ssh, bash, john]
-image: /assets/img/htb-writeups/Pasted image 20231125165125.png
+image: /assets/img/htb-writeups/Pasted-image-20231125165125.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20231125165125.png
   platform="HTB"
 %}
 
-![Keeper](/assets/img/htb-writeups/Pasted image 20231125165125.png)
+![Keeper](/assets/img/htb-writeups/Pasted-image-20231125165125.png)
 
 -----
 
@@ -38,35 +38,35 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 HTTP
 
-![KEEPER](/assets/img/htb-writeups/Pasted image 20231125165125.png)
+![KEEPER](/assets/img/htb-writeups/Pasted-image-20231125165125.png)
 
 Agregamos el dominio de virtual hosting y volvemos a acceder. En este caso agregaremos tickets.keeper.htb y keeper.htb.
 
 Al entrar nos llama la atención esto:
 
-![KEEPER](/assets/img/htb-writeups/Pasted image 20231125170113.png)
+![KEEPER](/assets/img/htb-writeups/Pasted-image-20231125170113.png)
 
 Buscando información en internet, leemos que las credenciales por defecto son root:password.
 
 https://github.com/bestpractical/rt
 
-![KEEPER](/assets/img/htb-writeups/Pasted image 20231125170231.png)
+![KEEPER](/assets/img/htb-writeups/Pasted-image-20231125170231.png)
 
 Las probamos, por si acaso.
 
-![KEEPER](/assets/img/htb-writeups/Pasted image 20231125170323.png)
+![KEEPER](/assets/img/htb-writeups/Pasted-image-20231125170323.png)
 
 Increíble pero funciona. Ahora debemos investigar cómo acceder al sistema.
 
 Vemos una lista de correos enviados a root desde la cuenta de Lisa Norgaard:
 
-![KEEPER](/assets/img/htb-writeups/Pasted image 20231125171701.png)
+![KEEPER](/assets/img/htb-writeups/Pasted-image-20231125171701.png)
 
 Existe una base de datos de Keepass pero la ha movido a su carpeta de usuario por seguridad.
 
 Si nos vamos a usuario y abrimos la ficha de Lise, encontramos un password en texto plano.
 
-![KEEPER](/assets/img/htb-writeups/Pasted image 20231125171951.png)
+![KEEPER](/assets/img/htb-writeups/Pasted-image-20231125171951.png)
 
 Apuntamos las credenciales:
 
@@ -80,13 +80,13 @@ Vamos a proba estas credenciales por SSH.
 $ ssh lnorgaard@keeper.htb
 ```
 
-![KEEPER](/assets/img/htb-writeups/Pasted image 20231125172257.png)
+![KEEPER](/assets/img/htb-writeups/Pasted-image-20231125172257.png)
 
 Y para adentro, además tiene correo pendiente de leer... peor no tiene nada.
 
 Registramos la primera bandera y seguimos.
 
-![KEEPER](/assets/img/htb-writeups/Pasted image 20231125172709.png)
+![KEEPER](/assets/img/htb-writeups/Pasted-image-20231125172709.png)
 
 Como decía en el correo tiene la base de datos en fomrato keepass en un archivo ZIP en su directorio home. Como la máquina dispone de Python, nos vamos a compartir por http su carpeta y nos vamos a traer el archivo a nuestra máquina.
 
@@ -107,7 +107,7 @@ passcodes:$keepass$*2*60000*0*5d7b4747e5a278d572fb0a66fe187ae5d74a0e2f56a2aaaf4c
 
 Copamos el hash en un archivo que llamaremos "hash.keepass" y se lo daremos amablemente a _john_
 
-![KEEPER](/assets/img/htb-writeups/Pasted image 20231125173756.png)
+![KEEPER](/assets/img/htb-writeups/Pasted-image-20231125173756.png)
 
 Así podemos estar mil años para romper la contraseña y por algo se nos ofrece el dump. Así que vamos a investigar un poco.
 
@@ -115,7 +115,7 @@ Encontramos en internet un exploit de KeePass que emplea el archivo .dump para r
 
 https://github.com/vdohney/keepass-password-dumper
 
-![KEEPER](/assets/img/htb-writeups/Pasted image 20231125174238.png)
+![KEEPER](/assets/img/htb-writeups/Pasted-image-20231125174238.png)
 
 Nos clonamos el repositorio y lo ejecutamos:
 
@@ -123,11 +123,11 @@ Nos clonamos el repositorio y lo ejecutamos:
 $ dotnet run ../KeePassDumpFull.dmp
 ```
 
-![KEEPER](/assets/img/htb-writeups/Pasted image 20231125175150.png)
+![KEEPER](/assets/img/htb-writeups/Pasted-image-20231125175150.png)
 
 Tenemos una palabra en Danés posiblemente y una letra que no ha logrado descifrar. Vamos a hacer una búsqueda en San Google para ver si nos la completa.
 
-![KEEPER](/assets/img/htb-writeups/Pasted image 20231125175400.png)
+![KEEPER](/assets/img/htb-writeups/Pasted-image-20231125175400.png)
 
 Es el nombre de un postre y la letra que nos faltaba es la "r".
 
@@ -135,7 +135,7 @@ Tenemos la contraseña: _rødgrød med fløde_
 
 Vamos a abrir la base de datos con keepass
 
-![KEEPER](/assets/img/htb-writeups/Pasted image 20231125175903.png)
+![KEEPER](/assets/img/htb-writeups/Pasted-image-20231125175903.png)
 
 Tenemos la contraseña y un archivo ppk de certificado para _Putty_
 
@@ -157,7 +157,7 @@ Y para acabar, entramos como root...
 $ ssh -i id_rsa root@keeper.htb
 ```
 
-![KEEPER](/assets/img/htb-writeups/Pasted image 20231125181431.png)
+![KEEPER](/assets/img/htb-writeups/Pasted-image-20231125181431.png)
 
 Registramos bandera de root y reto conseguido!
 ---

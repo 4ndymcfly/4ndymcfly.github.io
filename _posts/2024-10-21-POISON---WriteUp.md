@@ -3,7 +3,7 @@ title: "Poison - WriteUp"
 date: Mon Oct 21 2024 21:30:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, linpeas, apache, php, linux, ssh, bash, python]
-image: /assets/img/htb-writeups/Pasted image 20240122092228.png
+image: /assets/img/htb-writeups/Pasted-image-20240122092228.png
 ---
 
 {% include machine-info.html
@@ -13,11 +13,11 @@ image: /assets/img/htb-writeups/Pasted image 20240122092228.png
   platform="HTB"
 %}
 
-![Poison](/assets/img/htb-writeups/Pasted image 20240122092228.png)
+![Poison](/assets/img/htb-writeups/Pasted-image-20240122092228.png)
 
 ------
 
-![POISON](/assets/img/htb-writeups/Pasted image 20240122092228.png)
+![POISON](/assets/img/htb-writeups/Pasted-image-20240122092228.png)
 
 -------
 
@@ -53,11 +53,11 @@ http://10.129.1.254 [200 OK] Apache[2.4.29], Country[RESERVED][ZZ], HTTPServer[F
 
 HTTP
 
-![POISON](/assets/img/htb-writeups/Pasted image 20240122092736.png)
+![POISON](/assets/img/htb-writeups/Pasted-image-20240122092736.png)
 
 Si le introducimos por ejemplo "info.php" el resultado es el siguiente;
 
-![POISON](/assets/img/htb-writeups/Pasted image 20240122092925.png)
+![POISON](/assets/img/htb-writeups/Pasted-image-20240122092925.png)
 
 Se puede acontecer un LFI. Vamos a probarlo:
 
@@ -65,15 +65,15 @@ Se puede acontecer un LFI. Vamos a probarlo:
 http://10.129.1.254/browse.php?file=/../../../../../../../../etc/passwd
 ```
 
-![POISON](/assets/img/htb-writeups/Pasted image 20240122093242.png)
+![POISON](/assets/img/htb-writeups/Pasted-image-20240122093242.png)
 
 OK, vamos a probar otro archivo de la lista:
 
-![POISON](/assets/img/htb-writeups/Pasted image 20240122093416.png)
+![POISON](/assets/img/htb-writeups/Pasted-image-20240122093416.png)
 
 El archivo número 8 parece sospechoso, vamos a ver qué contiene:
 
-![POISON](/assets/img/htb-writeups/Pasted image 20240122093544.png)
+![POISON](/assets/img/htb-writeups/Pasted-image-20240122093544.png)
 
 Parece que está codificado 13 veces en base64. Vamos a descifrarlo con _Cyberchef_
 
@@ -109,7 +109,7 @@ except Exception as e:
 
 Y obtenemos el resultado:
 
-![POISON](/assets/img/htb-writeups/Pasted image 20240122095445.png)
+![POISON](/assets/img/htb-writeups/Pasted-image-20240122095445.png)
 
 Tenemos credenciales, ya que habíamos conseguido la lista de usuarios anteriormente:
 
@@ -127,7 +127,7 @@ Y pa dentro!
 
 Empezamos a enumerar y vemos un archivo sospechoso además de la primera bandera:
 
-![POISON](/assets/img/htb-writeups/Pasted image 20240122101243.png)
+![POISON](/assets/img/htb-writeups/Pasted-image-20240122101243.png)
 
 Vamos a intentar traérnoslo a nuestra máquina con _NetCat_
 
@@ -145,7 +145,7 @@ Y en la máquina víctima enviaremos el archivo:
 
 Nos lo pasamos pero al intentar descomprimirlo nos pide un password, volvemos a introducir la contraseña del usuario _charix_ y parece que funciona. Pero el contenido parece cifrado o un rabbit hole.
 
-![POISON](/assets/img/htb-writeups/Pasted image 20240122102411.png)
+![POISON](/assets/img/htb-writeups/Pasted-image-20240122102411.png)
 
 Vamos a seguir enumerando la máquina víctima para ver qué encontramos.
 
@@ -155,7 +155,7 @@ Empecemos por los puertos o servicios en escucha, si no vemos nada, le subiremos
 $ netstat -an | grep -i listen
 ```
 
-![POISON](/assets/img/htb-writeups/Pasted image 20240122103755.png)
+![POISON](/assets/img/htb-writeups/Pasted-image-20240122103755.png)
 
 Vemos que tiene dos puertos en escucha interna, que si la memoria no me falla corresponden a VNC.
 
@@ -165,7 +165,7 @@ Vamos a listar los procesos para ver si el servicio de VNC está levantado:
 $ ps aux | grep -i vnc
 ```
 
-![POISON](/assets/img/htb-writeups/Pasted image 20240122104018.png)
+![POISON](/assets/img/htb-writeups/Pasted-image-20240122104018.png)
 
 Y efectivamente, es tiene corriendo un servidor de VNC internamente. Ahora vamos a traernos uno de los puertos en escucha hacia nuestra máquina para probar una conexión remota.
 
@@ -179,7 +179,7 @@ Y ahora desde otra consola conectamos por VNC con las credenciales de Charix:
 $ vncviewer 127.0.0.1:5901
 ```
 
-![POISON](/assets/img/htb-writeups/Pasted image 20240122112336.png)
+![POISON](/assets/img/htb-writeups/Pasted-image-20240122112336.png)
 
 Pero no funciona. Vamos a probar con el archivo descomprimido anterior mente como certificado:
 
@@ -187,7 +187,7 @@ Pero no funciona. Vamos a probar con el archivo descomprimido anterior mente com
 $ vncviewer 127.0.0.1:5901 -passwd secret
 ```
 
-![POISON](/assets/img/htb-writeups/Pasted image 20240122112719.png)
+![POISON](/assets/img/htb-writeups/Pasted-image-20240122112719.png)
 
 Y estamos dentro! Como el servicio lo ejecutaba root, al entrar hemos entrado como superusuario. Registramos la flag y máquina pa la saca!
 ---

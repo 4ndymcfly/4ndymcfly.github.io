@@ -3,7 +3,7 @@ title: "Perfection - WriteUp"
 date: Sat Aug 30 2025 16:15:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, reverse-shell, hashcat, exploit, sudo, nginx, linux, ssh]
-image: /assets/img/htb-writeups/Pasted image 20240318122502.png
+image: /assets/img/htb-writeups/Pasted-image-20240318122502.png
 ---
 
 {% include machine-info.html
@@ -13,13 +13,13 @@ image: /assets/img/htb-writeups/Pasted image 20240318122502.png
   platform="HTB"
 %}
 
-![Perfection](/assets/img/htb-writeups/Pasted image 20240318122502.png)
+![Perfection](/assets/img/htb-writeups/Pasted-image-20240318122502.png)
 
 Tags:  
 
 ------
 
-![PERFECTION](/assets/img/htb-writeups/Pasted image 20240318122502.png)
+![PERFECTION](/assets/img/htb-writeups/Pasted-image-20240318122502.png)
 
 ----
 
@@ -49,11 +49,11 @@ http://10.129.42.182 [200 OK] Country[RESERVED][ZZ], HTTPServer[nginx, WEBrick/1
 ```
 
 HTTP
-![PERFECTION](/assets/img/htb-writeups/Pasted image 20240318123123.png)
+![PERFECTION](/assets/img/htb-writeups/Pasted-image-20240318123123.png)
 
-![PERFECTION](/assets/img/htb-writeups/Pasted image 20240318123155.png)
+![PERFECTION](/assets/img/htb-writeups/Pasted-image-20240318123155.png)
 
-![PERFECTION](/assets/img/htb-writeups/Pasted image 20240318123338.png)
+![PERFECTION](/assets/img/htb-writeups/Pasted-image-20240318123338.png)
 
 # Start Listener
 

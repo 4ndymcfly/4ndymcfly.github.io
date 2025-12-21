@@ -3,7 +3,7 @@ title: "Node - WriteUp"
 date: Sat Apr 19 2025 14:15:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, reverse-shell, sudo, exploit, apache, linux, rdp, bof]
-image: /assets/img/htb-writeups/Pasted image 20240131115542.png
+image: /assets/img/htb-writeups/Pasted-image-20240131115542.png
 ---
 
 {% include machine-info.html
@@ -13,14 +13,14 @@ image: /assets/img/htb-writeups/Pasted image 20240131115542.png
   platform="HTB"
 %}
 
-![Node](/assets/img/htb-writeups/Pasted image 20240131115542.png)
+![Node](/assets/img/htb-writeups/Pasted-image-20240131115542.png)
 
 ---
 
 ---
 -----
 
-![NODE](/assets/img/htb-writeups/Pasted image 20240131115542.png)
+![NODE](/assets/img/htb-writeups/Pasted-image-20240131115542.png)
 
 -----
 

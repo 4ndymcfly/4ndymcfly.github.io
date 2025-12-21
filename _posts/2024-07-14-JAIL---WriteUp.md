@@ -3,7 +3,7 @@ title: "Jail - WriteUp"
 date: Sun Jul 14 2024 10:15:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Windows]
 tags: [ctf, nmap, htb, smb, ldap, windows, apache, bof, ssh, bash]
-image: /assets/img/htb-writeups/Pasted image 20240226131626.png
+image: /assets/img/htb-writeups/Pasted-image-20240226131626.png
 ---
 
 {% include machine-info.html
@@ -13,13 +13,13 @@ image: /assets/img/htb-writeups/Pasted image 20240226131626.png
   platform="HTB"
 %}
 
-![Jail](/assets/img/htb-writeups/Pasted image 20240226131626.png)
+![Jail](/assets/img/htb-writeups/Pasted-image-20240226131626.png)
 
 Tags:
 
 -----
 
-![JAIL](/assets/img/htb-writeups/Pasted image 20240226131626.png)
+![JAIL](/assets/img/htb-writeups/Pasted-image-20240226131626.png)
 
 Jail o "la cárcel", como su nombre lo indica, implica escapar de múltiples entornos sandbox y escalar entre múltiples cuentas de usuario. Definitivamente es una de las máquinas más desafiantes de Hack The Box y requiere conocimientos bastante avanzados en varias áreas para completarla.
 

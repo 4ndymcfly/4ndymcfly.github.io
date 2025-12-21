@@ -3,7 +3,7 @@ title: "Appsanity - WriteUp"
 date: Thu Sep 05 2024 11:00:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Windows]
 tags: [ctf, nmap, htb, winrm, windows, evil-winrm, ffuf, iis, bash]
-image: /assets/img/htb-writeups/Pasted image 20240126104024.png
+image: /assets/img/htb-writeups/Pasted-image-20240126104024.png
 ---
 
 {% include machine-info.html
@@ -13,14 +13,14 @@ image: /assets/img/htb-writeups/Pasted image 20240126104024.png
   platform="HTB"
 %}
 
-![Appsanity](/assets/img/htb-writeups/Pasted image 20240126104024.png)
+![Appsanity](/assets/img/htb-writeups/Pasted-image-20240126104024.png)
 
 ---
 
 ---
 ----
 
-![APPSANITY](/assets/img/htb-writeups/Pasted image 20240126104024.png)
+![APPSANITY](/assets/img/htb-writeups/Pasted-image-20240126104024.png)
 
 ----
 
@@ -56,19 +56,19 @@ Agregamos _meddigi.htb_ al hosts.
 
 HTTP
 
-![APPSANITY](/assets/img/htb-writeups/Pasted image 20240126104916.png)
+![APPSANITY](/assets/img/htb-writeups/Pasted-image-20240126104916.png)
 
 ```http
 https://meddigi.htb/signin
 ```
 
-![APPSANITY](/assets/img/htb-writeups/Pasted image 20240126105022.png)
+![APPSANITY](/assets/img/htb-writeups/Pasted-image-20240126105022.png)
 
 ```http
 https://meddigi.htb/signup
 ```
 
-![APPSANITY](/assets/img/htb-writeups/Pasted image 20240126105121.png)
+![APPSANITY](/assets/img/htb-writeups/Pasted-image-20240126105121.png)
 
 WHATWEB
 
@@ -84,11 +84,11 @@ Subdominios:
 $ ffuf -u https://meddigi.htb/ -H "Host: FUZZ.meddigi.htb" -w /usr/share/seclists/Discovery/DNS/subdomain-megalist.txt
 ```
 
-![APPSANITY](/assets/img/htb-writeups/Pasted image 20240126112040.png)
+![APPSANITY](/assets/img/htb-writeups/Pasted-image-20240126112040.png)
 
 Encuentra el subdominio _portal_ lo agregamos al hosts y vemos qué hay:
 
-![APPSANITY](/assets/img/htb-writeups/Pasted image 20240126112142.png)
+![APPSANITY](/assets/img/htb-writeups/Pasted-image-20240126112142.png)
 
 WriteUp Incompleto - No guardé los cambios - Lo siento :)
 ---

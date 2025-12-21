@@ -3,7 +3,7 @@ title: "Codify - WriteUp"
 date: Sun Aug 10 2025 15:45:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, linpeas, exploit, sudo, docker, apache, linux, mysql]
-image: /assets/img/htb-writeups/Pasted image 20231123200440.png
+image: /assets/img/htb-writeups/Pasted-image-20231123200440.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20231123200440.png
   platform="HTB"
 %}
 
-![Codify](/assets/img/htb-writeups/Pasted image 20231123200440.png)
+![Codify](/assets/img/htb-writeups/Pasted-image-20231123200440.png)
 
 ------
 
@@ -56,9 +56,9 @@ http://10.129.86.106:3000/ [200 OK] Bootstrap[4.3.1], Country[RESERVED][ZZ], HTM
 
 HTTP 80 y 3000
 
-![CODIFY](/assets/img/htb-writeups/Pasted image 20231123200440.png)
+![CODIFY](/assets/img/htb-writeups/Pasted-image-20231123200440.png)
 
-![CODIFY](/assets/img/htb-writeups/Pasted image 20231123200519.png)
+![CODIFY](/assets/img/htb-writeups/Pasted-image-20231123200519.png)
 
 La página ejecuta código _Node.js_ Probaremos de explotar esta característica.
 
@@ -94,7 +94,7 @@ console.log(vm.run(code));
 
 Ejecutamos el código:
 
-![CODIFY](/assets/img/htb-writeups/Pasted image 20231123211734.png)
+![CODIFY](/assets/img/htb-writeups/Pasted-image-20231123211734.png)
 
 Y vemos que funciona.
 
@@ -134,21 +134,21 @@ $ ssh svc@codify.htb -i ~/.ssh/id_rsa
 svc@codify:~$ 
 ```
 
-![CODIFY](/assets/img/htb-writeups/Pasted image 20231123213518.png)
+![CODIFY](/assets/img/htb-writeups/Pasted-image-20231123213518.png)
 
 Nos subimos _linpeas.sh_ y empezamos a enumerar.
 
 Usuarios:
 
-![CODIFY](/assets/img/htb-writeups/Pasted image 20231123215845.png)
+![CODIFY](/assets/img/htb-writeups/Pasted-image-20231123215845.png)
 
 Según este proceso se está ejecutando un contenedor docker con una base de datos MySQL.
 
-![CODIFY](/assets/img/htb-writeups/Pasted image 20231123215215.png)
+![CODIFY](/assets/img/htb-writeups/Pasted-image-20231123215215.png)
 
 Confirmamos el servicio MySQL escuchando por un puerto interno y docker.
 
-![CODIFY](/assets/img/htb-writeups/Pasted image 20231123215621.png)
+![CODIFY](/assets/img/htb-writeups/Pasted-image-20231123215621.png)
 
 Encontramos el archivo _tickets.db_ dentro de /var/www/contact.
 
@@ -158,7 +158,7 @@ Vamos a ver qué contiene:
 $ strings /var/www/contact/tickets.db
 ```
 
-![CODIFY](/assets/img/htb-writeups/Pasted image 20231123222953.png)
+![CODIFY](/assets/img/htb-writeups/Pasted-image-20231123222953.png)
 
 Encontramos lo que parece el hash de la contraseña del usuario _joshua_. Vamos a ver de qué tipo de hash se trata con _hashid_:
 
@@ -166,7 +166,7 @@ Encontramos lo que parece el hash de la contraseña del usuario _joshua_. Vamos 
 $ hashid '$2a$12$SOn8Pf6z8fO/nVsNbAAequ/P6vLRJJl7gCUEiYBU2iLHn4G/p/Zw2'
 ```
 
-![CODIFY](/assets/img/htb-writeups/Pasted image 20231123223201.png)
+![CODIFY](/assets/img/htb-writeups/Pasted-image-20231123223201.png)
 
 Parece que es _bcrypt_. Copiamos el hash en un archivo y usamos a nuestro amigo _john_ para romperlo:
 
@@ -174,7 +174,7 @@ Parece que es _bcrypt_. Copiamos el hash en un archivo y usamos a nuestro amigo 
 $ john --wordlist=/usr/share/wordlists/rockyou.txt hash.joshua
 ```
 
-![CODIFY](/assets/img/htb-writeups/Pasted image 20231123223444.png)
+![CODIFY](/assets/img/htb-writeups/Pasted-image-20231123223444.png)
 
 Tenemos nuevas credenciales:
 
@@ -182,17 +182,17 @@ Tenemos nuevas credenciales:
 joshua:spongebob1
 ```
 
-![CODIFY](/assets/img/htb-writeups/Pasted image 20231123223613.png)
+![CODIFY](/assets/img/htb-writeups/Pasted-image-20231123223613.png)
 
 Funcionan. Vamos a investigar...
 
 Conseguimos nuestra primera flag y la registramos.
 
-![CODIFY](/assets/img/htb-writeups/Pasted image 20231123223742.png)
+![CODIFY](/assets/img/htb-writeups/Pasted-image-20231123223742.png)
 
 Si hacemos un _sudo -l_ podremos ver que podemos ejecutar con permisos de sudo el script /opt/scripts/mysql-backup.sh
 
-![CODIFY](/assets/img/htb-writeups/Pasted image 20231123224214.png)
+![CODIFY](/assets/img/htb-writeups/Pasted-image-20231123224214.png)
 
 Veamos qué contiene el script:
 
@@ -276,7 +276,7 @@ while not is_password_found:
 
 Resultado:
 
-![CODIFY](/assets/img/htb-writeups/Pasted image 20231123230338.png)
+![CODIFY](/assets/img/htb-writeups/Pasted-image-20231123230338.png)
 
 **Obteniendo Root con su**
 

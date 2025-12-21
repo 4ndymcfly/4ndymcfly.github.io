@@ -3,7 +3,7 @@ title: "Drive - WriteUp"
 date: Sat Aug 16 2025 08:15:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, hashcat, linpeas, nginx, ffuf, linux, mysql, php]
-image: /assets/img/htb-writeups/Pasted image 20240119115810.png
+image: /assets/img/htb-writeups/Pasted-image-20240119115810.png
 ---
 
 {% include machine-info.html
@@ -13,11 +13,11 @@ image: /assets/img/htb-writeups/Pasted image 20240119115810.png
   platform="HTB"
 %}
 
-![Drive](/assets/img/htb-writeups/Pasted image 20240119115810.png)
+![Drive](/assets/img/htb-writeups/Pasted-image-20240119115810.png)
 
 ------
 
-![DRIVE](/assets/img/htb-writeups/Pasted image 20240119115810.png)
+![DRIVE](/assets/img/htb-writeups/Pasted-image-20240119115810.png)
 
 Máquina Linux
 Dificultad Difícil
@@ -52,23 +52,23 @@ http://drive.htb/ [200 OK] Bootstrap, Cookies[csrftoken], Country[RESERVED][ZZ],
 
 HTTP
 
-![DRIVE](/assets/img/htb-writeups/Pasted image 20240119120640.png)
+![DRIVE](/assets/img/htb-writeups/Pasted-image-20240119120640.png)
 
 Posibles usuarios:
 
-![DRIVE](/assets/img/htb-writeups/Pasted image 20240119120717.png)
+![DRIVE](/assets/img/htb-writeups/Pasted-image-20240119120717.png)
 
 Panel de registro y login: 
 
-![DRIVE](/assets/img/htb-writeups/Pasted image 20240119120827.png)
+![DRIVE](/assets/img/htb-writeups/Pasted-image-20240119120827.png)
 
-![DRIVE](/assets/img/htb-writeups/Pasted image 20240119120850.png)
+![DRIVE](/assets/img/htb-writeups/Pasted-image-20240119120850.png)
 
 Procedemos a registrarnos y hacer login.
 
 Al entrar en nuestra cuenta tenemos dos opciones nuevas:
 
-![DRIVE](/assets/img/htb-writeups/Pasted image 20240119122812.png)
+![DRIVE](/assets/img/htb-writeups/Pasted-image-20240119122812.png)
 
 ```http
 martin:Xk4@KjyrYv8t194L!

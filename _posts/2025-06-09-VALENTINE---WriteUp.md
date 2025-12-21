@@ -3,7 +3,7 @@ title: "Valentine - WriteUp"
 date: Mon Jun 09 2025 14:00:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, dirb, cve, exploit, cve-2014-0160, apache, gobuster, linux]
-image: /assets/img/htb-writeups/Pasted image 20240201101609.png
+image: /assets/img/htb-writeups/Pasted-image-20240201101609.png
 ---
 
 {% include machine-info.html
@@ -13,14 +13,14 @@ image: /assets/img/htb-writeups/Pasted image 20240201101609.png
   platform="HTB"
 %}
 
-![Valentine](/assets/img/htb-writeups/Pasted image 20240201101609.png)
+![Valentine](/assets/img/htb-writeups/Pasted-image-20240201101609.png)
 
 ---
 
 ---
 -----
 
-![VALENTINE](/assets/img/htb-writeups/Pasted image 20240201101609.png)
+![VALENTINE](/assets/img/htb-writeups/Pasted-image-20240201101609.png)
 
 -----
 
@@ -58,7 +58,7 @@ Host script results:
 
 Damos de alta el nombre de dominio _valentine.htb_ en el archivo hosts.
 
-![VALENTINE](/assets/img/htb-writeups/Pasted image 20240201104323.png)
+![VALENTINE](/assets/img/htb-writeups/Pasted-image-20240201104323.png)
 
 Vemos que la versión del OpenSSH es muy inferior a la 7.7 por lo que podemos enumerar usuarios y al ver el nombre de la máquina podemos estar ante un host vulnerable a _Heartbleed_. 
 
@@ -124,21 +124,21 @@ Finished
 
 Miramos las rutas encontradas:
 
-![VALENTINE](/assets/img/htb-writeups/Pasted image 20240201104135.png)
+![VALENTINE](/assets/img/htb-writeups/Pasted-image-20240201104135.png)
 
-![VALENTINE](/assets/img/htb-writeups/Pasted image 20240201104436.png)
+![VALENTINE](/assets/img/htb-writeups/Pasted-image-20240201104436.png)
 
-![VALENTINE](/assets/img/htb-writeups/Pasted image 20240201104523.png)
+![VALENTINE](/assets/img/htb-writeups/Pasted-image-20240201104523.png)
 
-![VALENTINE](/assets/img/htb-writeups/Pasted image 20240201104151.png)
+![VALENTINE](/assets/img/htb-writeups/Pasted-image-20240201104151.png)
 
-![VALENTINE](/assets/img/htb-writeups/Pasted image 20240201104212.png)
+![VALENTINE](/assets/img/htb-writeups/Pasted-image-20240201104212.png)
 
 #### EXPLOTACIÓN
 
 Vamos a centrarnos en el archivo _hype_key_ encontrado. Parece Hexadecimal. Nos ayudaremos de la página _Cyberchef_ para intentar averiguar lo que oculta o cuál es su función...
 
-![VALENTINE](/assets/img/htb-writeups/Pasted image 20240201104909.png)
+![VALENTINE](/assets/img/htb-writeups/Pasted-image-20240201104909.png)
 
 Es una clave privada.
 
@@ -159,7 +159,7 @@ Vamos a ejecutar el exploit https://gist.github.com/eelsivart/10174134 para ver 
 $ python2.7 heartbleed.py 10.129.1.181
 ```
 
-![VALENTINE](/assets/img/htb-writeups/Pasted image 20240201110555.png)
+![VALENTINE](/assets/img/htb-writeups/Pasted-image-20240201110555.png)
 
 Nos devuelve una variable _text_ con un texto cifrado en _base64_. Lo desciframos y lo apuntamos.
 
@@ -170,11 +170,11 @@ heartbleedbelievethehype
 
 Si vamos a las páginas encontradas enconder / decoder hacen la misma función. Codifican en base64 y viceversa.
 
-![VALENTINE](/assets/img/htb-writeups/Pasted image 20240201111521.png)
+![VALENTINE](/assets/img/htb-writeups/Pasted-image-20240201111521.png)
 
 Probamos unos cuantos usuarios aprovechándonos de la vulnerabailidad de enumeración, funciona aunque la respuesta la ofrece con varios segundos de retraso lo que imposibilita la enumeración rápida por diccionario. Pero damos con un usuario válido...
 
-![VALENTINE](/assets/img/htb-writeups/Pasted image 20240201111822.png)
+![VALENTINE](/assets/img/htb-writeups/Pasted-image-20240201111822.png)
 
 Perfecto, parece que tenemos un usuario, una contraseña y un archivo de clave privada... Vamos a probar todo junto y ver si podemos obtener un acceso a la máquina...
 
@@ -207,7 +207,7 @@ En este caso bastará con ejecutar el mismo comando que está ejecutando root pa
 $ /usr/bin/tmux -S /.devs/dev_sess
 ```
 
-![VALENTINE](/assets/img/htb-writeups/Pasted image 20240201120535.png)
+![VALENTINE](/assets/img/htb-writeups/Pasted-image-20240201120535.png)
 ---
 
 **Última actualización**: 2025-06-09<br>

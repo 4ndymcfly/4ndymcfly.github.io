@@ -3,7 +3,7 @@ title: "Brainfuck - WriteUp"
 date: Wed Dec 25 2024 14:30:00 GMT+0100 (Central European Standard Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, lxd, ssh, wordpress, exploit, bash, burp, wfuzz]
-image: /assets/img/htb-writeups/Pasted image 20240202124848.png
+image: /assets/img/htb-writeups/Pasted-image-20240202124848.png
 ---
 
 {% include machine-info.html
@@ -13,14 +13,14 @@ image: /assets/img/htb-writeups/Pasted image 20240202124848.png
   platform="HTB"
 %}
 
-![Brainfuck](/assets/img/htb-writeups/Pasted image 20240202124848.png)
+![Brainfuck](/assets/img/htb-writeups/Pasted-image-20240202124848.png)
 
 ---
 
 ---
 ----
 
-![BRAINFUCK](/assets/img/htb-writeups/Pasted image 20240202124848.png)
+![BRAINFUCK](/assets/img/htb-writeups/Pasted-image-20240202124848.png)
 
 -----
 

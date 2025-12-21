@@ -3,7 +3,7 @@ title: "Sizzle - WriteUp"
 date: Mon Jun 09 2025 21:00:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Windows]
 tags: [ctf, nmap, htb, winrm, powershell, dcsync, evil-winrm, bash, smb, rpc]
-image: /assets/img/htb-writeups/Pasted image 20240113113110.png
+image: /assets/img/htb-writeups/Pasted-image-20240113113110.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20240113113110.png
   platform="HTB"
 %}
 
-![Sizzle](/assets/img/htb-writeups/Pasted image 20240113113110.png)
+![Sizzle](/assets/img/htb-writeups/Pasted-image-20240113113110.png)
 
 ------
 
@@ -179,7 +179,7 @@ SMB         10.129.16.146   445    SIZZLE           //10.129.16.146/Department S
 ```
 
 Descubrimos un listado de posibles usuarios:
-![SIZZLE](/assets/img/htb-writeups/Pasted image 20240113113110.png)
+![SIZZLE](/assets/img/htb-writeups/Pasted-image-20240113113110.png)
 
 Los copiamos en un archivo tipo users.txt y lo pasamos por kerbrute para ver qué usuario son válidos:
 
@@ -317,11 +317,11 @@ $ sudo impacket-smbserver smbFolder $(pwd) -smb2support
 
 Moveremos el archivo .scf a la carpeta /Public y esperaremos la autenticación.
 
-![SIZZLE](/assets/img/htb-writeups/Pasted image 20240116105434.png)
+![SIZZLE](/assets/img/htb-writeups/Pasted-image-20240116105434.png)
 
 Pasados un minuto podremos ver el hash del usuario amanda:
 
-![SIZZLE](/assets/img/htb-writeups/Pasted image 20240116105552.png)
+![SIZZLE](/assets/img/htb-writeups/Pasted-image-20240116105552.png)
 
 ```http
 amanda::HTB:aaaaaaaaaaaaaaaa:2b3c9567563dcda00917d5160cb7d358:010100000000000080c19c0e6248da011a5fa09dcf8a45ef00000000010010004c0054006c006a006500770074005500030010004c0054006c006a006500770074005500020010006f006e007a00410042004b0055007100040010006f006e007a00410042004b00550071000700080080c19c0e6248da0106000400020000000800300030000000000000000100000000200000908323fd0d7fb750bb700afbfc971ef365e792327cd9799e5362d43411b667610a001000000000000000000000000000000000000900200063006900660073002f00310030002e00310030002e00310034002e0033003300000000000000000000000000
@@ -333,7 +333,7 @@ Lo copiamos en un archivo y le pasamos _john_
 $ john --wordlist=/usr/share/wordlists/rockyou.txt amanda-hash
 ```
 
-![SIZZLE](/assets/img/htb-writeups/Pasted image 20240116105959.png)
+![SIZZLE](/assets/img/htb-writeups/Pasted-image-20240116105959.png)
 
 Tenemos nuevas credenciales:
 
@@ -398,11 +398,11 @@ $ enum4linux -UMSPG -d -u htb.local/amanda -p Ashare1972 10.129.118.228
 
 Descubrimos que Amanda pertenece al grupo de Administradores de Usuarios Remotos, pero por ahora no podemos acceder si no disponemos de un certificado válido:
 
-![SIZZLE](/assets/img/htb-writeups/Pasted image 20240116130747.png)
+![SIZZLE](/assets/img/htb-writeups/Pasted-image-20240116130747.png)
 
 También vemos que el usuario _sizzler_ pertenece al grupo de administradores. Sólo para tenerlo en cuenta.
 
-![SIZZLE](/assets/img/htb-writeups/Pasted image 20240116115113.png)
+![SIZZLE](/assets/img/htb-writeups/Pasted-image-20240116115113.png)
 
 Vamos a realizar fuzzing con un diccionario específico para IIS:
 
@@ -410,19 +410,19 @@ Vamos a realizar fuzzing con un diccionario específico para IIS:
 $ wfuzz -c --hc=404 -t 200 -w /usr/share/seclists/Discovery/Web-Content/IIS.fuzz.txt http://10.129.118.228/FUZZ
 ```
 
-![SIZZLE](/assets/img/htb-writeups/Pasted image 20240116124202.png)
+![SIZZLE](/assets/img/htb-writeups/Pasted-image-20240116124202.png)
 
 Y vemos una ruta con nombre _certsrv_
 
 Vamos al navegador y vemos qué es:
 
-![SIZZLE](/assets/img/htb-writeups/Pasted image 20240116124308.png)
+![SIZZLE](/assets/img/htb-writeups/Pasted-image-20240116124308.png)
 
 Y nos sale un panel de login.
 
 Probamos con las únicas credenciales que tenemos hasta ahora y vemos si tenemos acceso.
 
-![SIZZLE](/assets/img/htb-writeups/Pasted image 20240116124457.png)
+![SIZZLE](/assets/img/htb-writeups/Pasted-image-20240116124457.png)
 
 Y entramos en una página en la que podemos solicitar un certificado. Este nos podrá servidr para conectarnos remotamente por el servicio WinRM.
 
@@ -434,27 +434,27 @@ $ openssl req -newkey rsa:2048 -nodes -keyout amanda.key -out amanda.csr
 
 Pulsamos intro a todas las preguntas para dejarlo por defecto.
 
-![SIZZLE](/assets/img/htb-writeups/Pasted image 20240116125250.png)
+![SIZZLE](/assets/img/htb-writeups/Pasted-image-20240116125250.png)
 
 Y nos habré creado el par de calves que necesitamos:
 
-![SIZZLE](/assets/img/htb-writeups/Pasted image 20240116125324.png)
+![SIZZLE](/assets/img/htb-writeups/Pasted-image-20240116125324.png)
 
 Abrimos el archivo _amanda.csr_ y copiamos su contenido.
 
-![SIZZLE](/assets/img/htb-writeups/Pasted image 20240116125619.png)
+![SIZZLE](/assets/img/htb-writeups/Pasted-image-20240116125619.png)
 
 Ahora volvemos a la web y pinchamos sobre "Request a certificate" > "advanced certificate request"
 
 Pegamos el contenido dentro de la caja "Saved Request" y pulsamos en "Submit"
 
-![SIZZLE](/assets/img/htb-writeups/Pasted image 20240116125824.png)
+![SIZZLE](/assets/img/htb-writeups/Pasted-image-20240116125824.png)
 
 Ahora pulsamos sobre "Download Certificate" y lo movemos a nustra ruta de trabajo donde tenemos los otros certificados generados:
 
-![SIZZLE](/assets/img/htb-writeups/Pasted image 20240116130145.png)
+![SIZZLE](/assets/img/htb-writeups/Pasted-image-20240116130145.png)
 
-![SIZZLE](/assets/img/htb-writeups/Pasted image 20240116130226.png)
+![SIZZLE](/assets/img/htb-writeups/Pasted-image-20240116130226.png)
 
 Ahora que tenemos todos los certificados necesarios podemos conectar con ellos mediante _evil-winRM_ al puerto 5986 SSL con el usuario _amanda_, ya que como vimos anteriormente, pertenece al grupo de Administradores Remotos.
 
@@ -462,7 +462,7 @@ Ahora que tenemos todos los certificados necesarios podemos conectar con ellos m
 $ evil-winrm -S -c certnew.cer -k amanda.key -i 10.129.118.228 -u 'amanda' -p 'Ashare1972'
 ```
 
-![SIZZLE](/assets/img/htb-writeups/Pasted image 20240116131124.png)
+![SIZZLE](/assets/img/htb-writeups/Pasted-image-20240116131124.png)
 
 #### ESCALADA DE PRIVILEGIOS
 
@@ -472,7 +472,7 @@ Llegados a este punto y como el usuario con el que hemos accedido no tiene la fl
 $ bloodhound-python -u 'amanda' -p 'Ashare1972' -ns 10.129.118.228 -d htb.local -c all
 ```
 
-![SIZZLE](/assets/img/htb-writeups/Pasted image 20240116132647.png)
+![SIZZLE](/assets/img/htb-writeups/Pasted-image-20240116132647.png)
 
 Una vez hemos recolectado la información iniciamos el servidor _neo4j_ y seguidamente _bloodhound_:
 

