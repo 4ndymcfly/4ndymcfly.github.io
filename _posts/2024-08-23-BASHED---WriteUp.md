@@ -1,9 +1,19 @@
 ---
-title: "Bashed - WriteUp"
-date: Fri Aug 23 2024 10:13:12 GMT+0200 (Central European Summer Time)
-categories: [WriteUps, HTB, Linux]
-tags: [fuzzing, gobuster, pspy]
-image: /assets/img/cabeceras/2024-08-23-bashed---writeup.png
+title: Bashed - WriteUp
+date: 'Fri, 23 Aug 2024 00:00:00 GMT'
+categories:
+  - WriteUps
+  - HTB
+  - Linux
+tags:
+  - fuzzing
+  - gobuster
+  - pspy
+image: /assets/img/cabeceras/2024-08-23-BASHED-WRITEUP.png
+description: >-
+  Bashed es una máquina bastante fácil que se centra principalmente en difuminar
+  y localizar archivos importantes. Como el acceso básico a la crontab está
+  restringido.
 ---
 
 ## Enumeración
@@ -158,3 +168,8 @@ $ mc -nlvp 8888
 
 Reto conseguido!
 
+---
+
+**Última actualización**: 2025-12-21<br>
+**Autor**: A. Lorente<br>
+**Licencia**: Creative Commons BY-NC-SA 4.0
