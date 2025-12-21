@@ -1,9 +1,21 @@
 ---
-title: "Devvortex - WriteUp"
-date: Tue Dec 03 2024 20:15:00 GMT+0100 (Central European Standard Time)
-categories: [WriteUps, HTB, Linux]
-tags: [joomla, cve-2023-23752, mysql, john, apport-cli, cve-2023-1326, htb, ctf, linux]
-image: /assets/img/htb-writeups/Pasted image 20231208225239.png
+title: Devvortex - WriteUp
+date: 'Tue, 03 Dec 2024 00:00:00 GMT'
+categories:
+  - WriteUps
+  - HTB
+  - Linux
+tags:
+  - joomla
+  - cve-2023-23752
+  - mysql
+  - john
+  - apport-cli
+  - cve-2023-1326
+  - htb
+  - ctf
+  - linux
+image: /assets/img/cabeceras/2024-12-03-DEVVORTEX-WRITEUP.png
 ---
 
 {% include machine-info.html
