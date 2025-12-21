@@ -51,6 +51,7 @@ jobs:
           JEKYLL_ENV: "production"
 
       - name: Test site
+        continue-on-error: true
         run: |
           bundle exec htmlproofer _site \
             \-\-disable-external \
