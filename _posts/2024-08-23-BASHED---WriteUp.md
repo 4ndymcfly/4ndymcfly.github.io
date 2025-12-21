@@ -13,7 +13,7 @@ image: /assets/img/cabeceras/2024-08-23-BASHED-WRITEUP.png
 description: >-
   Bashed es una máquina bastante fácil que se centra principalmente en difuminar
   y localizar archivos importantes. Como el acceso básico a la crontab está
-  restringido.
+  restringido...
 ---
 
 ## Enumeración
