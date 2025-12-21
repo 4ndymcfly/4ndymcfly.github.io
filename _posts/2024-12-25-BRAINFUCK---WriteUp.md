@@ -197,7 +197,7 @@ The proof of concept is a page that will help generate the correct POST request,
 
 Opening that shows a simple form asking what name I would like to auth as. I’ll enter admin (the author of the post):
 
-![](https://0xdfimages.gitlab.io/img/image-20220512075119269.png)
+![image](https://0xdfimages.gitlab.io/img/image-20220512075119269.png)
 
 The HTML page is just a quick was to help generate this POST request:
 
