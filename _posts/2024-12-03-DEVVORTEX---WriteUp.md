@@ -16,6 +16,11 @@ tags:
   - ctf
   - linux
 image: /assets/img/cabeceras/2024-12-03-DEVVORTEX-WRITEUP.png
+description: >-
+  Devvortex es una máquina Linux de fácil dificultad que cuenta con un CMS de
+  Joomla que es vulnerable a la divulgación de información. El acceso al archivo
+  de configuración del servicio revela credenciales de texto sin formato que
+  conducen al acceso administrativo a la instancia de Joomla.
 ---
 
 {% include machine-info.html
