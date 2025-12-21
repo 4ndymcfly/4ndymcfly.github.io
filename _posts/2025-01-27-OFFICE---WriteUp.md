@@ -3,7 +3,7 @@ title: "Office - WriteUp"
 date: Mon Jan 27 2025 14:00:00 GMT+0100 (Central European Standard Time)
 categories: [WriteUps, HTB, Windows]
 tags: [ctf, nmap, htb, cve, smb, exploit, windows, apache, joomla, active-directory]
-image: /assets/img/htb-writeups/Pasted image 20240221173549.png
+image: /assets/img/htb-writeups/Pasted-image-20240221173549.png
 ---
 
 {% include machine-info.html
@@ -13,13 +13,13 @@ image: /assets/img/htb-writeups/Pasted image 20240221173549.png
   platform="HTB"
 %}
 
-![Office](/assets/img/htb-writeups/Pasted image 20240221173549.png)
+![Office](/assets/img/htb-writeups/Pasted-image-20240221173549.png)
 
 Tags: 
 
 -------
 
-![OFFICE](/assets/img/htb-writeups/Pasted image 20240221173549.png)
+![OFFICE](/assets/img/htb-writeups/Pasted-image-20240221173549.png)
 
 -----
 
@@ -154,11 +154,11 @@ Disallow: /tmp/
 
 HTTP
 
-![OFFICE](/assets/img/htb-writeups/Pasted image 20240221191314.png)
+![OFFICE](/assets/img/htb-writeups/Pasted-image-20240221191314.png)
 
 HTTPS
 
-![OFFICE](/assets/img/htb-writeups/Pasted image 20240221191333.png)
+![OFFICE](/assets/img/htb-writeups/Pasted-image-20240221191333.png)
 
 https://github.com/Acceis/exploit-CVE-2023-23752
 ---

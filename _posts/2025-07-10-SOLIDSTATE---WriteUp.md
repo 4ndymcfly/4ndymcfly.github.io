@@ -3,7 +3,7 @@ title: "Solidstate - WriteUp"
 date: Thu Jul 10 2025 22:15:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, linpeas, exploit, privesc, pspy, apache, cron, linux]
-image: /assets/img/htb-writeups/Pasted image 20240206120557.png
+image: /assets/img/htb-writeups/Pasted-image-20240206120557.png
 ---
 
 {% include machine-info.html
@@ -13,14 +13,14 @@ image: /assets/img/htb-writeups/Pasted image 20240206120557.png
   platform="HTB"
 %}
 
-![Solidstate](/assets/img/htb-writeups/Pasted image 20240206120557.png)
+![Solidstate](/assets/img/htb-writeups/Pasted-image-20240206120557.png)
 
 ---
 
 ---
 -----
 
-![SOLIDSTATE](/assets/img/htb-writeups/Pasted image 20240206120557.png)
+![SOLIDSTATE](/assets/img/htb-writeups/Pasted-image-20240206120557.png)
 
 Descripción:
 SolidState es una máquina de dificultad media que requiere encadenar múltiples vectores de ataque para obtener un shell privilegiado. Como nota, en algunos casos el exploit puede no activarse más de una vez y es necesario reiniciar la máquina.
@@ -66,7 +66,7 @@ Network Distance: 2 hops
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
 
-![SOLIDSTATE](/assets/img/htb-writeups/Pasted image 20240206205343.png)
+![SOLIDSTATE](/assets/img/htb-writeups/Pasted-image-20240206205343.png)
 
 Buscando información sobre _James Remote Administration_, descubrimos que el servicio es fácilmente explotable y tiene como credenciales por defecto `root:root`.
 
@@ -84,9 +84,9 @@ setpassword mindy mindy123
 Password for mindy reset
 ```
 
-![SOLIDSTATE](/assets/img/htb-writeups/Pasted image 20240206204606.png)
+![SOLIDSTATE](/assets/img/htb-writeups/Pasted-image-20240206204606.png)
 
-![SOLIDSTATE](/assets/img/htb-writeups/Pasted image 20240206200914.png)
+![SOLIDSTATE](/assets/img/htb-writeups/Pasted-image-20240206200914.png)
 
 ```http
 mindy:P@55W0rd1!2@
@@ -94,15 +94,15 @@ mindy:P@55W0rd1!2@
 
 Conectamos por Telnet con las credenciales del email y subimos pspy32 y linpeas para enumerar. Nada más ejecutar el pspy ya vemos el primer vector de ataque para escalar privilegios. Se ve demasiado fácil para una máquina Medium...
 
-![SOLIDSTATE](/assets/img/htb-writeups/Pasted image 20240206203950.png)
+![SOLIDSTATE](/assets/img/htb-writeups/Pasted-image-20240206203950.png)
 
 Modificamos el archivo de la siguiente manera y ya solo tenemos que esperar para que root cambie los permisos de /bin/bash
 
-![SOLIDSTATE](/assets/img/htb-writeups/Pasted image 20240206204103.png)
+![SOLIDSTATE](/assets/img/htb-writeups/Pasted-image-20240206204103.png)
 
 Escalamos privilegios y chimpun.
 
-![SOLIDSTATE](/assets/img/htb-writeups/Pasted image 20240206204329.png)
+![SOLIDSTATE](/assets/img/htb-writeups/Pasted-image-20240206204329.png)
 ---
 
 **Última actualización**: 2025-07-10<br>

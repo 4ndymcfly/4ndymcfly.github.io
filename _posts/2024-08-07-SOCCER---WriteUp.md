@@ -3,7 +3,7 @@ title: "Soccer - WriteUp"
 date: Wed Aug 07 2024 10:45:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, dirb, reverse-shell, sudo, nginx, php, linux, ssh]
-image: /assets/img/htb-writeups/Pasted image 20240123120955.png
+image: /assets/img/htb-writeups/Pasted-image-20240123120955.png
 ---
 
 {% include machine-info.html
@@ -13,11 +13,11 @@ image: /assets/img/htb-writeups/Pasted image 20240123120955.png
   platform="HTB"
 %}
 
-![Soccer](/assets/img/htb-writeups/Pasted image 20240123120955.png)
+![Soccer](/assets/img/htb-writeups/Pasted-image-20240123120955.png)
 
 -------
 
-![SOCCER](/assets/img/htb-writeups/Pasted image 20240123120955.png)
+![SOCCER](/assets/img/htb-writeups/Pasted-image-20240123120955.png)
 
 -------
 
@@ -106,7 +106,7 @@ soccer.htb > /etc/hosts
 
 HTTP
 
-![SOCCER](/assets/img/htb-writeups/Pasted image 20240123121549.png)
+![SOCCER](/assets/img/htb-writeups/Pasted-image-20240123121549.png)
 
 FUZZING
 
@@ -114,27 +114,27 @@ FUZZING
 $ feroxbuster -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://soccer.htb
 ```
 
-![SOCCER](/assets/img/htb-writeups/Pasted image 20240123122254.png)
+![SOCCER](/assets/img/htb-writeups/Pasted-image-20240123122254.png)
 
 Si vamos a http://soccer.htb/tiny/ vemos un panel de login:
 
-![SOCCER](/assets/img/htb-writeups/Pasted image 20240123122349.png)
+![SOCCER](/assets/img/htb-writeups/Pasted-image-20240123122349.png)
 
 Examinamos el código fuente de la página y damos con la versión.
 
-![SOCCER](/assets/img/htb-writeups/Pasted image 20240123123804.png)
+![SOCCER](/assets/img/htb-writeups/Pasted-image-20240123123804.png)
 
 Probamos las credenciales por defecto _admin:admin@123_ y entramos.
 
-![SOCCER](/assets/img/htb-writeups/Pasted image 20240123124049.png)
+![SOCCER](/assets/img/htb-writeups/Pasted-image-20240123124049.png)
 
 Confirmamos versión encontrada y continuamos.
 
-![SOCCER](/assets/img/htb-writeups/Pasted image 20240123124530.png)
+![SOCCER](/assets/img/htb-writeups/Pasted-image-20240123124530.png)
 
 Tenemos acceso de escritura en la carpeta /uploads, vamos a preparar una reverse shell y la subimos.
 
-![SOCCER](/assets/img/htb-writeups/Pasted image 20240123125125.png)
+![SOCCER](/assets/img/htb-writeups/Pasted-image-20240123125125.png)
 
 Nos ponemos en escucha y navegamos a la url:
 
@@ -144,23 +144,23 @@ http://soccer.htb/tiny/uploads/fullshell.php
 
 Y accedemos a la máquina. Hay que darse un poco de prisa porque por detrás se ejecuta una tarea que borra todos los archivos subidos.
 
-![SOCCER](/assets/img/htb-writeups/Pasted image 20240123125400.png)
+![SOCCER](/assets/img/htb-writeups/Pasted-image-20240123125400.png)
 
 Sanitizamos consola y continuamos...
 
 Si vamos a los archivos de configuración de _nginx_ vemos que tiene un subdominio nuevo:
 
-![SOCCER](/assets/img/htb-writeups/Pasted image 20240123131947.png)
+![SOCCER](/assets/img/htb-writeups/Pasted-image-20240123131947.png)
 
 Lo damos de alta en el /etc/hosts e introducimos la URL en el navegador.
 
-![SOCCER](/assets/img/htb-writeups/Pasted image 20240123133231.png)
+![SOCCER](/assets/img/htb-writeups/Pasted-image-20240123133231.png)
 
 Si nos fijamos ahora tiene más opciones.
 
 Nos registramos en la página y entramos para ver qué vemos.
 
-![SOCCER](/assets/img/htb-writeups/Pasted image 20240123133818.png)
+![SOCCER](/assets/img/htb-writeups/Pasted-image-20240123133818.png)
 
 Vamos a ver qué hace por detrás capturando las peticiones con BurpSuite:
 

@@ -3,7 +3,7 @@ title: "Visual - WriteUp"
 date: Wed Aug 14 2024 13:00:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Windows]
 tags: [ctf, nmap, htb, responder, hashcat, sudo, windows, apache, php, bash]
-image: /assets/img/htb-writeups/Pasted image 20231209134637.png
+image: /assets/img/htb-writeups/Pasted-image-20231209134637.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20231209134637.png
   platform="HTB"
 %}
 
-![Visual](/assets/img/htb-writeups/Pasted image 20231209134637.png)
+![Visual](/assets/img/htb-writeups/Pasted-image-20231209134637.png)
 
 ------
 
@@ -37,11 +37,11 @@ PORT   STATE SERVICE VERSION
 
 HTTP:
 
-![VISUAL](/assets/img/htb-writeups/Pasted image 20231209134637.png)
+![VISUAL](/assets/img/htb-writeups/Pasted-image-20231209134637.png)
 
 En la misma página, en la parte de abajo vemos un campo que nos llama la atención.
 
-![VISUAL](/assets/img/htb-writeups/Pasted image 20231209135309.png)
+![VISUAL](/assets/img/htb-writeups/Pasted-image-20231209135309.png)
 
 Aquí para probar me he puesto en escucha con _responder_ y en el campo de entrada he puesto mi IP.
 
@@ -53,15 +53,15 @@ En una terminal me he puesto en escucha con responder:
 $ sudo responder -I tun0 -wA
 ```
 
-![VISUAL](/assets/img/htb-writeups/Pasted image 20231209135022.png)
+![VISUAL](/assets/img/htb-writeups/Pasted-image-20231209135022.png)
 
 Le damos a "Submit" y nos llevará ala siguiente página:
 
-![VISUAL](/assets/img/htb-writeups/Pasted image 20231209135400.png)
+![VISUAL](/assets/img/htb-writeups/Pasted-image-20231209135400.png)
 
 Esperamos un rato y pulsamos sobre "Return to homepage" y nos vamos a la terminal del responder
 
-![VISUAL](/assets/img/htb-writeups/Pasted image 20231209135059.png)
+![VISUAL](/assets/img/htb-writeups/Pasted-image-20231209135059.png)
 
 ```
 [HTTP] NTLMv2 Client   : 10.129.47.133
@@ -99,23 +99,23 @@ Vamos a buscar otra manera de entrar.
 
 Hemos añadido por causalidad el dominio _visual.htb_ al fichero hosts de nuestro equipo y ahora la web muestra más información que antes...
 
-![VISUAL](/assets/img/htb-writeups/Pasted image 20231209151727.png)
+![VISUAL](/assets/img/htb-writeups/Pasted-image-20231209151727.png)
 
 Creamos un archivo .git de prueba (test.git) y levantamos un servidor HTTP con Python para ver qué pasa.
 
 Vamos ala web y le indicamos nuestra Ip y el archivo que queremos compartir.
 
-![VISUAL](/assets/img/htb-writeups/Pasted image 20231209141548.png)
+![VISUAL](/assets/img/htb-writeups/Pasted-image-20231209141548.png)
 
 Le damos a "Submit" y esperamos.
 
 Nos coge el archivo...
 
-![VISUAL](/assets/img/htb-writeups/Pasted image 20231209141804.png)
+![VISUAL](/assets/img/htb-writeups/Pasted-image-20231209141804.png)
 
 Y si volvemos a la web nos muestra un mensaje de error:
 
-![VISUAL](/assets/img/htb-writeups/Pasted image 20231209141847.png)
+![VISUAL](/assets/img/htb-writeups/Pasted-image-20231209141847.png)
 
 Nos apuntamos la supuesta URL de subida del archivo.
 

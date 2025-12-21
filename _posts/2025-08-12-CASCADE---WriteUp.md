@@ -3,7 +3,7 @@ title: "Cascade - WriteUp"
 date: Tue Aug 12 2025 12:00:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Windows]
 tags: [ctf, nmap, htb, impacket, smb, crackmapexec, rpc, ldap, winrm, windows]
-image: /assets/img/htb-writeups/Pasted image 20231128114053.png
+image: /assets/img/htb-writeups/Pasted-image-20231128114053.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20231128114053.png
   platform="HTB"
 %}
 
-![Cascade](/assets/img/htb-writeups/Pasted image 20231128114053.png)
+![Cascade](/assets/img/htb-writeups/Pasted-image-20231128114053.png)
 
 ------
 
@@ -64,7 +64,7 @@ Vamos a intentar enumerar usuarios válidos conectándonos con _rpcclient_ media
 $ rpcclient -U "" 10.129.117.116
 ```
 
-![CASCADE](/assets/img/htb-writeups/Pasted image 20231128114053.png)
+![CASCADE](/assets/img/htb-writeups/Pasted-image-20231128114053.png)
 
 Y podemos enumerarlos. Vamos a copiarnos los usuarios en un archivo de texto para usarlo más adelante limpiando todo lo que nos sobra:
 
@@ -80,7 +80,7 @@ Ahora vamos a validar con _kerbrute_ si los usuarios que tenemos son válidos y 
 $ kerbrute userenum --dc 10.129.117.116 -d cascade.local users.txt
 ```
 
-![CASCADE](/assets/img/htb-writeups/Pasted image 20231128115356.png)
+![CASCADE](/assets/img/htb-writeups/Pasted-image-20231128115356.png)
 
 Teniendo esto, vamos a intentar conseguir un TGT a través de una ASEPRoast Attack con _impacket-GetNPUsers_
 
@@ -88,7 +88,7 @@ Teniendo esto, vamos a intentar conseguir un TGT a través de una ASEPRoast Atta
 impacket-GetNPUsers -no-pass -usersfile users.txt cascade.local/
 ```
 
-![CASCADE](/assets/img/htb-writeups/Pasted image 20231128120847.png)
+![CASCADE](/assets/img/htb-writeups/Pasted-image-20231128120847.png)
 
 Pero no tenemos suerte, de todas formas _kerbrute_ ya nos dejó claro que no lo eran ya que ninguno arrojó el hash en la enumeración.
 
@@ -98,7 +98,7 @@ Vamos a intentar enumerar por SMB con una null session ya que seguimos sin crede
 smbclient -L 10.129.117.116 -N
 ```
 
-![CASCADE](/assets/img/htb-writeups/Pasted image 20231128121852.png)
+![CASCADE](/assets/img/htb-writeups/Pasted-image-20231128121852.png)
 
 Pero tampoco hay suerte. Vamos aprobar por LDAP con _ldapsearch_
 
@@ -108,7 +108,7 @@ $ ldapsearch -x -H ldap://10.129.117.116 -b "DC=cascade,DC=local"
 $ ldapsearch -x -H ldap://10.129.117.116 -b "DC=cascade,DC=local" | grep -i userprincipalname
 ```
 
-![CASCADE](/assets/img/htb-writeups/Pasted image 20231128142038.png)
+![CASCADE](/assets/img/htb-writeups/Pasted-image-20231128142038.png)
 
 Vamos a ampliar la información de cada línea encontrada para ver si podemos ver más detalles de la cuenta.
 
@@ -118,13 +118,13 @@ $ ldapsearch -x -H ldap://10.129.117.116 -b "DC=cascade,DC=local" | cat -l rb
 
 Hacemos una búsqueda con la cadena _UserPrincipalName_ y vamos saltando. En el segundo salto vemos que el usuario _s.smith_ pertenece al grupo _Remote Management_:
 
-![CASCADE](/assets/img/htb-writeups/Pasted image 20231128144333.png)
+![CASCADE](/assets/img/htb-writeups/Pasted-image-20231128144333.png)
 
 Encontramos un usuario que si tuviéramos sus credenciales podríamos conectarnos con _EvilWinRM_.
 
 Seguimos y encontramos esto:
 
-![CASCADE](/assets/img/htb-writeups/Pasted image 20231128144503.png)
+![CASCADE](/assets/img/htb-writeups/Pasted-image-20231128144503.png)
 
 Encontramos un password en formato _base64_ en el usuario _r.thompson_
 
@@ -139,7 +139,7 @@ Probamos las credenciales para ver si son válidas:
 $ crackmapexec smb 10.129.117.116 -u 'r.thompson' -p 'rY4n5eva'
 ```
 
-![CASCADE](/assets/img/htb-writeups/Pasted image 20231128144821.png)
+![CASCADE](/assets/img/htb-writeups/Pasted-image-20231128144821.png)
 
 Pues tenemos nuestras primeras credenciales y recursos compartidos...
 
@@ -149,11 +149,11 @@ Ahora que tenemos un usuario válido vamos a intentar volcar la información del
 $ sudo ldapdomaindump -u 'CASCADE.LOCAL\r.thompson' -p 'rY4n5eva' 10.129.117.116
 ```
 
-![CASCADE](/assets/img/htb-writeups/Pasted image 20231128150412.png)
+![CASCADE](/assets/img/htb-writeups/Pasted-image-20231128150412.png)
 
 Ahora ya podemos tener de una manera más visual la información del dominio. Levantamos un servidor http con Python y accedemos a la URL http://127.0.0.1/domain_users.html
 
-![CASCADE](/assets/img/htb-writeups/Pasted image 20231128150603.png)
+![CASCADE](/assets/img/htb-writeups/Pasted-image-20231128150603.png)
 
 Ahora podemos explorar la información de una manera más cómoda.
 

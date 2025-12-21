@@ -3,7 +3,7 @@ title: "Sense - WriteUp"
 date: Sun Feb 09 2025 08:15:00 GMT+0100 (Central European Standard Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, dirb, exploit, gobuster, php, linux, dirbuster, bash]
-image: /assets/img/htb-writeups/Pasted image 20240130191810.png
+image: /assets/img/htb-writeups/Pasted-image-20240130191810.png
 ---
 
 {% include machine-info.html
@@ -13,14 +13,14 @@ image: /assets/img/htb-writeups/Pasted image 20240130191810.png
   platform="HTB"
 %}
 
-![Sense](/assets/img/htb-writeups/Pasted image 20240130191810.png)
+![Sense](/assets/img/htb-writeups/Pasted-image-20240130191810.png)
 
 ---
 
 ---
 ----
 
-![SENSE](/assets/img/htb-writeups/Pasted image 20240130191810.png)
+![SENSE](/assets/img/htb-writeups/Pasted-image-20240130191810.png)
 
 -------
 
@@ -50,7 +50,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 
 HTTP
 
-![SENSE](/assets/img/htb-writeups/Pasted image 20240130193155.png)
+![SENSE](/assets/img/htb-writeups/Pasted-image-20240130193155.png)
 
 Estamos ante un panel de login de _PFSense_
 
@@ -91,9 +91,9 @@ $ gobuster dir -u https://10.129.60.5 -w /usr/share/wordlists/dirbuster/director
 
 Vamos a mirar los archivos de texto encontrados:
 
-![SENSE](/assets/img/htb-writeups/Pasted image 20240130203337.png)
+![SENSE](/assets/img/htb-writeups/Pasted-image-20240130203337.png)
 
-![SENSE](/assets/img/htb-writeups/Pasted image 20240130203837.png)
+![SENSE](/assets/img/htb-writeups/Pasted-image-20240130203837.png)
 
 Tenemos un posible nombre de usuario: _Rohit_
 
@@ -103,7 +103,7 @@ Como dice que el password es de por defecto en la empresa, probamos con _pfsense
 rohit:pfsense
 ```
 
-![SENSE](/assets/img/htb-writeups/Pasted image 20240130204346.png)
+![SENSE](/assets/img/htb-writeups/Pasted-image-20240130204346.png)
 
 Ahora que tenemos credenciales, tenemos la versión exacta y el próximo paso será encontrar exploits.
 
@@ -111,7 +111,7 @@ La versión es la 2.1.3.
 
 Nos bajamos el exploit de https://www.exploit-db.com/exploits/43560
 
-![SENSE](/assets/img/htb-writeups/Pasted image 20240130211029.png)
+![SENSE](/assets/img/htb-writeups/Pasted-image-20240130211029.png)
 
 Nos ponemos a la escucha con _NetCat_ por el puerto 4444 por ejemplo.
 
@@ -125,7 +125,7 @@ Running exploit...
 Exploit completed
 ```
 
-![SENSE](/assets/img/htb-writeups/Pasted image 20240130211619.png)
+![SENSE](/assets/img/htb-writeups/Pasted-image-20240130211619.png)
 
 Y accedemos directamente como root!
 ---

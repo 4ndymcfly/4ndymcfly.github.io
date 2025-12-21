@@ -3,7 +3,7 @@ title: "Squashed - WriteUp"
 date: Wed Jun 12 2024 21:45:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, reverse-shell, apache, php, linux, ssh, bash, john]
-image: /assets/img/htb-writeups/Pasted image 20240125194525.png
+image: /assets/img/htb-writeups/Pasted-image-20240125194525.png
 ---
 
 {% include machine-info.html
@@ -13,14 +13,14 @@ image: /assets/img/htb-writeups/Pasted image 20240125194525.png
   platform="HTB"
 %}
 
-![Squashed](/assets/img/htb-writeups/Pasted image 20240125194525.png)
+![Squashed](/assets/img/htb-writeups/Pasted-image-20240125194525.png)
 
 ---
 
 ---
 ---
 
-![SQUASHED](/assets/img/htb-writeups/Pasted image 20240125194525.png)
+![SQUASHED](/assets/img/htb-writeups/Pasted-image-20240125194525.png)
 
 ---
 
@@ -77,7 +77,7 @@ HTTP
 
 Esta es la web, pero es estática y por ahora no la vamos a tocar:
 
-![SQUASHED](/assets/img/htb-writeups/Pasted image 20240125195208.png)
+![SQUASHED](/assets/img/htb-writeups/Pasted-image-20240125195208.png)
 
 Nos vamos a centrar en enumerar el puerto 111 TCP y 2049 TCP - NFS
 
@@ -103,7 +103,7 @@ $ mount -t nfs -o vers=3 10.129.228.109:/var/www/html /mnt/squashed/html -o nolo
 
 Hacemos un _tree_ rápido y solo tenemos acceso a un archivo. Es una base de datos de _keepass_. Nos la copiamos a nuestra carpeta e intentamos acceder a ella.
 
-![SQUASHED](/assets/img/htb-writeups/Pasted image 20240125201259.png)
+![SQUASHED](/assets/img/htb-writeups/Pasted-image-20240125201259.png)
 
 Pero no tenemos suerte:
 

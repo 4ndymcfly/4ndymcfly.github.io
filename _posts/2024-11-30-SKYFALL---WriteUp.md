@@ -3,7 +3,7 @@ title: "Skyfall - WriteUp"
 date: Sat Nov 30 2024 08:45:00 GMT+0100 (Central European Standard Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, cve-2023-28432, nmap, htb, cve, sudo, nginx, linux, ssh, bash]
-image: /assets/img/htb-writeups/Pasted image 20240209114816.png
+image: /assets/img/htb-writeups/Pasted-image-20240209114816.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20240209114816.png
   platform="HTB"
 %}
 
-![Skyfall](/assets/img/htb-writeups/Pasted image 20240209114816.png)
+![Skyfall](/assets/img/htb-writeups/Pasted-image-20240209114816.png)
 
 ---
 
@@ -22,7 +22,7 @@ Tags:
 
 -----
 
-![SKYFALL](/assets/img/htb-writeups/Pasted image 20240209114816.png)
+![SKYFALL](/assets/img/htb-writeups/Pasted-image-20240209114816.png)
 
 ----
 
@@ -47,11 +47,11 @@ PORT   STATE SERVICE VERSION
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
 
-![SKYFALL](/assets/img/htb-writeups/Pasted image 20240209115242.png)
+![SKYFALL](/assets/img/htb-writeups/Pasted-image-20240209115242.png)
 
 En el código fuente encontramos un subdominio y dominio de virtual hosting. Lo damos de alta.
 
-![SKYFALL](/assets/img/htb-writeups/Pasted image 20240209115417.png)
+![SKYFALL](/assets/img/htb-writeups/Pasted-image-20240209115417.png)
 
 ```http
 WHATWEB:
@@ -81,11 +81,11 @@ jbond@skyfall.htb
 ```
 
 HTTP DEMO
-![SKYFALL](/assets/img/htb-writeups/Pasted image 20240209120043.png)
+![SKYFALL](/assets/img/htb-writeups/Pasted-image-20240209120043.png)
 
 Entramos con las credenciales que nos muestra (guest/guest):
 
-![SKYFALL](/assets/img/htb-writeups/Pasted image 20240209120206.png)
+![SKYFALL](/assets/img/htb-writeups/Pasted-image-20240209120206.png)
 
 A la izquierda del panel, podemos ver Min10 Métricas. ¡Cuando intentamos acceder a Min10 Metrices, muestra 403 prohibido!
 

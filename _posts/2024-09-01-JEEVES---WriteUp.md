@@ -3,7 +3,7 @@ title: "Jeeves - WriteUp"
 date: Sun Sep 01 2024 22:45:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Windows]
 tags: [ctf, nmap, htb, dirb, impacket, smb, crackmapexec, exploit, windows, gobuster]
-image: /assets/img/htb-writeups/Pasted image 20240219200329.png
+image: /assets/img/htb-writeups/Pasted-image-20240219200329.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20240219200329.png
   platform="HTB"
 %}
 
-![Jeeves](/assets/img/htb-writeups/Pasted image 20240219200329.png)
+![Jeeves](/assets/img/htb-writeups/Pasted-image-20240219200329.png)
 
 ---
 
@@ -22,7 +22,7 @@ Tags:
 
 ---------
 
-![JEEVES](/assets/img/htb-writeups/Pasted image 20240219200329.png)
+![JEEVES](/assets/img/htb-writeups/Pasted-image-20240219200329.png)
 
 Jeeves no es demasiado complicado, sin embargo, se centra en algunas técnicas interesantes y proporciona una gran experiencia de aprendizaje. Como el uso de flujos de datos alternativos no es muy común, algunos usuarios pueden tener dificultades para localizar la ruta de escalada correcta.
 
@@ -70,11 +70,11 @@ Host script results:
 
 HTTP
 
-![JEEVES](/assets/img/htb-writeups/Pasted image 20240220095239.png)
+![JEEVES](/assets/img/htb-writeups/Pasted-image-20240220095239.png)
 
 HTTP:50000
 
-![JEEVES](/assets/img/htb-writeups/Pasted image 20240220095407.png)
+![JEEVES](/assets/img/htb-writeups/Pasted-image-20240220095407.png)
 
 Buscamos exploits en searchsploit y vemos esto:
 
@@ -108,7 +108,7 @@ Finished
 
 Vamos a ver la ruta encontrada:
 
-![JEEVES](/assets/img/htb-writeups/Pasted image 20240220102159.png)
+![JEEVES](/assets/img/htb-writeups/Pasted-image-20240220102159.png)
 
 Tenemos un _Jenkins_ corriendo.
 
@@ -148,7 +148,7 @@ Nos ponemos en escucha con NetCat y rlwrap y pulsamos sobre el botón "Run"
 $ rlwrap nc -nlvp 443
 ```
 
-![JEEVES](/assets/img/htb-writeups/Pasted image 20240220110928.png)
+![JEEVES](/assets/img/htb-writeups/Pasted-image-20240220110928.png)
 
 Y voilá! Estamos dentro...
 
@@ -156,7 +156,7 @@ Podemos registrar la primera bandera que está en el escritorio del usuario _koh
 
 Vamos a ver los permisos que tenemos.
 
-![JEEVES](/assets/img/htb-writeups/Pasted image 20240220111922.png)
+![JEEVES](/assets/img/htb-writeups/Pasted-image-20240220111922.png)
 
 Tenemos el servicio "SeImpersonatePrivilege" habilitado, lo que quiere decir que podemos escalar mediante "potatos".
 
@@ -181,11 +181,11 @@ moonshine1       (CEH)
 
 Tenemos la contraseña de la base de datos de KeePass. Vamos a abrir el archivo.
 
-![JEEVES](/assets/img/htb-writeups/Pasted image 20240220120930.png)
+![JEEVES](/assets/img/htb-writeups/Pasted-image-20240220120930.png)
 
 Y estamos dentro. Hay muchas credenciales, las apuntamos todas y hacemos password spraying con _crackmapexec_ pero sin éxito.
 
-![JEEVES](/assets/img/htb-writeups/Pasted image 20240220121221.png)
+![JEEVES](/assets/img/htb-writeups/Pasted-image-20240220121221.png)
 
 También encontramos un hash, que se puede ver en la captura, nos lo copiamos y probamos si podemos hacer un "passthehash" con _psexec_.
 
@@ -193,7 +193,7 @@ También encontramos un hash, que se puede ver en la captura, nos lo copiamos y 
 $ impacket-psexec Administrator@10.129.228.112 -hashes :e0fb1fb85756c24235ff238cbe81fe00
 ```
 
-![JEEVES](/assets/img/htb-writeups/Pasted image 20240220121551.png)
+![JEEVES](/assets/img/htb-writeups/Pasted-image-20240220121551.png)
 
 Pero cuando vamos a registrar la bandera de Admin porque pensamos que ya está nos encontramos con este mensaje:
 

