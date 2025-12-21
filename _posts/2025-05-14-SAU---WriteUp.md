@@ -79,7 +79,7 @@ Descubrimos dos puerto filtrados.
 
 Como se ve en los resultados del análisis, tenemos los puertos 80 y 8338, pero ambos están filtrados. Aunque aún podemos intentar acceder al puerto 55555 donde parece estar alojado un sitio web.
 
-![](https://miro.medium.com/v2/resize:fit:700/0*BJLvRtFaxaRmZJ0-.png)
+![image](https://miro.medium.com/v2/resize:fit:700/0*BJLvRtFaxaRmZJ0-.png)
 
 Podemos explorar un poco la herramienta y descubrir que es un contenedor de solicitudes típico, donde crea nuevas cestas y le otorga un token que puede usar para acceder a la cesta más adelante. Además, podemos enviar solicitudes a nuestra cesta y ver los datos que ingresan, pero no se puede generar ningún ataque en particular a partir de ellos.
 
@@ -119,7 +119,7 @@ Proof-of-Concept of SSRF on Request-Baskets (CVE-2023-27163) || More info at htt
 
 Ahora podemos ir a la cesta recién creada y, con suerte, esa solicitud realizará una solicitud al puerto 80 en el objetivo.
 
-![](https://miro.medium.com/v2/resize:fit:700/0*J2g4BfjaCB9MEEyb.png)
+![image](https://miro.medium.com/v2/resize:fit:700/0*J2g4BfjaCB9MEEyb.png)
 
 Parece que alguna otra aplicación llamada _Maltrail_ se está ejecutando en el puerto 80. También sabemos que su versión _v0.53_ se está ejecutando en el servidor.
 

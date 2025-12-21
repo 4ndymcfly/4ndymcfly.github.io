@@ -99,7 +99,7 @@ Para las pruebas iniciales, intento borrar el subdominio, si lo hay en la aplica
 $ ffuf -u http://drive.htb/ -H "Host: FUZZ.drive.htb" -w /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-110000.txt -fl 8
 ```
 
-![](https://miro.medium.com/v2/resize:fit:700/1*VvU_r3c7rgz89xqtncvvrQ.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*VvU_r3c7rgz89xqtncvvrQ.png)
 
 Subdominio difuso
 
@@ -109,17 +109,17 @@ Luego intento borrar el directorio y encontrar el punto final que me interese y 
 $ ffuf -u http://drive.htb/FUZZ -w /usr/share/wordlists/seclists/Discovery/Web-Content/raft-large-directories.txt - fc 302
 ```
 
-![](https://miro.medium.com/v2/resize:fit:700/1*Fibm79AQVymXVcVUfRJqRA.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*Fibm79AQVymXVcVUfRJqRA.png)
 
 Entonces, intento acceder al punto final /suscribir pero no puedo, aparece el mensaje de error 500 del servidor. Pero cuando cambio el método de GET a POST, el resultado es 403 Prohibido. Hmm, es como una pantalla de Django. Además, no sé qué tipo de carga útil debería insertarse. Entonces el resultado es el mismo cuando intento probar el punto final /password_reset.
 
-![](https://miro.medium.com/v2/resize:fit:700/1*ShE_3gmluULOrO6Mqi38RA.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*ShE_3gmluULOrO6Mqi38RA.png)
 
-![](https://miro.medium.com/v2/resize:fit:700/1*8Lzi3a5k7r2sibg5Q4xtLw.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*8Lzi3a5k7r2sibg5Q4xtLw.png)
 
-![](https://miro.medium.com/v2/resize:fit:700/1*H5UocHHaRijSKH6e9JH2kg.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*H5UocHHaRijSKH6e9JH2kg.png)
 
-![](https://miro.medium.com/v2/resize:fit:700/1*y2lSiaOvy3HjzC56Qjubgg.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*y2lSiaOvy3HjzC56Qjubgg.png)
 
 Deberíamos encontrar los próximos posibles vectores de ataque.
 
@@ -129,67 +129,67 @@ Luego intento gospider para encontrar el archivo de ruta recursiva. Hay custom.
 $ gospider -s "http://drive.htb/"
 ```
 
-![](https://miro.medium.com/v2/resize:fit:700/1*TYObHoJZLiDBmtFALrpNig.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*TYObHoJZLiDBmtFALrpNig.png)
 
-![](https://miro.medium.com/v2/resize:fit:700/1*PXbBZHPlT9JcRaiA2J95QQ.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*PXbBZHPlT9JcRaiA2J95QQ.png)
 
 Hmm, está bien si no he encontrado ninguna pista. Lo siguiente es intentar interceptar cada solicitud.
 
 Cuando intercepto una solicitud de registro, hay una cookie que es csrftoken y luego csrfmiddlewaretoken en el parámetro. El siguiente es normalmente el parámetro que ingresamos desde el registro del formulario. Según [**_la documentación de Django_**](https://docs.djangoproject.com/en/4.2/ref/csrf/) , CsrfViewMiddleware envía esta cookie con la respuesta cada vez que se llama a django.middleware.csrf.get_token(). También puede enviarlo en otros casos. Por razones de seguridad, el valor del secreto cambia cada vez que un usuario inicia sesión. Un campo de formulario oculto con el nombre 'csrfmiddlewaretoken', presente en todos los formularios POST salientes.
 
-![](https://miro.medium.com/v2/resize:fit:700/1*EJwTt00UOo_hijL3PmWqUA.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*EJwTt00UOo_hijL3PmWqUA.png)
 
 Después de iniciar sesión, los usuarios tendrán otra cookie que es sessionid.
 
-![](https://miro.medium.com/v2/resize:fit:700/1*mN5PMAumcN4f89PFd_Qygw.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*mN5PMAumcN4f89PFd_Qygw.png)
 
 Luego, intento cargar un archivo que contenga un script que me lleve al shell inverso. Intento configurar el oyente y luego acceder a los detalles del archivo, pero el resultado no es nada. Parece que solo podemos leer los archivos, no podemos escribirlos ni ejecutarlos.
 
-![](https://miro.medium.com/v2/resize:fit:700/1*8zAwnXttJkyOhxjnAkbhCw.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*8zAwnXttJkyOhxjnAkbhCw.png)
 
 Interceptar al cargar el archivo
 
-![](https://miro.medium.com/v2/resize:fit:429/1*j0v3ujEYvwVCzwYrCEEvWg.png)
+![image](https://miro.medium.com/v2/resize:fit:429/1*j0v3ujEYvwVCzwYrCEEvWg.png)
 
 Establecer oyente
 
-![](https://miro.medium.com/v2/resize:fit:700/1*MZKLuS2dcUxwuSfPgDusEQ.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*MZKLuS2dcUxwuSfPgDusEQ.png)
 
 archivo de detalle
 
 Pero, del experimento anterior, lo que me interesa es que cuando accedemos al archivo de detalles, se dirige a /123/getFileDetail/. Significa el número de llamada de la aplicación web como archivo identificador para obtener el archivo. Mmm. Luego intento invadir la solicitud con la carga útil del número de marca. Luego configure las cargas útiles en números de secuencia del 1 al 1000 y esperemos que podamos encontrar el archivo no autorizado.
 
-![](https://miro.medium.com/v2/resize:fit:700/1*eWQJ1_bWX24b676KV6IwDg.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*eWQJ1_bWX24b676KV6IwDg.png)
 
 marcar el número de identificación como carga útil
 
-![](https://miro.medium.com/v2/resize:fit:700/1*uk3ySFs-6p30QlVurwg0cA.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*uk3ySFs-6p30QlVurwg0cA.png)
 
 establecer la carga útil del número de secuencias
 
 El resultado es que hay varias identificaciones que tienen el código de estado 200. Después de verificarlas una por una, no hay ninguna que me interese. Pero hay una identificación que tiene el código de estado 401 no autorizado al que no podemos acceder. Hmm, parece que deberíamos encontrar una manera de leer archivos no autorizados.
 
-![](https://miro.medium.com/v2/resize:fit:700/1*i29sLsqkThm4XS7-B1cfww.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*i29sLsqkThm4XS7-B1cfww.png)
 
-![](https://miro.medium.com/v2/resize:fit:700/1*QzPG4e-B7R--NjIZu5Izbg.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*QzPG4e-B7R--NjIZu5Izbg.png)
 
 # Gana Shell como Martin
 
 En la página del archivo de lista, hay una reserva que dirige al punto final /123/block/, que es el nuevo punto final que nunca se prueba.
 
-![](https://miro.medium.com/v2/resize:fit:700/1*TbUKyKlfyi9RyJ37T2PiOw.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*TbUKyKlfyi9RyJ37T2PiOw.png)
 
-![](https://miro.medium.com/v2/resize:fit:700/1*75LDmSfr10vBveo1Z_QfEQ.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*75LDmSfr10vBveo1Z_QfEQ.png)
 
 Luego, intento bloquear el punto final del intruso nuevamente y espero que pueda acceder al archivo no autorizado. Después, el resultado es que hay varios códigos de estado 200, más que antes.
 
-![](https://miro.medium.com/v2/resize:fit:700/1*KQWirLHOusy6RW8Wzr-ZJQ.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*KQWirLHOusy6RW8Wzr-ZJQ.png)
 
 Luego, trato de verificarlos uno por uno y encuentro la credencial ssh de Martin y encontré el directorio de respaldo de la base de datos. ¡¡Finalmente!!
 
-![](https://miro.medium.com/v2/resize:fit:700/1*HwnjDF_f0aBD4HtGTPfWqA.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*HwnjDF_f0aBD4HtGTPfWqA.png)
 
-![](https://miro.medium.com/v2/resize:fit:700/1*5SlHQcrk7rAtirrcjFhatw.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*5SlHQcrk7rAtirrcjFhatw.png)
 
 > IDOR
 
@@ -197,95 +197,95 @@ Esta vulnerabilidad es IDOR, que significa Insecure Direct Object. Según [**_
 
 Luego intento iniciar sesión en ssh como martin, ¡y luego funciona! Pero no hay ningún indicador de usuario en el directorio martin. Luego trato de ver la lista de usuarios en el directorio /home, el resultado es que hay cuatro usuarios: martin, cris, git y tom. huftt..
 
-![](https://miro.medium.com/v2/resize:fit:650/1*91Uq8RPTGmqCvFp6TwF7GQ.png)
+![image](https://miro.medium.com/v2/resize:fit:650/1*91Uq8RPTGmqCvFp6TwF7GQ.png)
 
 # Gana Shell como Tom
 
 A continuación, intento descargar el archivo de copia de seguridad de la base de datos local para que podamos analizarlo. Así que creo un servidor Python en forma remota y luego intento iniciar sesión en local.
 
-![](https://miro.medium.com/v2/resize:fit:700/1*w54S9hqVd2QjI4tTlpU3wA.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*w54S9hqVd2QjI4tTlpU3wA.png)
 
 Listar archivos en el directorio de copias de seguridad
 
 martin@drive:/var/www/backups$ python3 -m http.servidor
 
-![](https://miro.medium.com/v2/resize:fit:700/1*pxXx6zOIpWENRrJ2GtBdnQ.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*pxXx6zOIpWENRrJ2GtBdnQ.png)
 
 Configurar el servidor Python en remoto
 
 wget http://10.10.11.235:8000/1_Sep_db_backup.sqlite3.7z
 
-![](https://miro.medium.com/v2/resize:fit:700/1*CnBNSeGWIm3vpcJkbkyFCQ.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*CnBNSeGWIm3vpcJkbkyFCQ.png)
 
 Descargar archivo con wget
 
 Hay un total de 5 archivos que descargué con cuatro archivos zip y un archivo sqlite db.
 
-![](https://miro.medium.com/v2/resize:fit:687/1*GFPSphF3l7q2BLQOBVsJdA.png)
+![image](https://miro.medium.com/v2/resize:fit:687/1*GFPSphF3l7q2BLQOBVsJdA.png)
 
 Luego intento acceder al archivo db con el navegador sqlite db y encontré la tabla de usuarios.
 
-![](https://miro.medium.com/v2/resize:fit:700/1*cyfEWCpfbse2KWfYz7WgxA.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*cyfEWCpfbse2KWfYz7WgxA.png)
 
 Intento almacenar la contraseña hash en un solo archivo.
 
-![](https://miro.medium.com/v2/resize:fit:700/1*cBR-NDHSgEwkVpuepPShiw.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*cBR-NDHSgEwkVpuepPShiw.png)
 
 La idea es descifrar la contraseña hash con hashcat o john, pero parece que los hash contienen sal, no solo sha1. Así que intenté buscar [**_un ejemplo de hashcat en modo hash_**](https://hashcat.net/wiki/doku.php?id=example_hashes) y lo encontré.
 
-![](https://miro.medium.com/v2/resize:fit:700/1*bUpJoJs5hB1Ph7P6WiPohA.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*bUpJoJs5hB1Ph7P6WiPohA.png)
 
 Luego intento descifrar las contraseñas con hashcat pero parece imposible de descifrar.
 
-![](https://miro.medium.com/v2/resize:fit:700/1*_f2wTPx7Bb6yhevX7DM80w.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*_f2wTPx7Bb6yhevX7DM80w.png)
 
 Después de eso, intento extraer archivos zip, pero debería insertar la contraseña. Intento con la contraseña martin que encontramos anteriormente, pero no funciona.
 
-![](https://miro.medium.com/v2/resize:fit:478/1*gejulNpma9vov1QAapXTWA.png)
+![image](https://miro.medium.com/v2/resize:fit:478/1*gejulNpma9vov1QAapXTWA.png)
 
-![](https://miro.medium.com/v2/resize:fit:478/1*1f50EMoeWin-Ae-GEAgN_Q.png)
+![image](https://miro.medium.com/v2/resize:fit:478/1*1f50EMoeWin-Ae-GEAgN_Q.png)
 
 Hmm, parece que debemos encontrar la contraseña zip de otra manera. Entonces intento ejecutar linpeas para analizarlo.
 
-![](https://miro.medium.com/v2/resize:fit:700/1*lxI6-AwwBXxf7acPy0mffg.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*lxI6-AwwBXxf7acPy0mffg.png)
 
 Después de mirar a mi alrededor, me doy cuenta de que con el escaneo de puertos anterior hay el puerto 3000. Así que busco puertos activos y hay varios puertos activos que son 33060, que es el puerto mysql, 3306 también mysql, 80 http, 53 dns, 22 ssh, y 3000.
 
-![](https://miro.medium.com/v2/resize:fit:700/1*91V58Cjnuhl0TSDi-kwSkA.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*91V58Cjnuhl0TSDi-kwSkA.png)
 
 Entonces, intento reenviar localmente los puertos activos a mi máquina local para poder acceder a ellos. Intento redireccionar el puerto local 3000 y luego acceder a él, ¡hay una página de gitea!
 
 ssh -L 3000:127.0.0.1:3000 martin@drive.htb
 
-![](https://miro.medium.com/v2/resize:fit:700/1*5pUwTULBSfkm3ipHKLlxYg.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*5pUwTULBSfkm3ipHKLlxYg.png)
 
-![](https://miro.medium.com/v2/resize:fit:700/1*iZBaetj37BcRUSBkUpb7ig.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*iZBaetj37BcRUSBkUpb7ig.png)
 
 Luego intento iniciar sesión con la credencial de Martin (use el correo electrónico en la base de datos antes, la contraseña en el punto final del bloque), hay un repositorio DoodleGrive.
 
-![](https://miro.medium.com/v2/resize:fit:700/1*1r1xYAfcw2XFmx6pC2Ch-A.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*1r1xYAfcw2XFmx6pC2Ch-A.png)
 
 Revisé db_backup.sh y encontré la contraseña zip.
 
-![](https://miro.medium.com/v2/resize:fit:700/1*fEgnKobJ7Ih-pH7I0Cy3BA.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*fEgnKobJ7Ih-pH7I0Cy3BA.png)
 
 Luego intento extraer la contraseña y funciona y la administro. Después de verificarlo uno por uno, hay dos tipos de hash de contraseña: sha1$ y pbkdf2_sha256$.
 
-![](https://miro.medium.com/v2/resize:fit:700/1*_WrXF6bMIKRvJ0OvFUQPsw.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*_WrXF6bMIKRvJ0OvFUQPsw.png)
 
-![](https://miro.medium.com/v2/resize:fit:700/1*oAcvl08ImjcvPhcFh_RLdA.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*oAcvl08ImjcvPhcFh_RLdA.png)
 
-![](https://miro.medium.com/v2/resize:fit:700/1*SWme0EzrMESOtjqujFqK-w.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*SWme0EzrMESOtjqujFqK-w.png)
 
 Después de eso, intenté descifrar hashes nuevamente con hashcat y encontré la contraseña.
 
 hashcat -m 124 hashsha1.txt /usr/share/wordlists/rockyou.txt
 
-![](https://miro.medium.com/v2/resize:fit:700/1*SvHYVCA4-2bkXqHr4UNjng.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*SvHYVCA4-2bkXqHr4UNjng.png)
 
 Después, intento hacer coincidir el hash con el usuario en el navegador db y el resultado es el tom de la contraseña. Intento iniciar sesión en ssh insertando la contraseña arriba una por una, luego funciona. ¡La contraseña es johnmayer7 y obtuve la bandera de usuario!
 
-![](https://miro.medium.com/v2/resize:fit:700/1*0GIWSG90upabP9YJZLoP0g.png)
+![image](https://miro.medium.com/v2/resize:fit:700/1*0GIWSG90upabP9YJZLoP0g.png)
 
 Lea la bandera del usuario:
 
