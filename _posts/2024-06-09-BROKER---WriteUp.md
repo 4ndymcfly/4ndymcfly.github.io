@@ -1,9 +1,30 @@
 ---
-title: "Broker - WriteUp"
-date: Sun Jun 09 2024 15:15:00 GMT+0200 (Central European Summer Time)
-categories: [WriteUps, HTB, Linux]
-tags: [ctf, nmap, htb, cve, exploit, nginx, apache, cve-2023-46604, linux, ssh]
-image: /assets/img/htb-writeups/Pasted-image-20231129085444.png
+title: Broker - WriteUp
+date: 'Sun, 09 Jun 2024 00:00:00 GMT'
+categories:
+  - WriteUps
+  - HTB
+  - Linux
+tags:
+  - ctf
+  - nmap
+  - htb
+  - cve
+  - exploit
+  - nginx
+  - apache
+  - cve-2023-46604
+  - linux
+  - ssh
+image: /assets/img/cabeceras/2024-06-09-BROKER-WRITEUP.png
+description: >-
+  Broker es una máquina Linux de dificultad fácil que aloja una versión de
+  Apache ActiveMQ. La enumeración de la versión de Apache ActiveMQ muestra que
+  es vulnerable a la ejecución remota de código no autenticado, que se utiliza
+  para obtener acceso de usuario al objetivo. La enumeración posterior a la
+  explotación revela que el sistema tiene una configuración incorrecta de sudo
+  que permite al usuario activemq ejecutar sudo /usr/sbin/nginx, similar a la
+  reciente divulgación de Zimbra y que se utiliza para obtener acceso root.
 ---
 
 {% include machine-info.html
@@ -13,11 +34,7 @@ image: /assets/img/htb-writeups/Pasted-image-20231129085444.png
   platform="HTB"
 %}
 
-![Broker](/assets/img/htb-writeups/Pasted-image-20231129085444.png)
 
------
-
-Máquina Linux
 
 NMAP
 
