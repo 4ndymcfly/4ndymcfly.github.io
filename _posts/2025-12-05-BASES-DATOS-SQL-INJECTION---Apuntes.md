@@ -1,9 +1,24 @@
 ---
-title: "SQL Injection y Bases de Datos - Guía Completa"
-date: Thu Dec 05 2025 00:00:00 GMT+0100 (Central European Standard Time)
-categories: [Apuntes, SQL Injection]
-tags: [sqli, sql-injection, mysql, mssql, mongodb, union-based, blind-sqli, sqlmap, oscp, owasp, apuntes, pentesting]
-image: /assets/img/cabeceras/2025-12-05-bases-datos-sql-injection.png
+title: SQL Injection y Bases de Datos - Guía Completa
+date: 'Fri, 05 Dec 2025 00:00:00 GMT'
+categories:
+  - Apuntes
+  - SQL Injection
+tags:
+  - sqli
+  - sql-injection
+  - mysql
+  - mssql
+  - mongodb
+  - union-based
+  - blind-sqli
+  - sqlmap
+  - oscp
+  - owasp
+  - apuntes
+  - pentesting
+image: >-
+  /assets/img/cabeceras/2025-12-05-SQL-INJECTION-Y-BASES-DE-DATOS-GUIA-COMPLETA.png
 ---
 
 # SQL Injection y Bases de Datos - Guía Completa
