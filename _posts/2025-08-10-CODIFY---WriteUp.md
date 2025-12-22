@@ -1,9 +1,30 @@
 ---
-title: "Codify - WriteUp"
-date: Sun Aug 10 2025 15:45:00 GMT+0200 (Central European Summer Time)
-categories: [WriteUps, HTB, Linux]
-tags: [ctf, nmap, htb, linpeas, exploit, sudo, docker, apache, linux, mysql]
-image: /assets/img/htb-writeups/Pasted-image-20231123200440.png
+title: Codify - WriteUp
+date: 'Sun, 10 Aug 2025 00:00:00 GMT'
+categories:
+  - WriteUps
+  - HTB
+  - Linux
+tags:
+  - ctf
+  - nmap
+  - htb
+  - linpeas
+  - exploit
+  - sudo
+  - docker
+  - apache
+  - linux
+  - mysql
+image: /assets/img/cabeceras/2025-08-10-CODIFY-WRITEUP.png
+description: >-
+  Codify es una máquina Linux sencilla que incluye una aplicación web que
+  permite a los usuarios probar código Node.js. La aplicación utiliza una
+  biblioteca vm2 vulnerable, que se aprovecha para ejecutar código remoto. Al
+  enumerar el objetivo, se revela una base de datos SQLite que contiene un hash
+  que, una vez descifrado, otorga acceso SSH al equipo. Finalmente, se puede
+  ejecutar un script bash vulnerable con privilegios elevados para revelar la
+  contraseña del usuario root, lo que otorga acceso privilegiado a la máquina.
 ---
 
 {% include machine-info.html
@@ -13,11 +34,8 @@ image: /assets/img/htb-writeups/Pasted-image-20231123200440.png
   platform="HTB"
 %}
 
-![Codify](/assets/img/htb-writeups/Pasted-image-20231123200440.png)
 
-------
-
-Máquina Linux
+## Enumeración
 
 NMAP
 ```bash
@@ -53,6 +71,8 @@ $ whatweb http://10.129.86.106:3000/
 
 http://10.129.86.106:3000/ [200 OK] Bootstrap[4.3.1], Country[RESERVED][ZZ], HTML5, IP[10.129.86.106], Title[Codify], X-Powered-By[Express]
 ```
+
+## Explotación
 
 HTTP 80 y 3000
 
@@ -92,6 +112,8 @@ try {
 console.log(vm.run(code));
 ```
 
+
+
 Ejecutamos el código:
 
 ![CODIFY](/assets/img/htb-writeups/Pasted-image-20231123211734.png)
@@ -125,6 +147,7 @@ try {
 `
 console.log(vm.run(code));
 ```
+
 
 Le damos a Run por última vez y intentamos conectar desde nuestra consola a la máquina víctima por SSH y nuestra clave privada.
 
@@ -190,6 +213,9 @@ Conseguimos nuestra primera flag y la registramos.
 
 ![CODIFY](/assets/img/htb-writeups/Pasted-image-20231123223742.png)
 
+
+## Escalada
+
 Si hacemos un _sudo -l_ podremos ver que podemos ejecutar con permisos de sudo el script /opt/scripts/mysql-backup.sh
 
 ![CODIFY](/assets/img/htb-writeups/Pasted-image-20231123224214.png)
@@ -228,6 +254,7 @@ done
 /usr/bin/echo 'Done!'
 ```
 
+
 La vulnerabilidad en el script está relacionada con cómo se maneja la confirmación de la contraseña:
 
 ```bash
@@ -238,6 +265,7 @@ else
     exit 1
 fi
 ```
+
 
 Esta sección del script compara la contraseña proporcionada por el usuario (USER_PASS) con la contraseña real de la base de datos (DB_PASS). La vulnerabilidad aquí se debe al uso de == dentro de [ [  ] ] en Bash, que realiza una coincidencia de patrones en lugar de una comparación directa de cadenas. Esto significa que la entrada del usuario (USER_PASS) se trata como un patrón y, si incluye caracteres globales como * o ?, potencialmente puede coincidir con cadenas no deseadas.
 
@@ -314,6 +342,7 @@ El acceso inicial se obtuvo explotando un escape de espacio aislado en el ejecut
 El último punto de inflexión fue un script de respaldo MySQL vulnerable del que se podía abusar a través de su débil lógica de comparación de contraseñas. Después de escribir un exploit para revelar lentamente la contraseña de administrador del script, pude obtener acceso de root y control completo del sistema.
 
 Cuadros como Codify ejemplifican la importancia de pensar de manera amplia en múltiples dominios como aplicaciones web, bases de datos, scripts, autenticación y administración de sistemas. Los desarrolladores deben proteger todos los niveles, mientras que los piratas informáticos solo necesitan encontrar un descuido. Esto hace que la enumeración integral, el pensamiento lateral y el encadenamiento de múltiples técnicas sean indispensables para los aspirantes a hackers.
+
 ---
 
 **Última actualización**: 2025-08-10<br>
