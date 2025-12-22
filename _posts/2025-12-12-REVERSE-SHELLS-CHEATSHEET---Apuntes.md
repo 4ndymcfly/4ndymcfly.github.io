@@ -1,5 +1,5 @@
 ---
-title: Reverse Shells Cheatsheet - Guía Completa
+title: Reverse Shells - Guía Completa
 date: 'Fri, 12 Dec 2025 00:00:00 GMT'
 categories:
   - Apuntes
