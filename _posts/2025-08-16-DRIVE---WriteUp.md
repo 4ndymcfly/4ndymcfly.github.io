@@ -1,9 +1,35 @@
 ---
-title: "Drive - WriteUp"
-date: Sat Aug 16 2025 08:15:00 GMT+0200 (Central European Summer Time)
-categories: [WriteUps, HTB, Linux]
-tags: [ctf, nmap, htb, hashcat, linpeas, nginx, ffuf, linux, mysql, php]
-image: /assets/img/htb-writeups/Pasted-image-20240119115810.png
+title: Drive - WriteUp
+date: 'Sat, 16 Aug 2025 00:00:00 GMT'
+categories:
+  - WriteUps
+  - HTB
+  - Linux
+tags:
+  - ctf
+  - nmap
+  - htb
+  - hashcat
+  - linpeas
+  - nginx
+  - ffuf
+  - linux
+  - mysql
+  - php
+image: /assets/img/cabeceras/2025-08-16-DRIVE-WRITEUP.png
+description: >-
+  Drive es una máquina Linux con un servicio de intercambio de archivos
+  susceptible a la Referencia Directa a Objetos Insegura (IDOR), mediante la
+  cual se obtiene una contraseña en texto plano, lo que permite el acceso SSH al
+  equipo. Se descubren copias de seguridad cifradas de la base de datos, que se
+  desbloquean mediante una contraseña codificada expuesta en un repositorio de
+  Gitea. Se descifran los hashes de las copias de seguridad, lo que permite el
+  acceso a otro usuario del sistema que tiene acceso a un binario propiedad del
+  usuario root con el bit SUID activado. Se aplica ingeniería inversa al
+  programa, lo que revela el uso indebido de una función printf, que se utiliza
+  para leer y posteriormente omitir el canario en la pila. Finalmente, se
+  utiliza una secuencia de dispositivos ROP para obtener un shell en el
+  objetivo.
 ---
 
 {% include machine-info.html
@@ -13,16 +39,8 @@ image: /assets/img/htb-writeups/Pasted-image-20240119115810.png
   platform="HTB"
 %}
 
-![Drive](/assets/img/htb-writeups/Pasted-image-20240119115810.png)
 
-------
-
-![DRIVE](/assets/img/htb-writeups/Pasted-image-20240119115810.png)
-
-Máquina Linux
-Dificultad Difícil
-
-------
+## Enumeración
 
 NMAP
 
@@ -147,25 +165,25 @@ Luego, intento cargar un archivo que contenga un script que me lleve al shell in
 
 ![image](https://miro.medium.com/v2/resize:fit:700/1*8zAwnXttJkyOhxjnAkbhCw.png)
 
-Interceptar al cargar el archivo
+>Interceptar al cargar el archivo
 
 ![image](https://miro.medium.com/v2/resize:fit:429/1*j0v3ujEYvwVCzwYrCEEvWg.png)
 
-Establecer oyente
+>Establecer oyente
 
 ![image](https://miro.medium.com/v2/resize:fit:700/1*MZKLuS2dcUxwuSfPgDusEQ.png)
 
-archivo de detalle
+>Archivo de detalle
 
 Pero, del experimento anterior, lo que me interesa es que cuando accedemos al archivo de detalles, se dirige a /123/getFileDetail/. Significa el número de llamada de la aplicación web como archivo identificador para obtener el archivo. Mmm. Luego intento invadir la solicitud con la carga útil del número de marca. Luego configure las cargas útiles en números de secuencia del 1 al 1000 y esperemos que podamos encontrar el archivo no autorizado.
 
 ![image](https://miro.medium.com/v2/resize:fit:700/1*eWQJ1_bWX24b676KV6IwDg.png)
 
-marcar el número de identificación como carga útil
+>Marcar el número de identificación como carga útil
 
 ![image](https://miro.medium.com/v2/resize:fit:700/1*uk3ySFs-6p30QlVurwg0cA.png)
 
-establecer la carga útil del número de secuencias
+>Establecer la carga útil del número de secuencias
 
 El resultado es que hay varias identificaciones que tienen el código de estado 200. Después de verificarlas una por una, no hay ninguna que me interese. Pero hay una identificación que tiene el código de estado 401 no autorizado al que no podemos acceder. Hmm, parece que deberíamos encontrar una manera de leer archivos no autorizados.
 
@@ -173,7 +191,9 @@ El resultado es que hay varias identificaciones que tienen el código de estado 
 
 ![image](https://miro.medium.com/v2/resize:fit:700/1*QzPG4e-B7R--NjIZu5Izbg.png)
 
-# Gana Shell como Martin
+## Explotación
+
+### Shell como Martin
 
 En la página del archivo de lista, hay una reserva que dirige al punto final /123/block/, que es el nuevo punto final que nunca se prueba.
 
@@ -199,7 +219,7 @@ Luego intento iniciar sesión en ssh como martin, ¡y luego funciona! Pero no h
 
 ![image](https://miro.medium.com/v2/resize:fit:650/1*91Uq8RPTGmqCvFp6TwF7GQ.png)
 
-# Gana Shell como Tom
+### Shell como Tom
 
 A continuación, intento descargar el archivo de copia de seguridad de la base de datos local para que podamos analizarlo. Así que creo un servidor Python en forma remota y luego intento iniciar sesión en local.
 
@@ -253,6 +273,8 @@ Después de mirar a mi alrededor, me doy cuenta de que con el escaneo de puertos
 
 ![image](https://miro.medium.com/v2/resize:fit:700/1*91V58Cjnuhl0TSDi-kwSkA.png)
 
+## Escalada
+
 Entonces, intento reenviar localmente los puertos activos a mi máquina local para poder acceder a ellos. Intento redireccionar el puerto local 3000 y luego acceder a él, ¡hay una página de gitea!
 
 ssh -L 3000:127.0.0.1:3000 martin@drive.htb
@@ -289,8 +311,12 @@ Después, intento hacer coincidir el hash con el usuario en el navegador db y el
 
 Lea la bandera del usuario:
 
+```bash
 tom@drive:~$ gato usuario.txt   
 0cb8******************************
+```
+
+
 ---
 
 **Última actualización**: 2025-08-16<br>
