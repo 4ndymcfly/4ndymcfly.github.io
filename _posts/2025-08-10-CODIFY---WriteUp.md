@@ -86,7 +86,8 @@ Buscando por internet llegamos a esta vulnerabilidad con un PoC.
 https://gist.github.com/leesh3288/381b230b04936dd4d74aaf90cc8bb244
 
 Hasta que llegamos a este código, donde 'id' es el comando a ejecutar.
-```Java
+
+```java
 const {VM} = require("vm2");
 const vm = new VM();
 
@@ -122,7 +123,8 @@ Y vemos que funciona.
 
 Pues bien, lo que vamos a hacer ahora en vez de intentar conseguir una shell reversa es copiarle nuestro certificado público SSH en la carpeta del usuario _svc_, dentro de la carpeta /home/svc/.ssh en el archivo _authorized_keys. 
 
-```Java
+
+```java
 const {VM} = require("vm2");
 const vm = new VM();
 
