@@ -1,9 +1,28 @@
 ---
-title: "Squashed - WriteUp"
-date: Wed Jun 12 2024 21:45:00 GMT+0200 (Central European Summer Time)
-categories: [WriteUps, HTB, Linux]
-tags: [ctf, nmap, htb, reverse-shell, apache, php, linux, ssh, bash, john]
-image: /assets/img/htb-writeups/Pasted-image-20240125194525.png
+title: Squashed - WriteUp
+date: 'Wed, 12 Jun 2024 00:00:00 GMT'
+categories:
+  - WriteUps
+  - HTB
+  - Linux
+tags:
+  - ctf
+  - nmap
+  - htb
+  - reverse-shell
+  - apache
+  - php
+  - linux
+  - ssh
+  - bash
+  - john
+image: /assets/img/cabeceras/2024-06-12-SQUASHED-WRITEUP.png
+description: >-
+  Squashed es una máquina Linux de dificultad fácil que combina la
+  identificación y el aprovechamiento de configuraciones incorrectas en recursos
+  compartidos NFS mediante la suplantación de usuarios. Además, incorpora la
+  enumeración de una pantalla X11 en la escalada de privilegios, al pedirle al
+  atacante que tome una captura de pantalla del escritorio actual.
 ---
 
 {% include machine-info.html
@@ -13,18 +32,8 @@ image: /assets/img/htb-writeups/Pasted-image-20240125194525.png
   platform="HTB"
 %}
 
-![Squashed](/assets/img/htb-writeups/Pasted-image-20240125194525.png)
 
----
-
----
----
-
-![SQUASHED](/assets/img/htb-writeups/Pasted-image-20240125194525.png)
-
----
-
-NFS Imitation The plan now is to imitate the user with the UID of 2017 , try adding a php file containing our reverse shell to the webserver and then use our browser to trigger it.
+## Reconocimiento
 
 NMAP
 
@@ -114,7 +123,11 @@ $ keepass2john Passwords.kdbx
 
 Tenemos que buscar otro camino...
 
-![[Squashed (1).pdf]]
+```http
+INCOMPLETO - Próximamente...
+```
+
+
 ---
 
 **Última actualización**: 2024-06-12<br>
