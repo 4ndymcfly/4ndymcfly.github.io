@@ -221,11 +221,6 @@ CREDS:
 ```http
 susan:susan_nasus_413759210
 ```
----
-
-**Última actualización**: 2025-08-30<br>
-**Autor**: susan_nasus_413759210<br>
-**Licencia**: Creative Commons BY-NC-SA 4.0
 
 ---
 
