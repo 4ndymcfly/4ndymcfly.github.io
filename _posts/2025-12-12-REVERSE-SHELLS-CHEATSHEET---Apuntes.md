@@ -1,9 +1,22 @@
 ---
-title: "Reverse Shells Cheatsheet - Guía Completa"
-date: Thu Dec 12 2025 00:00:00 GMT+0100 (Central European Standard Time)
-categories: [Apuntes, Reverse Shells]
-tags: [reverse-shell, bash, python, php, powershell, netcat, meterpreter, rce, oscp, apuntes, pentesting]
-image: /assets/img/cabeceras/2025-12-12-reverse-shells-cheatsheet.png
+title: Reverse Shells Cheatsheet - Guía Completa
+date: 'Fri, 12 Dec 2025 00:00:00 GMT'
+categories:
+  - Apuntes
+  - Reverse Shells
+tags:
+  - reverse-shell
+  - bash
+  - python
+  - php
+  - powershell
+  - netcat
+  - meterpreter
+  - rce
+  - oscp
+  - apuntes
+  - pentesting
+image: /assets/img/cabeceras/2025-12-12-REVERSE-SHELLS-CHEATSHEET-GUIA-COMPLETA.png
 ---
 
 # Reverse Shells Cheatsheet - Guía Completa
