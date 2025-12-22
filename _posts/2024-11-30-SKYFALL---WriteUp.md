@@ -1,9 +1,29 @@
 ---
-title: "Skyfall - WriteUp"
-date: Sat Nov 30 2024 08:45:00 GMT+0100 (Central European Standard Time)
-categories: [WriteUps, HTB, Linux]
-tags: [ctf, cve-2023-28432, nmap, htb, cve, sudo, nginx, linux, ssh, bash]
-image: /assets/img/htb-writeups/Pasted-image-20240209114816.png
+title: Skyfall - WriteUp
+date: 'Sat, 30 Nov 2024 00:00:00 GMT'
+categories:
+  - WriteUps
+  - HTB
+  - Linux
+tags:
+  - ctf
+  - cve-2023-28432
+  - nmap
+  - htb
+  - cve
+  - sudo
+  - nginx
+  - linux
+  - ssh
+  - bash
+image: /assets/img/cabeceras/2024-11-30-SKYFALL-WRITEUP.png
+description: >-
+  Skyfall es una máquina Linux descontrolada que presenta a una compañía
+  lanzando su nueva aplicación beta de almacenamiento en la nube, respaldada por
+  MinIO, un servicio de almacenamiento de objetos S3. La aplicación web está
+  escrita en Python con Flask. Tiene una sección restringida del sitio
+  vulnerable a una ACL de Nginx y una omisión específica de Flask, específica
+  para su configuración.
 ---
 
 {% include machine-info.html
@@ -13,18 +33,7 @@ image: /assets/img/htb-writeups/Pasted-image-20240209114816.png
   platform="HTB"
 %}
 
-![Skyfall](/assets/img/htb-writeups/Pasted-image-20240209114816.png)
 
----
-
----
-Tags: 
-
------
-
-![SKYFALL](/assets/img/htb-writeups/Pasted-image-20240209114816.png)
-
-----
 
 #### ENUM
 
