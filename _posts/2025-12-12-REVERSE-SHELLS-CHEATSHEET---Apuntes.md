@@ -19,8 +19,6 @@ tags:
 image: /assets/img/cabeceras/2025-12-12-REVERSE-SHELLS-CHEATSHEET-GUIA-COMPLETA.png
 ---
 
-# Reverse Shells - Guía Completa
-
 ## 🎯 Conceptos Fundamentales
 
 ### ¿Qué es una Reverse Shell?
