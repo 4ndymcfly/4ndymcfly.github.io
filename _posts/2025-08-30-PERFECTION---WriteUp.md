@@ -38,7 +38,7 @@ description: >-
 %}
 
 
-## Enumeración
+## Enumeration
 
 NMAP
 ```perl
