@@ -1,9 +1,22 @@
 ---
-title: "Nineveh - WriteUp"
-date: Fri Jun 13 2025 17:15:00 GMT+0200 (Central European Summer Time)
-categories: [WriteUps, HTB, Linux]
-tags: [ctf, nmap, htb, hydra, dirb, reverse-shell, linpeas, exploit, pspy, apache]
-image: /assets/img/htb-writeups/Pasted-image-20240205174856.png
+title: Nineveh - WriteUp
+date: 'Fri, 13 Jun 2025 00:00:00 GMT'
+categories:
+  - WriteUps
+  - HTB
+  - Linux
+tags:
+  - ctf
+  - nmap
+  - htb
+  - hydra
+  - dirb
+  - reverse-shell
+  - linpeas
+  - exploit
+  - pspy
+  - apache
+image: /assets/img/cabeceras/2025-06-13-NINEVEH-WRITEUP.png
 ---
 
 {% include machine-info.html
@@ -13,13 +26,7 @@ image: /assets/img/htb-writeups/Pasted-image-20240205174856.png
   platform="HTB"
 %}
 
-![Nineveh](/assets/img/htb-writeups/Pasted-image-20240205174856.png)
 
---------
-
-![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205174856.png)
-
-------
 
 #### ENUMERACIÓN
 
