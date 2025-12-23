@@ -1,9 +1,45 @@
 ---
 ---
 
-/* Custom styles for Hacking Épico */
+/* ============================================
+   HACKING ÉPICO - CYBERPUNK NEON THEME
+   Paleta inspirada en estética synthwave/tech
+   ============================================ */
 
-/* Difficulty Badges */
+/* ===========================================
+   VARIABLES DE COLOR - PALETA CYBERPUNK
+   =========================================== */
+:root {
+  /* Fondos principales */
+  --cyber-bg-deep: #0a0e1a;
+  --cyber-bg-main: #0d1221;
+  --cyber-bg-card: #131a2e;
+  --cyber-bg-elevated: #1a2340;
+
+  /* Colores neón principales */
+  --neon-cyan: #00d4ff;
+  --neon-cyan-dim: #0099cc;
+  --neon-magenta: #e930ff;
+  --neon-magenta-dim: #b024cc;
+  --neon-purple: #8b5cf6;
+  --neon-purple-dim: #6d42d9;
+  --neon-yellow: #ffd700;
+  --neon-orange: #ff6b35;
+  --neon-green: #39ff14;
+  --neon-pink: #ff1493;
+
+  /* Bordes y líneas */
+  --cyber-border: #2a3a5c;
+  --cyber-border-glow: rgba(0, 212, 255, 0.3);
+
+  /* Texto */
+  --cyber-text: #e6edf3;
+  --cyber-text-muted: #8b949e;
+}
+
+/* ===========================================
+   DIFFICULTY BADGES - GRADIENTES NEÓN
+   =========================================== */
 .difficulty-badge {
   display: inline-block;
   padding: 0.35em 0.65em;
@@ -18,44 +54,62 @@
   margin-right: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-shadow: 0 0 10px currentColor;
 }
 
 .difficulty-easy {
-  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-  box-shadow: 0 2px 4px rgba(46, 204, 113, 0.3);
+  background: linear-gradient(135deg, #39ff14 0%, #00ff88 100%);
+  box-shadow: 0 0 15px rgba(57, 255, 20, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
+  color: #000;
 }
 
 .difficulty-medium {
-  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-  box-shadow: 0 2px 4px rgba(243, 156, 18, 0.3);
+  background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
+  color: #000;
 }
 
 .difficulty-hard {
-  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-  box-shadow: 0 2px 4px rgba(231, 76, 60, 0.3);
+  background: linear-gradient(135deg, #ff6b35 0%, #ff3366 100%);
+  box-shadow: 0 0 15px rgba(255, 107, 53, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .difficulty-insane {
-  background: linear-gradient(135deg, #8e44ad 0%, #6c3483 100%);
-  box-shadow: 0 2px 4px rgba(142, 68, 173, 0.3);
+  background: linear-gradient(135deg, #e930ff 0%, #8b5cf6 100%);
+  box-shadow: 0 0 15px rgba(233, 48, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Machine Info Card */
+/* ===========================================
+   MACHINE INFO CARD - ESTILO TERMINAL
+   =========================================== */
 .machine-info-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border-color);
+  background: linear-gradient(145deg, var(--cyber-bg-card) 0%, var(--cyber-bg-elevated) 100%);
+  border: 1px solid var(--cyber-border);
   border-radius: 0.5rem;
   padding: 1.5rem;
   margin: 1.5rem 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.1), 0 4px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.machine-info-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--neon-cyan) 0%, var(--neon-magenta) 50%, var(--neon-purple) 100%);
+  border-radius: 0.5rem 0.5rem 0 0;
 }
 
 .machine-info-card h4 {
   margin-bottom: 1rem;
-  color: var(--heading-color);
+  color: var(--neon-cyan);
   font-size: 1.1rem;
-  border-bottom: 2px solid var(--main-border-color);
+  border-bottom: 1px solid var(--cyber-border);
   padding-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
 }
 
 .machine-info-grid {
@@ -71,7 +125,7 @@
 
 .machine-info-label {
   font-size: 0.8rem;
-  color: var(--text-muted-color);
+  color: var(--cyber-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 0.25rem;
@@ -80,10 +134,12 @@
 .machine-info-value {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--text-color);
+  color: var(--cyber-text);
 }
 
-/* Platform Badges */
+/* ===========================================
+   PLATFORM BADGES - COLORES MARCA + GLOW
+   =========================================== */
 .platform-badge {
   display: inline-block;
   padding: 0.25em 0.6em;
@@ -92,34 +148,60 @@
   border-radius: 0.25rem;
   margin-right: 0.5rem;
   text-transform: uppercase;
+  transition: all 0.3s ease;
 }
 
 .platform-htb {
   background-color: #9fef00;
   color: #000;
+  box-shadow: 0 0 10px rgba(159, 239, 0, 0.5);
+}
+
+.platform-htb:hover {
+  box-shadow: 0 0 20px rgba(159, 239, 0, 0.8);
 }
 
 .platform-thm {
-  background-color: #212c42;
+  background: linear-gradient(135deg, #1c2538 0%, #212c42 100%);
   color: #fff;
+  border: 1px solid #00d4ff;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}
+
+.platform-thm:hover {
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
 }
 
 .platform-pg {
-  background-color: #e83030;
+  background: linear-gradient(135deg, #ff3366 0%, #e83030 100%);
   color: #fff;
+  box-shadow: 0 0 10px rgba(232, 48, 48, 0.5);
+}
+
+.platform-pg:hover {
+  box-shadow: 0 0 20px rgba(232, 48, 48, 0.8);
 }
 
 .platform-vulnhub {
-  background-color: #4a90e2;
-  color: #fff;
+  background: linear-gradient(135deg, #00d4ff 0%, #4a90e2 100%);
+  color: #000;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
 }
 
-/* Tags with Icons */
+.platform-vulnhub:hover {
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+}
+
+/* ===========================================
+   TAGS WITH ICONS
+   =========================================== */
 .tag-icon {
   margin-right: 0.3rem;
 }
 
-/* Stats Counter in Sidebar */
+/* ===========================================
+   STATS COUNTER IN SIDEBAR - CYAN NEON
+   =========================================== */
 .stats-section {
   width: 100%;
   padding: 1rem 0.75rem;
@@ -130,7 +212,8 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 0.75rem;
-  color: var(--sidebar-muted-color);
+  color: var(--neon-cyan);
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
 }
 
 .stats-list {
@@ -147,38 +230,53 @@
   align-items: center;
 }
 
-/* Forzar color azul en los números de estadísticas */
+/* Números de estadísticas con efecto neón cyan */
 #sidebar .stats-section .stats-list li a.count,
 #sidebar .stats-section .stats-list li a.count:link,
 #sidebar .stats-section .stats-list li a.count:visited {
   font-weight: 700 !important;
-  color: #3498db !important;
+  color: var(--neon-cyan) !important;
   text-decoration: none !important;
-  transition: all 0.2s !important;
+  transition: all 0.3s ease !important;
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
 }
 
 #sidebar .stats-section .stats-list li a.count:hover,
 #sidebar .stats-section .stats-list li a.count:active {
-  color: #2980b9 !important;
-  text-decoration: underline !important;
+  color: #fff !important;
+  text-decoration: none !important;
   transform: translateX(3px);
+  text-shadow: 0 0 15px rgba(0, 212, 255, 0.8), 0 0 30px rgba(0, 212, 255, 0.5);
 }
 
-/* Footer Customization */
+/* ===========================================
+   FOOTER - ESTILO CYBERPUNK
+   =========================================== */
 footer.site-footer {
-  border-top: 2px solid var(--main-border-color);
+  border-top: 2px solid var(--cyber-border);
   padding-top: 2rem;
+  position: relative;
+}
+
+footer.site-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--neon-cyan) 20%, var(--neon-magenta) 50%, var(--neon-purple) 80%, transparent 100%);
 }
 
 .footer-disclaimer {
-  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-  border: none;
+  background: linear-gradient(135deg, #1a1f35 0%, #2a1f45 100%);
+  border: 1px solid var(--neon-magenta);
   padding: 1.25rem 1.5rem;
   margin: 2rem 0;
   border-radius: 0.5rem;
   font-size: 0.95rem;
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+  box-shadow: 0 0 20px rgba(233, 48, 255, 0.2), 0 4px 15px rgba(0, 0, 0, 0.3);
   position: relative;
   overflow: hidden;
 }
@@ -190,21 +288,22 @@ footer.site-footer {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(135deg, rgba(233, 48, 255, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
   pointer-events: none;
 }
 
 .footer-disclaimer strong {
-  color: #ffffff;
+  color: var(--neon-magenta);
   font-weight: 700;
   font-size: 1.1em;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 0 10px rgba(233, 48, 255, 0.5);
 }
 
 .footer-resources h5 {
   font-size: 1rem;
   margin-bottom: 1rem;
-  color: var(--heading-color);
+  color: var(--neon-cyan);
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
 }
 
 .footer-resources ul {
@@ -216,18 +315,21 @@ footer.site-footer {
 }
 
 .footer-resources li a {
-  color: var(--link-color);
+  color: var(--cyber-text-muted);
   text-decoration: none;
   font-size: 0.9rem;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
 }
 
 .footer-resources li a:hover {
-  color: var(--link-underline-color);
+  color: var(--neon-cyan);
   padding-left: 0.5rem;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
 }
 
-/* OS Tags with Icons */
+/* ===========================================
+   OS TAGS WITH ICONS
+   =========================================== */
 .tag-linux::before {
   content: "🐧 ";
 }
@@ -249,74 +351,83 @@ footer.site-footer {
   content: "🔴 ";
 }
 
-/* Post Preview Enhancements */
+/* ===========================================
+   POST PREVIEW - HOVER CON GLOW
+   =========================================== */
 .post-preview {
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 1px solid transparent;
 }
 
 .post-preview:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(0, 212, 255, 0.2), 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-color: var(--cyber-border);
 }
 
-/* Reading Progress Bar */
+/* ===========================================
+   READING PROGRESS BAR - GRADIENTE NEÓN
+   =========================================== */
 .reading-progress {
   position: fixed;
   top: 0;
   left: 0;
   width: 0%;
   height: 3px;
-  background: linear-gradient(90deg, #2ecc71 0%, #3498db 100%);
+  background: linear-gradient(90deg, var(--neon-cyan) 0%, var(--neon-magenta) 50%, var(--neon-purple) 100%);
   z-index: 9999;
   transition: width 0.1s;
+  box-shadow: 0 0 10px var(--neon-cyan), 0 0 20px rgba(0, 212, 255, 0.5);
 }
 
-/* Custom Background for Main Content Area */
+/* ===========================================
+   FONDOS PRINCIPALES - AZUL PROFUNDO
+   =========================================== */
 #main-wrapper,
 #core-wrapper {
-  background-color: #282828 !important;
+  background-color: var(--cyber-bg-main) !important;
 }
 
-/* Ensure post cards have better contrast */
+/* Tarjetas y posts con mejor contraste */
 .card,
 .post-preview,
 article {
-  background-color: #1f1f1f !important;
-  border-color: #3a3a3a !important;
+  background-color: var(--cyber-bg-card) !important;
+  border-color: var(--cyber-border) !important;
 }
 
-/* Post content area when viewing a full post */
+/* Área de contenido del post */
 #post-wrapper,
 .post-content,
 #main-wrapper > .row,
 #core-wrapper > .row {
-  background-color: #282828 !important;
+  background-color: var(--cyber-bg-main) !important;
 }
 
-/* Topbar with same color as content area */
+/* Topbar con mismo color */
 #topbar-wrapper,
 #topbar {
-  background-color: #282828 !important;
-  border-bottom-color: #3a3a3a !important;
+  background-color: var(--cyber-bg-deep) !important;
+  border-bottom: 1px solid var(--cyber-border) !important;
 }
 
-/* Footer with same color as content area */
+/* Footer con mismo color */
 footer,
 footer.site-footer,
 #footer-wrapper,
 .footer-wrapper,
 body > footer,
 #main > footer {
-  background-color: #282828 !important;
-  border-top-color: #3a3a3a !important;
+  background-color: var(--cyber-bg-main) !important;
+  border-top-color: var(--cyber-border) !important;
 }
 
-/* Ensure entire body background matches */
+/* Body background */
 body {
-  background-color: #282828 !important;
+  background-color: var(--cyber-bg-deep) !important;
 }
 
-/* Remove dark shadows/boxes in right panel only */
+/* Panel derecho transparente */
 #panel-wrapper,
 .panel-wrapper,
 #access-lastmod,
@@ -326,12 +437,237 @@ body {
   border: none !important;
 }
 
-/* Fix article and post content background */
+/* Artículos y contenido */
 article,
 .post,
 #post-wrapper article,
 .post-content,
 main article {
-  background-color: #282828 !important;
+  background-color: var(--cyber-bg-main) !important;
   box-shadow: none !important;
+}
+
+/* ===========================================
+   SIDEBAR - ESTILO CYBERPUNK
+   =========================================== */
+#sidebar {
+  background: linear-gradient(180deg, var(--cyber-bg-deep) 0%, #0a0d18 100%) !important;
+  border-right: 1px solid var(--cyber-border) !important;
+}
+
+#sidebar .site-title a {
+  color: var(--neon-cyan) !important;
+  text-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+  transition: all 0.3s ease;
+}
+
+#sidebar .site-title a:hover {
+  text-shadow: 0 0 25px rgba(0, 212, 255, 0.8), 0 0 50px rgba(0, 212, 255, 0.4);
+}
+
+#sidebar .site-subtitle {
+  color: var(--cyber-text-muted) !important;
+}
+
+#sidebar .nav-item a {
+  transition: all 0.3s ease;
+}
+
+#sidebar .nav-item a:hover,
+#sidebar .nav-item a.active {
+  color: var(--neon-cyan) !important;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+/* ===========================================
+   LINKS - CYAN NEÓN
+   =========================================== */
+a {
+  color: var(--neon-cyan);
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+.post-content a {
+  color: var(--neon-cyan);
+  border-bottom: 1px dashed var(--neon-cyan);
+  text-decoration: none;
+}
+
+.post-content a:hover {
+  color: #fff;
+  border-bottom-color: #fff;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+/* ===========================================
+   CODE BLOCKS - TERMINAL STYLE
+   =========================================== */
+pre,
+code {
+  background-color: var(--cyber-bg-deep) !important;
+  border: 1px solid var(--cyber-border) !important;
+}
+
+pre {
+  border-radius: 0.5rem;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+code {
+  color: var(--neon-green) !important;
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+}
+
+/* ===========================================
+   HEADINGS - CON PREFIJO
+   =========================================== */
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+  color: var(--cyber-text) !important;
+  position: relative;
+}
+
+.post-content h2::before {
+  content: "//";
+  color: var(--neon-cyan);
+  margin-right: 0.5rem;
+  opacity: 0.7;
+}
+
+/* ===========================================
+   BLOCKQUOTES - ESTILO TERMINAL
+   =========================================== */
+blockquote {
+  background: linear-gradient(90deg, var(--cyber-bg-elevated) 0%, transparent 100%) !important;
+  border-left: 4px solid var(--neon-purple) !important;
+  padding: 1rem 1.5rem !important;
+  margin: 1.5rem 0 !important;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+blockquote p {
+  color: var(--cyber-text-muted) !important;
+}
+
+/* ===========================================
+   TABLES - ESTILO MATRIX
+   =========================================== */
+table {
+  border-collapse: collapse;
+  background-color: var(--cyber-bg-card) !important;
+  border: 1px solid var(--cyber-border) !important;
+}
+
+th {
+  background: linear-gradient(180deg, var(--cyber-bg-elevated) 0%, var(--cyber-bg-card) 100%) !important;
+  color: var(--neon-cyan) !important;
+  border-bottom: 2px solid var(--neon-cyan) !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85em;
+}
+
+td {
+  border-color: var(--cyber-border) !important;
+}
+
+tr:hover td {
+  background-color: rgba(0, 212, 255, 0.05) !important;
+}
+
+/* ===========================================
+   PAGINATION - ESTILO CYBERPUNK
+   =========================================== */
+.pagination .page-link {
+  background-color: var(--cyber-bg-card) !important;
+  border-color: var(--cyber-border) !important;
+  color: var(--cyber-text) !important;
+  transition: all 0.3s ease;
+}
+
+.pagination .page-link:hover {
+  background-color: var(--cyber-bg-elevated) !important;
+  border-color: var(--neon-cyan) !important;
+  color: var(--neon-cyan) !important;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}
+
+.pagination .page-item.active .page-link {
+  background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-purple) 100%) !important;
+  border-color: transparent !important;
+  color: #000 !important;
+  font-weight: 700;
+}
+
+/* ===========================================
+   SEARCH - ESTILO TERMINAL
+   =========================================== */
+#search-input,
+.search-input {
+  background-color: var(--cyber-bg-deep) !important;
+  border: 1px solid var(--cyber-border) !important;
+  color: var(--cyber-text) !important;
+  transition: all 0.3s ease;
+}
+
+#search-input:focus,
+.search-input:focus {
+  border-color: var(--neon-cyan) !important;
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.3) !important;
+  outline: none;
+}
+
+/* ===========================================
+   SCROLLBAR - ESTILO NEÓN
+   =========================================== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cyber-bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--neon-cyan) 0%, var(--neon-purple) 100%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--neon-magenta) 0%, var(--neon-cyan) 100%);
+}
+
+/* ===========================================
+   SELECTION - HIGHLIGHT NEÓN
+   =========================================== */
+::selection {
+  background-color: var(--neon-cyan);
+  color: #000;
+}
+
+::-moz-selection {
+  background-color: var(--neon-cyan);
+  color: #000;
+}
+
+/* ===========================================
+   RESPONSIVE - AJUSTES MÓVIL
+   =========================================== */
+@media (max-width: 768px) {
+  .machine-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-resources ul {
+    grid-template-columns: 1fr;
+  }
 }
