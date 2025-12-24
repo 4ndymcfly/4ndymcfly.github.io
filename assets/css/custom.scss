@@ -410,6 +410,8 @@ footer.site-footer::before {
 .post-card {
   background-color: var(--cyber-bg-card) !important;
   border: 1px solid var(--cyber-border) !important;
+  border-radius: 0.5rem !important;
+  overflow: hidden;
   transition: all 0.3s ease !important;
 }
 
@@ -420,7 +422,16 @@ footer.site-footer::before {
   transform: translateY(-5px);
   background-color: var(--cyber-bg-hover) !important;
   border-color: var(--neon-cyan) !important;
-  box-shadow: var(--glow-cyan), 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: var(--glow-cyan) !important;
+}
+
+/* Imágenes de preview con esquinas redondeadas */
+.post-preview img,
+.card img,
+.post-card img,
+.card-img-top,
+.preview-img {
+  border-radius: 0.5rem 0.5rem 0 0;
 }
 
 /* Post list items */
@@ -429,6 +440,8 @@ footer.site-footer::before {
 .post-content .post-preview {
   background-color: var(--cyber-bg-card) !important;
   border: 1px solid var(--cyber-border) !important;
+  border-radius: 0.5rem !important;
+  overflow: hidden;
 }
 
 .post-list .post-preview:hover,
