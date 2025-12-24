@@ -585,7 +585,6 @@ main article {
   text-shadow: 0 0 15px rgba(0, 212, 255, 0.9), 0 0 30px rgba(0, 212, 255, 0.6), 0 0 45px rgba(0, 212, 255, 0.3);
   background: linear-gradient(90deg, rgba(0, 212, 255, 0.15) 0%, rgba(0, 212, 255, 0.05) 50%, transparent 100%) !important;
   border-left: 3px solid var(--neon-cyan) !important;
-  box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
   padding-left: calc(1rem - 3px) !important;
 }
 
@@ -1117,22 +1116,27 @@ table:not(.rouge-table):not(.highlight table) tr:hover td {
 /* ===========================================
    SEARCH - ESTILO TERMINAL + GLOW CYAN
    =========================================== */
-/* Contenedor/wrapper de búsqueda con borde azul cyberpunk */
+/* Contenedor/wrapper de búsqueda - estilo etiquetas populares */
 #search-wrapper,
 .search-wrapper,
 #topbar #search-wrapper,
 #search-input-wrap,
-.search-input-wrap {
-  background-color: transparent !important;
+.search-input-wrap,
+#topbar .search-wrapper,
+#topbar-wrapper #search-wrapper,
+.topbar #search-wrapper {
+  background-color: var(--cyber-bg-card) !important;
   border: 1px solid var(--neon-cyan) !important;
   border-radius: 0.5rem !important;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+  transition: all 0.3s ease !important;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.2) !important;
 }
 
 #search-wrapper:focus-within,
 .search-wrapper:focus-within,
-#topbar #search-wrapper:focus-within {
+#topbar #search-wrapper:focus-within,
+#topbar .search-wrapper:focus-within {
+  background-color: var(--cyber-bg-hover) !important;
   border-color: var(--neon-cyan) !important;
   box-shadow: var(--glow-cyan) !important;
 }
@@ -1171,6 +1175,15 @@ input[type="search"]:focus,
 #search-wrapper i,
 .search-wrapper i {
   color: var(--neon-cyan) !important;
+}
+
+/* FORZAR borde cyan - sobrescribir cualquier estilo del tema */
+#topbar #search-wrapper,
+#topbar .search-wrapper,
+#topbar-wrapper .search-wrapper,
+body #topbar #search-wrapper,
+html #topbar #search-wrapper {
+  border-color: var(--neon-cyan) !important;
 }
 
 /* Search results */
