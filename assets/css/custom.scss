@@ -555,23 +555,23 @@ main article {
 #sidebar .nav-item a,
 #sidebar nav a,
 #sidebar .sidebar-nav a {
-  color: var(--cyber-text-muted) !important;
+  color: var(--cyber-text-muted);
   text-shadow: none;
   transition: all 0.3s ease;
   position: relative;
-  padding: 0.5rem 1rem !important;
+  padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   display: block;
-  background: transparent !important;
+  background: transparent;
 }
 
 /* Hover state - Glow sutil */
 #sidebar .nav-item a:hover,
 #sidebar nav a:hover,
 #sidebar .sidebar-nav a:hover {
-  color: var(--neon-cyan) !important;
+  color: var(--neon-cyan);
   text-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
-  background: linear-gradient(90deg, rgba(0, 212, 255, 0.05) 0%, transparent 100%) !important;
+  background: linear-gradient(90deg, rgba(0, 212, 255, 0.05) 0%, transparent 100%);
 }
 
 /* Active/Selected state - EFECTO SIMPLE SIN SOMBRAS RARAS */
@@ -581,11 +581,11 @@ main article {
 #sidebar .sidebar-nav a.active,
 #sidebar .nav-item a[aria-selected="true"],
 #sidebar nav li.active a {
-  color: #fff !important;
+  color: #fff;
   text-shadow: 0 0 15px rgba(0, 212, 255, 0.8);
-  background: rgba(0, 212, 255, 0.08) !important;
-  border-left: 3px solid var(--neon-cyan) !important;
-  padding-left: calc(1rem - 3px) !important;
+  background: rgba(0, 212, 255, 0.08);
+  border-left: 3px solid var(--neon-cyan);
+  padding-left: calc(1rem - 3px);
 }
 
 /* Iconos sociales - GLOW en hover */
@@ -1101,74 +1101,43 @@ table:not(.rouge-table):not(.highlight table) tr:hover td {
 /* ===========================================
    SEARCH - ESTILO TERMINAL + GLOW CYAN
    =========================================== */
-/* Contenedor/wrapper de búsqueda - FORZAR estilo etiquetas */
-#search-wrapper,
-.search-wrapper,
-#topbar #search-wrapper,
-#search-input-wrap,
-.search-input-wrap,
-#topbar .search-wrapper,
-#topbar-wrapper #search-wrapper,
-.topbar #search-wrapper,
-body #topbar #search-wrapper,
-html body #topbar #search-wrapper,
-#topbar-wrapper .search-wrapper,
-body #topbar-wrapper .search-wrapper {
-  background-color: #131a2e !important;
-  background: #131a2e !important;
-  border: 2px solid #00d4ff !important;
-  border-color: #00d4ff !important;
-  border-radius: 0.5rem !important;
-  transition: all 0.3s ease !important;
-  box-shadow: 0 0 10px rgba(0, 212, 255, 0.3) !important;
-}
-
-#search-wrapper:focus-within,
-.search-wrapper:focus-within,
-#topbar #search-wrapper:focus-within,
-#topbar .search-wrapper:focus-within,
-body #topbar #search-wrapper:focus-within {
-  background-color: #1e2a4a !important;
-  background: #1e2a4a !important;
-  border: 2px solid #00d4ff !important;
-  border-color: #00d4ff !important;
-  box-shadow: 0 0 10px rgba(0, 212, 255, 0.5), 0 0 20px rgba(0, 212, 255, 0.3), 0 0 30px rgba(0, 212, 255, 0.2) !important;
-}
-
-/* Input de búsqueda - SIN bordes */
-#search-input,
-.search-input,
-input[type="search"],
-.form-control,
-#topbar #search-input,
-#topbar input[type="search"] {
-  background-color: transparent !important;
-  border: none !important;
-  color: var(--cyber-text) !important;
+/* Contenedor/wrapper de búsqueda */
+#topbar-wrapper #search-wrapper {
+  background-color: var(--cyber-bg-card);
+  border: 2px solid var(--neon-cyan);
+  border-radius: 0.5rem;
   transition: all 0.3s ease;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  outline: none !important;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
 }
 
-#search-input:focus,
-.search-input:focus,
-input[type="search"]:focus,
-.form-control:focus,
-#topbar #search-input:focus {
-  border: none !important;
-  box-shadow: none !important;
-  outline: none !important;
-  background-color: transparent !important;
+#topbar-wrapper #search-wrapper:focus-within {
+  background-color: var(--cyber-bg-hover);
+  border-color: var(--neon-cyan);
+  box-shadow: var(--glow-cyan);
+}
+
+/* Input de búsqueda - transparente para heredar del wrapper */
+#topbar-wrapper #search-input.form-control {
+  background-color: transparent;
+  background-image: none;
+  border: none;
+  color: var(--cyber-text);
+  transition: all 0.3s ease;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+#topbar-wrapper #search-input.form-control:focus {
+  background-color: transparent;
+  background-image: none;
+  border: none;
+  box-shadow: none;
+  outline: none;
 }
 
 /* Icono de búsqueda */
-#search-trigger,
-.search-icon,
-#topbar .search-icon,
-#search-wrapper i,
-.search-wrapper i {
-  color: var(--neon-cyan) !important;
+#topbar-wrapper #search-wrapper i {
+  color: var(--neon-cyan);
 }
 
 /* Search results */
