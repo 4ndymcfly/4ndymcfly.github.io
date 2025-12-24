@@ -574,7 +574,7 @@ main article {
   background: linear-gradient(90deg, rgba(0, 212, 255, 0.05) 0%, transparent 100%) !important;
 }
 
-/* Active/Selected state - GLOW INTENSO CYBERPUNK */
+/* Active/Selected state - EFECTO SIMPLE SIN SOMBRAS RARAS */
 #sidebar .nav-item a.active,
 #sidebar .nav-item.active a,
 #sidebar nav a.active,
@@ -582,25 +582,10 @@ main article {
 #sidebar .nav-item a[aria-selected="true"],
 #sidebar nav li.active a {
   color: #fff !important;
-  text-shadow: 0 0 15px rgba(0, 212, 255, 0.9), 0 0 30px rgba(0, 212, 255, 0.6), 0 0 45px rgba(0, 212, 255, 0.3);
-  background: linear-gradient(90deg, rgba(0, 212, 255, 0.15) 0%, rgba(0, 212, 255, 0.05) 50%, transparent 100%) !important;
+  text-shadow: 0 0 15px rgba(0, 212, 255, 0.8);
+  background: rgba(0, 212, 255, 0.08) !important;
   border-left: 3px solid var(--neon-cyan) !important;
   padding-left: calc(1rem - 3px) !important;
-}
-
-/* Efecto de borde neón en elemento activo */
-#sidebar .nav-item a.active::before,
-#sidebar .nav-item.active a::before,
-#sidebar nav a.active::before,
-#sidebar .sidebar-nav a.active::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: linear-gradient(180deg, var(--neon-cyan) 0%, var(--neon-purple) 100%);
-  box-shadow: 0 0 10px var(--neon-cyan), 0 0 20px rgba(0, 212, 255, 0.5);
 }
 
 /* Iconos sociales - GLOW en hover */
@@ -1116,7 +1101,7 @@ table:not(.rouge-table):not(.highlight table) tr:hover td {
 /* ===========================================
    SEARCH - ESTILO TERMINAL + GLOW CYAN
    =========================================== */
-/* Contenedor/wrapper de búsqueda - estilo etiquetas populares */
+/* Contenedor/wrapper de búsqueda - FORZAR estilo etiquetas */
 #search-wrapper,
 .search-wrapper,
 #topbar #search-wrapper,
@@ -1124,21 +1109,30 @@ table:not(.rouge-table):not(.highlight table) tr:hover td {
 .search-input-wrap,
 #topbar .search-wrapper,
 #topbar-wrapper #search-wrapper,
-.topbar #search-wrapper {
-  background-color: var(--cyber-bg-card) !important;
-  border: 1px solid var(--neon-cyan) !important;
+.topbar #search-wrapper,
+body #topbar #search-wrapper,
+html body #topbar #search-wrapper,
+#topbar-wrapper .search-wrapper,
+body #topbar-wrapper .search-wrapper {
+  background-color: #131a2e !important;
+  background: #131a2e !important;
+  border: 2px solid #00d4ff !important;
+  border-color: #00d4ff !important;
   border-radius: 0.5rem !important;
   transition: all 0.3s ease !important;
-  box-shadow: 0 0 10px rgba(0, 212, 255, 0.2) !important;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.3) !important;
 }
 
 #search-wrapper:focus-within,
 .search-wrapper:focus-within,
 #topbar #search-wrapper:focus-within,
-#topbar .search-wrapper:focus-within {
-  background-color: var(--cyber-bg-hover) !important;
-  border-color: var(--neon-cyan) !important;
-  box-shadow: var(--glow-cyan) !important;
+#topbar .search-wrapper:focus-within,
+body #topbar #search-wrapper:focus-within {
+  background-color: #1e2a4a !important;
+  background: #1e2a4a !important;
+  border: 2px solid #00d4ff !important;
+  border-color: #00d4ff !important;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.5), 0 0 20px rgba(0, 212, 255, 0.3), 0 0 30px rgba(0, 212, 255, 0.2) !important;
 }
 
 /* Input de búsqueda - SIN bordes */
@@ -1175,15 +1169,6 @@ input[type="search"]:focus,
 #search-wrapper i,
 .search-wrapper i {
   color: var(--neon-cyan) !important;
-}
-
-/* FORZAR borde cyan - sobrescribir cualquier estilo del tema */
-#topbar #search-wrapper,
-#topbar .search-wrapper,
-#topbar-wrapper .search-wrapper,
-body #topbar #search-wrapper,
-html #topbar #search-wrapper {
-  border-color: var(--neon-cyan) !important;
 }
 
 /* Search results */
