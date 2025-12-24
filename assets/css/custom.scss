@@ -1117,22 +1117,24 @@ table:not(.rouge-table):not(.highlight table) tr:hover td {
 }
 
 /* Input de búsqueda - transparente para heredar del wrapper */
-#topbar-wrapper #search-input.form-control {
-  background-color: transparent;
-  background-image: none;
-  border: none;
-  color: var(--cyber-text);
+/* Usamos !important SOLO para anular reglas del tema Chirpy que también usan !important */
+#topbar-wrapper #search-input.form-control[type="search"] {
+  background-color: transparent !important;
+  background-image: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  color: var(--cyber-text) !important;
   transition: all 0.3s ease;
-  border-radius: 0;
-  box-shadow: none;
 }
 
-#topbar-wrapper #search-input.form-control:focus {
-  background-color: transparent;
-  background-image: none;
-  border: none;
-  box-shadow: none;
-  outline: none;
+#topbar-wrapper #search-input.form-control[type="search"]:focus {
+  background-color: transparent !important;
+  background-image: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 /* Icono de búsqueda */
