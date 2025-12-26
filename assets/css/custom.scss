@@ -45,12 +45,32 @@
 }
 
 /* ===========================================
-   GLOBAL OVERRIDES - ELIMINAR GRISES
+   GLOBAL OVERRIDES - ELIMINAR GRISES Y NEGROS
    =========================================== */
 * {
   --bs-body-bg: var(--cyber-bg-main) !important;
   --bs-secondary-bg: var(--cyber-bg-card) !important;
   --bs-tertiary-bg: var(--cyber-bg-elevated) !important;
+}
+
+/* Forzar fondo azul oscuro en contenedores principales */
+body,
+html,
+#main,
+#main-wrapper,
+#core-wrapper,
+.wrapper,
+.page-wrapper,
+#page-wrapper,
+body > .container,
+body > .container-fluid,
+#main .container,
+#main .container-fluid,
+main,
+main > *,
+.content-wrapper,
+#content-wrapper {
+  background-color: var(--cyber-bg-main) !important;
 }
 
 /* ===========================================
@@ -303,8 +323,10 @@
 footer.site-footer {
   border-top: 2px solid var(--cyber-border);
   padding-top: 2rem;
+  padding-bottom: 2rem;
   position: relative;
   background-color: var(--cyber-bg-main) !important;
+  min-height: auto !important;
 }
 
 footer.site-footer::before {
@@ -319,7 +341,7 @@ footer.site-footer::before {
 }
 
 .footer-disclaimer {
-  background: linear-gradient(135deg, var(--cyber-bg-card) 0%, var(--cyber-bg-elevated) 100%);
+  background: linear-gradient(135deg, var(--cyber-bg-card) 0%, var(--cyber-bg-elevated) 100%) !important;
   border: 1px solid var(--neon-cyan);
   padding: 1.25rem 1.5rem;
   margin: 2rem 0;
@@ -329,6 +351,10 @@ footer.site-footer::before {
   box-shadow: var(--glow-cyan), 0 4px 15px rgba(0, 0, 0, 0.3);
   position: relative;
   overflow: hidden;
+}
+
+.footer-disclaimer * {
+  background-color: transparent !important;
 }
 
 .footer-disclaimer::before {
@@ -402,27 +428,44 @@ footer.site-footer::before {
 }
 
 /* ===========================================
-   POST CARDS & PREVIEWS - HOVER CON GLOW CYAN
+   POST CARDS & PREVIEWS - SELECTORES ULTRA-ESPECÍFICOS
    =========================================== */
-.post-preview,
-.card,
-#main .card,
-.post-card {
+
+/* Estado normal - Selector ultra-específico */
+html body #main-wrapper .post-preview,
+html body #main-wrapper .card,
+html body #main-wrapper #main .post-preview,
+html body #main-wrapper #main .card,
+html body .post-preview,
+html body .card {
   background-color: var(--cyber-bg-card) !important;
+  background: var(--cyber-bg-card) !important;
   border: 1px solid var(--cyber-border) !important;
   border-radius: 0.5rem !important;
   overflow: hidden;
-  transition: all 0.3s ease !important;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
 }
 
-.post-preview:hover,
-.card:hover,
-#main .card:hover,
-.post-card:hover {
-  transform: translateY(-5px);
-  background-color: var(--cyber-bg-hover) !important;
+/* Hover - MISMO fondo, solo cambia borde y glow */
+html body #main-wrapper .post-preview:hover,
+html body #main-wrapper .card:hover,
+html body #main-wrapper #main .post-preview:hover,
+html body #main-wrapper #main .card:hover,
+html body .post-preview:hover,
+html body .card:hover {
+  background-color: var(--cyber-bg-card) !important;
+  background: var(--cyber-bg-card) !important;
   border-color: var(--neon-cyan) !important;
   box-shadow: var(--glow-cyan) !important;
+}
+
+/* Todos los hijos en hover - fondo transparente/heredado */
+html body #main-wrapper .post-preview:hover *,
+html body #main-wrapper .card:hover *,
+html body .post-preview:hover *,
+html body .card:hover * {
+  background-color: transparent !important;
+  background: transparent !important;
 }
 
 /* Imágenes de preview con esquinas redondeadas */
@@ -434,21 +477,30 @@ footer.site-footer::before {
   border-radius: 0.5rem 0.5rem 0 0;
 }
 
-/* Post list items */
-.post-list .post-preview,
-#post-list .post-preview,
-.post-content .post-preview {
+/* Post list items - Selectores ultra-específicos */
+html body .post-list .post-preview,
+html body #post-list .post-preview,
+html body .post-content .post-preview {
   background-color: var(--cyber-bg-card) !important;
+  background: var(--cyber-bg-card) !important;
   border: 1px solid var(--cyber-border) !important;
   border-radius: 0.5rem !important;
   overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
 }
 
-.post-list .post-preview:hover,
-#post-list .post-preview:hover {
-  background-color: var(--cyber-bg-hover) !important;
+html body .post-list .post-preview:hover,
+html body #post-list .post-preview:hover {
+  background-color: var(--cyber-bg-card) !important;
+  background: var(--cyber-bg-card) !important;
   border-color: var(--neon-cyan) !important;
   box-shadow: var(--glow-cyan) !important;
+}
+
+html body .post-list .post-preview:hover *,
+html body #post-list .post-preview:hover * {
+  background-color: transparent !important;
+  background: transparent !important;
 }
 
 /* ===========================================
@@ -471,7 +523,8 @@ footer.site-footer::before {
    =========================================== */
 html,
 body {
-  background-color: var(--cyber-bg-deep) !important;
+  background-color: var(--cyber-bg-main) !important;
+  min-height: 100vh !important;
 }
 
 #main-wrapper,
@@ -479,6 +532,7 @@ body {
 .wrapper,
 main {
   background-color: var(--cyber-bg-main) !important;
+  min-height: 100vh !important;
 }
 
 /* Tarjetas y posts con mejor contraste */
@@ -510,14 +564,44 @@ nav.navbar,
   border-bottom: 1px solid var(--cyber-border) !important;
 }
 
-/* Footer */
+/* Footer - Fondo azul oscuro consistente en TODO el footer */
+footer,
+footer *,
+footer.site-footer,
+footer.site-footer *,
+#footer-wrapper,
+#footer-wrapper *,
+.footer-wrapper,
+.footer-wrapper *,
+body > footer,
+body > footer *,
+#main > footer,
+#main > footer *,
+.site-footer,
+.site-footer *,
+footer > div,
+footer .container,
+footer .container *,
+footer .container-fluid,
+footer .container-fluid *,
+footer .row,
+footer .row *,
+footer .col,
+footer .col *,
+footer div,
+footer section,
+footer p,
+footer ul,
+footer li {
+  background-color: var(--cyber-bg-main) !important;
+}
+
 footer,
 footer.site-footer,
 #footer-wrapper,
 .footer-wrapper,
 body > footer,
 #main > footer {
-  background-color: var(--cyber-bg-main) !important;
   border-top-color: var(--cyber-border) !important;
 }
 
@@ -849,16 +933,31 @@ table.rouge-table,
   background: var(--cyber-bg-code) !important;
 }
 
-/* Contenedor principal de código */
+/* Contenedor principal de código - SOLO este tiene borde y glow */
 div.highlight,
 figure.highlight,
 .highlighter-rouge {
   background-color: var(--cyber-bg-code) !important;
-  border: 1px solid var(--cyber-border) !important;
+  border: 1px solid var(--neon-cyan) !important;
   border-radius: 0.5rem !important;
   box-shadow: var(--glow-cyan) !important;
   margin: 1rem 0 !important;
   overflow: hidden !important;
+}
+
+/* Eliminar borde/glow de TODOS los elementos internos del código */
+div.highlight > *,
+figure.highlight > *,
+.highlighter-rouge > *,
+.highlight .code-header,
+.highlight pre,
+.highlight table,
+.highlight .rouge-table,
+.highlight td,
+.highlight tr {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 /* Pre dentro de highlight - mismo color */
@@ -1459,4 +1558,364 @@ button {
   ::-webkit-scrollbar {
     width: 6px;
   }
+
+  /* Eliminar línea azul debajo del título en móvil */
+  #sidebar,
+  #sidebar .site-title,
+  #sidebar .site-subtitle,
+  .sidebar,
+  .topbar-wrapper,
+  #topbar-wrapper,
+  nav.navbar,
+  header,
+  #sidebar::after,
+  #sidebar::before,
+  .site-title::after,
+  .site-title::before {
+    border: none !important;
+    border-bottom: none !important;
+    border-top: none !important;
+    box-shadow: none !important;
+  }
 }
+
+/* ===========================================
+   OVERRIDES FINALES - MÁXIMA PRIORIDAD
+   Estas reglas van AL FINAL para sobrescribir TODO
+   =========================================== */
+
+/* Anular variable de hover del tema Chirpy */
+:root,
+[data-mode="dark"],
+[data-mode="light"] {
+  --card-hover-bg: transparent !important;
+  --categories-hover-bg: transparent !important;
+}
+
+/* ELIMINAR el pseudo-elemento ::before que causa el fondo gris en hover */
+.post-preview::before,
+.card::before,
+.post-preview:hover::before,
+.card:hover::before {
+  display: none !important;
+  opacity: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  content: none !important;
+}
+
+/* CARDS: Fondo fijo */
+.post-preview,
+.card,
+.post-preview:hover,
+.card:hover {
+  background-color: var(--cyber-bg-card) !important;
+  background: var(--cyber-bg-card) !important;
+}
+
+/* Solo borde y glow cambian en hover */
+.post-preview:hover,
+.card:hover {
+  border-color: var(--neon-cyan) !important;
+  box-shadow: var(--glow-cyan) !important;
+}
+
+/* CÓDIGO: ELIMINAR TODO borde/sombra interior - ser muy agresivo */
+div.highlight *,
+div.highlight > *,
+figure.highlight *,
+figure.highlight > *,
+.highlighter-rouge *,
+.highlighter-rouge > *,
+.highlight pre,
+.highlight table,
+.highlight td,
+.highlight tr,
+.highlight tbody,
+.highlight code,
+.rouge-table,
+.rouge-code,
+.rouge-gutter,
+td.rouge-code,
+td.rouge-gutter,
+pre,
+pre.highlight,
+.code-header,
+.highlight .code-header,
+.highlight .rouge-table,
+.highlight .rouge-code,
+.highlight .rouge-gutter {
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* TODO el texto de código debe ser visible - blanco/claro */
+code,
+pre,
+pre code,
+pre *,
+.highlight code,
+.highlight pre,
+.highlight span,
+.rouge-code,
+.rouge-code *,
+td.rouge-code,
+td.rouge-code *,
+td.rouge-code pre,
+td.rouge-code pre * {
+  color: #e6edf3 !important;
+}
+
+/* Números de línea */
+.rouge-gutter,
+td.rouge-gutter,
+.lineno {
+  color: #6e7681 !important;
+  background-color: var(--cyber-bg-code) !important;
+}
+
+/* Syntax highlighting específico */
+.highlight .c, .highlight .c1, .highlight .cm, .highlight .cp, .highlight .cs { color: #8b949e !important; }
+.highlight .k, .highlight .kc, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt { color: #ff7b72 !important; }
+.highlight .s, .highlight .s1, .highlight .s2, .highlight .sr, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .se, .highlight .sh, .highlight .si, .highlight .sx { color: #a5d6ff !important; }
+.highlight .nf, .highlight .nx { color: #d2a8ff !important; }
+.highlight .nc, .highlight .nn { color: #ffa657 !important; }
+.highlight .mi, .highlight .mf, .highlight .mh, .highlight .mo { color: #79c0ff !important; }
+.highlight .o, .highlight .p { color: #e6edf3 !important; }
+.highlight .na, .highlight .nb, .highlight .ni, .highlight .ne, .highlight .nv, .highlight .nt { color: #7ee787 !important; }
+
+/* ===========================================
+   FIX CRÍTICO: Marco interior de bloques de código
+   Chirpy usa: div[class^=language-]{box-shadow:var(--language-border-color) 0 0 0 1px}
+   =========================================== */
+
+/* Anular la variable que crea el borde interior */
+:root,
+[data-mode="dark"],
+[data-mode="light"] {
+  --language-border-color: transparent !important;
+  --highlight-border-color: transparent !important;
+}
+
+/* Eliminar el box-shadow que crea el marco interior */
+div[class^="language-"],
+div[class*="language-"],
+.language-shell,
+.language-bash,
+.language-python,
+.language-plaintext,
+.language-http,
+.language-sql,
+.language-javascript,
+.language-css,
+.language-html,
+.language-ruby,
+.language-yaml,
+.language-json {
+  box-shadow: var(--glow-cyan) !important;
+  border: 1px solid var(--neon-cyan) !important;
+}
+
+/* Los elementos internos NO deben tener bordes ni sombras */
+div[class^="language-"] *,
+div[class^="language-"] .highlight,
+div[class^="language-"] .highlight *,
+div[class^="language-"] pre,
+div[class^="language-"] code,
+div[class^="language-"] table,
+div[class^="language-"] td,
+div[class^="language-"] tr {
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
+}
+
+/* ===========================================
+   FIX MÓVIL: Línea bajo título + Footer gris
+   Chirpy breakpoint móvil: 849px
+   =========================================== */
+
+/* Anular variables de borde de Chirpy en móvil */
+@media (max-width: 849px) {
+  :root,
+  [data-mode="dark"],
+  [data-mode="light"] {
+    --main-border-color: transparent !important;
+    --sidebar-border-color: transparent !important;
+    --topbar-border-color: transparent !important;
+  }
+}
+
+@media (max-width: 849px) {
+  /* NUCLEAR: Eliminar TODOS los bordes del topbar y contenedores */
+  #topbar-wrapper,
+  #topbar-wrapper::before,
+  #topbar-wrapper::after,
+  #topbar,
+  #topbar::before,
+  #topbar::after,
+  #topbar-title,
+  .container,
+  .container::before,
+  .container::after,
+  #main-wrapper,
+  #main-wrapper::before,
+  #main-wrapper::after,
+  #main-wrapper > .container,
+  #main-wrapper > .container::before,
+  #main-wrapper > .container::after,
+  .row,
+  .row::before,
+  .row::after,
+  main,
+  main::before,
+  main::after,
+  #sidebar,
+  #sidebar::before,
+  #sidebar::after,
+  .profile-wrapper,
+  header,
+  header::before,
+  header::after {
+    border: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  /* Fondo consistente en TODA la página móvil - NUCLEAR */
+  html,
+  body,
+  #main-wrapper,
+  #main-wrapper > .container,
+  #main-wrapper > .container > .row,
+  #main-wrapper .d-flex,
+  .container,
+  .container-fluid,
+  .row,
+  .col,
+  .col-12,
+  main,
+  footer,
+  footer.site-footer,
+  .site-footer,
+  #tail-wrapper,
+  #tail-wrapper > .col-12,
+  .footer-resources,
+  .footer-disclaimer,
+  #topbar-wrapper,
+  #topbar,
+  #mask,
+  #core-wrapper,
+  .wrapper,
+  div[class*="wrapper"],
+  div[class*="container"],
+  .flex-grow-1,
+  .d-flex {
+    background-color: var(--cyber-bg-main) !important;
+    background: var(--cyber-bg-main) !important;
+  }
+
+  /* Asegurar que html y body cubren toda la pantalla */
+  html, body {
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+  }
+
+  /* Sidebar móvil - fondo UNIFICADO */
+  #sidebar,
+  #sidebar *,
+  #sidebar .profile-wrapper,
+  #sidebar .site-title,
+  #sidebar .site-subtitle,
+  #sidebar nav,
+  #sidebar .nav,
+  #sidebar .nav-item,
+  #sidebar .nav-link,
+  #sidebar .sidebar-bottom,
+  #sidebar .stats-section,
+  #sidebar .stats-list,
+  #sidebar ul,
+  #sidebar li,
+  #sidebar a,
+  #sidebar header,
+  #sidebar .flex-column,
+  #sidebar .w-100,
+  #sidebar .d-flex {
+    background-color: transparent !important;
+    background: transparent !important;
+  }
+
+  /* Solo el contenedor principal del sidebar tiene el fondo */
+  #sidebar {
+    background: linear-gradient(180deg, var(--cyber-bg-deep) 0%, #080b14 100%) !important;
+    border: none !important;
+  }
+
+  /* El contenido también debe tener fondo consistente */
+  .post-content,
+  article,
+  .content,
+  #post-list,
+  .card-wrapper,
+  .px-md-4,
+  .col-lg-11,
+  .col-xl-9 {
+    background-color: var(--cyber-bg-main) !important;
+  }
+
+  /* CARDS MÓVIL: Fondo consistente en todos los elementos internos */
+  .card,
+  .card *,
+  .card-wrapper,
+  .card-wrapper *,
+  .post-preview,
+  .post-preview *,
+  .card-body,
+  .card-text,
+  .card-title,
+  .card-text.content,
+  .post-meta,
+  .preview-img,
+  .post-preview .card-body,
+  .post-preview .card-text,
+  .post-preview .content {
+    background-color: transparent !important;
+    background: transparent !important;
+  }
+
+  /* Mantener el fondo de la card principal */
+  .card,
+  .card-wrapper.card,
+  .post-preview {
+    background-color: var(--cyber-bg-card) !important;
+    background: var(--cyber-bg-card) !important;
+  }
+}
+
+/* Pantallas extra pequeñas */
+@media (max-width: 576px) {
+  #topbar-wrapper,
+  #topbar,
+  #sidebar,
+  header,
+  main,
+  footer {
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  html, body, #main-wrapper, footer, .site-footer {
+    background-color: var(--cyber-bg-main) !important;
+  }
+}
+
+/* Force rebuild - 2024-12-26-v6 */
