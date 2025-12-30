@@ -1,9 +1,27 @@
 ---
-title: "Solidstate - WriteUp"
-date: Thu Jul 10 2025 22:15:00 GMT+0200 (Central European Summer Time)
-categories: [WriteUps, HTB, Linux]
-tags: [ctf, nmap, htb, linpeas, exploit, privesc, pspy, apache, cron, linux]
-image: /assets/img/htb-writeups/Pasted-image-20240206120557.png
+title: Solidstate - WriteUp
+date: 'Thu, 10 Jul 2025 00:00:00 GMT'
+categories:
+  - WriteUps
+  - HTB
+  - Linux
+tags:
+  - ctf
+  - nmap
+  - htb
+  - linpeas
+  - exploit
+  - privesc
+  - pspy
+  - apache
+  - cron
+  - linux
+image: /assets/img/cabeceras/2025-07-10-SOLIDSTATE-WRITEUP.png
+description: >-
+  SolidState es una máquina de dificultad media que requiere encadenar múltiples
+  vectores de ataque para obtener un shell privilegiado. Como nota, en algunos
+  casos el exploit puede no activarse más de una vez y es necesario reiniciar la
+  máquina.
 ---
 
 {% include machine-info.html
@@ -13,30 +31,8 @@ image: /assets/img/htb-writeups/Pasted-image-20240206120557.png
   platform="HTB"
 %}
 
-![Solidstate](/assets/img/htb-writeups/Pasted-image-20240206120557.png)
 
----
-
----
------
-
-![SOLIDSTATE](/assets/img/htb-writeups/Pasted-image-20240206120557.png)
-
-Descripción:
-SolidState es una máquina de dificultad media que requiere encadenar múltiples vectores de ataque para obtener un shell privilegiado. Como nota, en algunos casos el exploit puede no activarse más de una vez y es necesario reiniciar la máquina.
-
-Skills:
-
-- Abusing James Remote Administration Tool
-- Changing a user's email password
-- Information Leakage
-
-- Escaping Restricted Bash (rbash)
-- Creating a bash script in order to detect cron jobs (procmon.sh)
-- Abusing Cron Job Privilege Escalation
-
------
-#### ENUMERACIÓN
+## ENUMERACIÓN
 
 NMAP
 ```bash
@@ -67,6 +63,8 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
 
 ![SOLIDSTATE](/assets/img/htb-writeups/Pasted-image-20240206205343.png)
+
+## EXPLOTACIÓN Y ESCALADA
 
 Buscando información sobre _James Remote Administration_, descubrimos que el servicio es fácilmente explotable y tiene como credenciales por defecto `root:root`.
 
@@ -99,6 +97,7 @@ Conectamos por Telnet con las credenciales del email y subimos pspy32 y linpeas 
 Modificamos el archivo de la siguiente manera y ya solo tenemos que esperar para que root cambie los permisos de /bin/bash
 
 ![SOLIDSTATE](/assets/img/htb-writeups/Pasted-image-20240206204103.png)
+
 
 Escalamos privilegios y chimpun.
 
