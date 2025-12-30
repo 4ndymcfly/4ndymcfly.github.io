@@ -28,7 +28,7 @@ Si te interesa la ciberseguridad, el aprendizaje práctico y el enfoque técnico
 
 ---
 
-**Andrés Lorente**<br>
+**Andrés Lorente**<br><br>
 `4ndymcfly`
 
 
