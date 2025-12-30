@@ -28,7 +28,7 @@ image: /assets/img/cabeceras/2025-06-13-NINEVEH-WRITEUP.png
 
 
 
-#### ENUMERACIÓN
+## ENUMERACIÓN
 
 NMAP
 ```bash
@@ -82,6 +82,7 @@ ninevehForAll.png                             100%[=============================
 2024-02-05 17:58:47 (2.01 MB/s) - ‘ninevehForAll.png’ saved [560852/560852]
 ```
 
+
 Examinamos la imagen a detalle:
 
 ```bash
@@ -111,7 +112,8 @@ Image Size                      : 1336x508
 Megapixels                      : 0.679
 ```
 
-FUZZING HTTP:
+
+## FUZZING HTTP:
 
 ```bash
 $ gobuster dir -u http://nineveh.htb -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 200 -k --no-error --add-slash
@@ -175,6 +177,7 @@ Probamos las principales rutas hasta que hacemos un descubrimiento:
 /proc/sched_debug
 ```
 
+
 En el archivo /proc/sched_debug vemos que tiene el servicio _knockd_. Eso significa que tiene un puerto que se activa con _knocking_ en la secuencia de puertos correcta.
 
 Para ello revisamos el archivo /etc/knockd.conf que contiene lo siguiente:
@@ -209,7 +212,7 @@ $ ssh amrois@10.129.229.157
 
 Pero necesitamos un archivo de clave pública para poder entrar.
 
-FUZZING HTTPS:
+## FUZZING HTTPS:
 
 ```bash
 $ gobuster dir -u https://nineveh.htb -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 200 -k --no-error --add-slash -x php,txt,html,png
@@ -252,6 +255,8 @@ Warning: rand() expects parameter 2 to be integer, float given in /var/www/ssl/d
 
 ![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205181225.png)
 
+## EXPLOTACIÓN
+
 Podemos introducir un password. Si no lo encontramos intentaremos romperlo con _hydra_
 
 ```bash
@@ -293,6 +298,8 @@ Nos subimos linpeas y pspy como siempre y empezamos la enumeración.
 Con pspy vemos que se ejecuta todo el rato
 
 ![NINEVEH](/assets/img/htb-writeups/Pasted-image-20240205204637.png)
+
+## ESCALADA
 
 Vamos a ver la vulnerabilidad
 
