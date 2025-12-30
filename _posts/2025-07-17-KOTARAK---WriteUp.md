@@ -736,11 +736,10 @@ I can verify that as atanas I can’t just access that directory directly:
 atanas@kotarak-dmz:~$ ls -ld /var/lib/lxc
 drwx------ 3 root root 4096 Jul 21  2017 /var/lib/lxc
 ```
----
 
-**Última actualización**: 2025-07-17<br>
-**Autores**: A. Lorente y escalada de https://0xdf.gitlab.io/ <br>
-**Licencia**: Creative Commons BY-NC-SA 4.0
+
+
+Thanks to https://0xdf.gitlab.io/
 
 ---
 
