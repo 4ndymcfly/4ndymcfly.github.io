@@ -1,9 +1,31 @@
 ---
-title: "Sizzle - WriteUp"
-date: Mon Jun 09 2025 21:00:00 GMT+0200 (Central European Summer Time)
-categories: [WriteUps, HTB, Windows]
-tags: [ctf, nmap, htb, winrm, powershell, dcsync, evil-winrm, bash, smb, rpc]
-image: /assets/img/htb-writeups/Pasted-image-20240113113110.png
+title: Sizzle - WriteUp
+date: 'Mon, 09 Jun 2025 00:00:00 GMT'
+categories:
+  - WriteUps
+  - HTB
+  - Windows
+tags:
+  - ctf
+  - nmap
+  - htb
+  - winrm
+  - powershell
+  - dcsync
+  - evil-winrm
+  - bash
+  - smb
+  - rpc
+image: /assets/img/cabeceras/2025-06-09-SIZZLE-WRITEUP.png
+description: >-
+  Sizzle es una máquina de dificultad Insane bajo WIndows en un entorno de
+  Active Directory. Un directorio, un recurso compartido de PYMES permite robar
+  hashes NTLM que se pueden descifrar para acceder al Portal de Servicios de
+  Certificados. Se puede crear un certificado autofirmado utilizando la CA y
+  utilizado para PSRemoting. Un SPN asociado con un usuario permite un ataque de
+  kerberoast en la caja. Se encuentra que el usuario tiene derechos de
+  replicación que pueden ser abusados para obtener hashes de administrador a
+  través de DCSync.
 ---
 
 {% include machine-info.html
@@ -13,14 +35,8 @@ image: /assets/img/htb-writeups/Pasted-image-20240113113110.png
   platform="HTB"
 %}
 
-![Sizzle](/assets/img/htb-writeups/Pasted-image-20240113113110.png)
 
-------
-
-Máquina Windows
-Dificultad Insane
-https://www.youtube.com/watch?v=7W2h7qoCShk
------
+## ENUMERACIÓM
 
 NMAP
 
@@ -297,6 +313,8 @@ Ahora ya podemos navegar entre carpetas desde nuestro equipo.
 
 Ahora nuestro próximo objetivo será crea dentro de /Public un archivo malicioso que nos ayude a la explotación de la máquina.
 
+## EXPLOTACIÓN
+
 En este caso crearemos un archivo .scf de modo que cuando se ejecute desde la máquina remota intentará loguearse contra nuestra máquina y podremos capturar su hash de validación.
 
 Para ello crearemos un archivo .scf con el siguiente contenido:
@@ -464,7 +482,7 @@ $ evil-winrm -S -c certnew.cer -k amanda.key -i 10.129.118.228 -u 'amanda' -p 'A
 
 ![SIZZLE](/assets/img/htb-writeups/Pasted-image-20240116131124.png)
 
-#### ESCALADA DE PRIVILEGIOS
+## ESCALADA
 
 Llegados a este punto y como el usuario con el que hemos accedido no tiene la flag de user, deberemos seguir enumerando todo el contenido del AD. Para ello nos ayudaremos de la utilidad _BloodHound_, podemos correrla en la misma máquina ya que tenemos acceso (es lo recomendable) o desde nuestro equipo con el script de python _bloodhound-python_. En este caso nos será suficiente con el script de python. Nos creamos una carpeta de trabajo donde almacenaremos todos los archivos que recopile la utilidad lanzada de la siguiente manera:
 
