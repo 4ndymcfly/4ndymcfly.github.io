@@ -1,9 +1,26 @@
 ---
-title: "Valentine - WriteUp"
-date: Mon Jun 09 2025 14:00:00 GMT+0200 (Central European Summer Time)
-categories: [WriteUps, HTB, Linux]
-tags: [ctf, nmap, htb, dirb, cve, exploit, cve-2014-0160, apache, gobuster, linux]
-image: /assets/img/htb-writeups/Pasted-image-20240201101609.png
+title: Valentine - WriteUp
+date: 'Mon, 09 Jun 2025 00:00:00 GMT'
+categories:
+  - WriteUps
+  - HTB
+  - Linux
+tags:
+  - ctf
+  - nmap
+  - htb
+  - dirb
+  - cve
+  - exploit
+  - cve-2014-0160
+  - apache
+  - gobuster
+  - linux
+image: /assets/img/cabeceras/2025-06-09-VALENTINE-WRITEUP.png
+description: >-
+  Valentine es una máquina de dificultad fácil única, que se centra en la
+  vulnerabilidad Heartbleed, que tuvo un impacto devastador en los sistemas de
+  todo el mundo.
 ---
 
 {% include machine-info.html
@@ -13,18 +30,7 @@ image: /assets/img/htb-writeups/Pasted-image-20240201101609.png
   platform="HTB"
 %}
 
-![Valentine](/assets/img/htb-writeups/Pasted-image-20240201101609.png)
-
----
-
----
------
-
-![VALENTINE](/assets/img/htb-writeups/Pasted-image-20240201101609.png)
-
------
-
-#### ENUMERACIÓN
+## ENUMERACIÓN
 
 NMAP
 
@@ -92,7 +98,7 @@ PORT    STATE SERVICE
 
 La vulnerabilidad tiene el CVE-2014-0160
 
-FUZZING
+## FUZZING
 
 ```bash
 $ gobuster dir -u http://10.129.1.181 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 200 --no-error
@@ -134,7 +140,7 @@ Miramos las rutas encontradas:
 
 ![VALENTINE](/assets/img/htb-writeups/Pasted-image-20240201104212.png)
 
-#### EXPLOTACIÓN
+## EXPLOTACIÓN
 
 Vamos a centrarnos en el archivo _hype_key_ encontrado. Parece Hexadecimal. Nos ayudaremos de la página _Cyberchef_ para intentar averiguar lo que oculta o cuál es su función...
 
@@ -188,7 +194,7 @@ Si en este punto diera un error al conectar del tipo "_sign_and_send_pubkey: no 
 $ ssh -o PubkeyAcceptedKeyTypes=ssh-rsa -i id_rsa hype@10.129.1.181
 ```
 
-#### ESCALADA
+## ESCALADA
 
 Si examinamos los procesos vemos uno que nos llama la atención:
 
