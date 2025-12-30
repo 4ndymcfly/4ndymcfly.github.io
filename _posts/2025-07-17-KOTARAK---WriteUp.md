@@ -1,9 +1,26 @@
 ---
-title: "Kotarak - WriteUp"
-date: Thu Jul 17 2025 19:45:00 GMT+0200 (Central European Summer Time)
-categories: [WriteUps, HTB, Linux]
-tags: [ctf, nmap, htb, msfvenom, ssh, cve, exploit, cve-2016-4971, bash, hashcat]
-image: /assets/img/htb-writeups/Pasted-image-20240207195006.png
+title: Kotarak - WriteUp
+date: 'Thu, 17 Jul 2025 00:00:00 GMT'
+categories:
+  - WriteUps
+  - HTB
+  - Linux
+tags:
+  - ctf
+  - nmap
+  - htb
+  - msfvenom
+  - ssh
+  - cve
+  - exploit
+  - cve-2016-4971
+  - bash
+  - hashcat
+image: /assets/img/cabeceras/2025-07-17-KOTARAK-WRITEUP.png
+description: >-
+  Kotarak se centra en muchos vectores de ataque diferentes y requiere bastantes
+  pasos para completarse. Es una gran experiencia de aprendizaje ya que muchos
+  de los temas no están cubiertos por otras máquinas en Hack The Box.
 ---
 
 {% include machine-info.html
@@ -13,16 +30,6 @@ image: /assets/img/htb-writeups/Pasted-image-20240207195006.png
   platform="HTB"
 %}
 
-![Kotarak](/assets/img/htb-writeups/Pasted-image-20240207195006.png)
-
----
-
----
-Tags:    
-
-----------
-
-![KOTARAK](/assets/img/htb-writeups/Pasted-image-20240207195006.png)
 
 #### INFO
 Kotarak se centra en muchos vectores de ataque diferentes y requiere bastantes pasos para completarse. Es una gran experiencia de aprendizaje ya que muchos de los temas no están cubiertos por otras máquinas en Hack The Box.
@@ -36,7 +43,7 @@ Kotarak se centra en muchos vectores de ataque diferentes y requiere bastantes p
 
 ---------
 
-#### ENUM
+## ENUM
 
 NMAP
 ```bash
@@ -66,6 +73,7 @@ PORT      STATE SERVICE VERSION
 |_http-server-header: Apache/2.4.18 (Ubuntu)
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
+
 
 HTTP puerto 8080
 
@@ -121,19 +129,32 @@ Y funciona...
 
 Estamos ante un port discovery mediante SSRF. Ahora nos toca descubrir más puertos internos.
 
-FUZZING:
+## FUZZING
 
 ```bash
 $ wfuzz -c -t 200 -z range,1-65535 --hh 2 'http://10.129.1.117:60000/url.php?path=http://localhost:FUZZ'
 ```
 
-```bash
+
+```
 =====================================================================
-ID           Response   Lines    Word       Chars       Payload                                                                                =====================================================================
-000000320:   200        26 L     109 W      1232 Ch     "320"                                                                                  000000022:   200        4 L      4 W        62 Ch       "22"                                                                                   000000888:   200        78 L     265 W      3955 Ch     "888"                                                                                  000000110:   200        17 L     24 W       187 Ch      "110"                                                                                  000000090:   200        11 L     18 W       156 Ch      "90"                                                                                   000003306:   200        2 L      6 W        123 Ch      "3306"                                                                                 000008080:   200        2 L      47 W       994 Ch      "8080"                                                                                 000000200:   200        3 L      2 W        22 Ch       "200"                                                                                  000060000:   200        78 L     130 W      1171 Ch     "60000"
+ID           Response   Lines    Word       Payload
+=====================================================================
+000000320:   200        26 L     109 W      1232 Ch     "320"
+000000022:   200        4 L      4 W        62 Ch       "22"
+000000888:   200        78 L     265 W      3955 Ch     "888"
+000000110:   200        17 L     24 W       187 Ch      "110"
+000000090:   200        11 L     18 W       156 Ch      "90"
+000003306:   200        2 L      6 W        123 Ch      "3306"
+000008080:   200        2 L      47 W       994 Ch      "8080"
+000000200:   200        3 L      2 W        22 Ch       "200"
+000060000:   200        78 L     130 W      1171 Ch     "60000"
 ```
 
+
 Tenemos algo en los puertos 22, 90, 110, 200, 320, 888, 3306, 8080 y 60000.
+
+## EXPLOTACIÓN
 
 Vamos a revisar puerto por puerto exceptuando los que ya sabíamos y nos quedaremos con los más relevantes.
 
@@ -330,7 +351,7 @@ Y la combinación ganadora es:
 atanas:f16tomcat!
 ```
 
-#### ESCALADA
+## ESCALADA
 
 https://0xdf.gitlab.io/2021/05/19/htb-kotarak.html
 
@@ -718,5 +739,11 @@ drwx------ 3 root root 4096 Jul 21  2017 /var/lib/lxc
 ---
 
 **Última actualización**: 2025-07-17<br>
+**Autores**: A. Lorente y escalada de https://0xdf.gitlab.io/ <br>
+**Licencia**: Creative Commons BY-NC-SA 4.0
+
+---
+
+**Última actualización**: 2025-12-30<br>
 **Autor**: A. Lorente<br>
 **Licencia**: Creative Commons BY-NC-SA 4.0
