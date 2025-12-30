@@ -42,6 +42,49 @@
   --glow-cyan: 0 0 10px rgba(0, 212, 255, 0.5), 0 0 20px rgba(0, 212, 255, 0.3), 0 0 30px rgba(0, 212, 255, 0.2);
   --glow-cyan-intense: 0 0 15px rgba(0, 212, 255, 0.7), 0 0 30px rgba(0, 212, 255, 0.5), 0 0 45px rgba(0, 212, 255, 0.3);
   --glow-purple: 0 0 10px rgba(139, 92, 246, 0.5), 0 0 20px rgba(139, 92, 246, 0.3);
+
+  /* OVERRIDE VARIABLES CHIRPY - Eliminar fondo negro */
+  --body-bg: #0d1221 !important;
+  --main-bg: #0d1221 !important;
+  --mask-bg: #0d1221 !important;
+  --site-footer-bg: #0d1221 !important;
+  --footer-bg: #0d1221 !important;
+}
+
+/* Override variables Chirpy para modo oscuro */
+html[data-mode="dark"],
+[data-mode="dark"] {
+  --body-bg: #0d1221 !important;
+  --main-bg: #0d1221 !important;
+  --mask-bg: #0d1221 !important;
+  --site-footer-bg: #0d1221 !important;
+  --footer-bg: #0d1221 !important;
+}
+
+/* Override para prefers-color-scheme dark (sistema en modo oscuro) */
+@media (prefers-color-scheme: dark) {
+  :root,
+  html,
+  html:not([data-mode]),
+  html[data-mode="dark"] {
+    --body-bg: #0d1221 !important;
+    --main-bg: #0d1221 !important;
+    --mask-bg: #0d1221 !important;
+  }
+}
+
+/* FORZAR background directo en body y footer - máxima prioridad */
+html body {
+  background: #0d1221 !important;
+  background-color: #0d1221 !important;
+}
+
+html body footer,
+html body footer.site-footer,
+html footer,
+footer {
+  background: #0d1221 !important;
+  background-color: #0d1221 !important;
 }
 
 /* ===========================================
@@ -630,8 +673,49 @@ main article {
    SIDEBAR - ESTILO CYBERPUNK + GLOW CYAN
    =========================================== */
 #sidebar {
-  background: linear-gradient(180deg, var(--cyber-bg-deep) 0%, #080b14 100%) !important;
+  background: var(--cyber-bg-deep) !important;
+  background-color: var(--cyber-bg-deep) !important;
   border-right: 1px solid var(--cyber-border) !important;
+}
+
+/* Unificar TODOS los elementos del sidebar con fondo transparente */
+#sidebar *,
+#sidebar .profile-wrapper,
+#sidebar .site-title,
+#sidebar .site-subtitle,
+#sidebar nav,
+#sidebar .nav,
+#sidebar .nav-item,
+#sidebar .nav-link,
+#sidebar .sidebar-bottom,
+#sidebar .stats-section,
+#sidebar .stats-list,
+#sidebar ul,
+#sidebar li,
+#sidebar a,
+#sidebar header,
+#sidebar .flex-column,
+#sidebar .w-100,
+#sidebar .d-flex,
+#sidebar .align-items-end,
+#sidebar .ps-0 {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+/* Eliminar líneas/bordes horizontales en el sidebar */
+#sidebar .nav,
+#sidebar nav,
+#sidebar .stats-section,
+#sidebar .sidebar-bottom,
+#sidebar hr,
+#sidebar [class*="border"] {
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
 }
 
 #sidebar .site-title a {
@@ -1092,8 +1176,10 @@ td.rouge-code pre,
 .toc-wrapper,
 #toc,
 .toc {
-  background-color: var(--cyber-bg-card) !important;
-  border: 1px solid var(--cyber-border) !important;
+  background-color: transparent !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 #toc a,
@@ -1918,4 +2004,59 @@ div[class^="language-"] tr {
   }
 }
 
-/* Force rebuild - 2024-12-26-v6 */
+/* ===========================================
+   FIX: Fondo negro en zona inferior (Footer/Aviso Legal)
+   Aplica en TODAS las resoluciones
+   =========================================== */
+
+/* NUCLEAR: Todos los contenedores de nivel superior */
+html,
+body,
+#main-wrapper,
+#core-wrapper,
+#tail-wrapper,
+#tail-wrapper *,
+.wrapper,
+main,
+footer,
+footer.site-footer,
+.site-footer,
+.footer-resources,
+.footer-disclaimer,
+.d-flex.flex-column,
+.flex-grow-1,
+div.d-flex,
+div.flex-column,
+body > div,
+#main-wrapper > div,
+#core-wrapper > div {
+  background-color: var(--cyber-bg-main) !important;
+  background: var(--cyber-bg-main) !important;
+}
+
+/* Selectores específicos para #tail-wrapper y descendientes */
+#tail-wrapper,
+#tail-wrapper .container,
+#tail-wrapper .container-fluid,
+#tail-wrapper .row,
+#tail-wrapper .col,
+#tail-wrapper .col-12,
+#tail-wrapper footer,
+#tail-wrapper .site-footer,
+#tail-wrapper > * {
+  background-color: var(--cyber-bg-main) !important;
+  background: var(--cyber-bg-main) !important;
+}
+
+/* Fix para el contenedor flex principal de Chirpy */
+body.d-flex,
+.d-flex.flex-column.min-vh-100,
+div.d-flex.flex-column.min-vh-100,
+#main-wrapper.d-flex,
+.flex-grow-1.d-flex,
+.flex-column.flex-grow-1 {
+  background-color: var(--cyber-bg-main) !important;
+  background: var(--cyber-bg-main) !important;
+}
+
+/* Force rebuild - 2024-12-30-v1 */
