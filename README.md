@@ -61,7 +61,7 @@ El blog está construido con:
 
 - **Jekyll** - Porque los blogs estáticos son rápidos y seguros (ironías de la vida)
 - **Chirpy Theme** - Un tema elegante que funciona de maravilla
-- **Netlify** - Deployment automático y sin complicaciones
+- **GitHub Pages + Actions** - Deployment automático con cada push
 - **Modo Oscuro** - Por defecto, porque los ojos te lo agradecerán
 
 ---
