@@ -11,6 +11,7 @@ gem "jekyll-theme-chirpy", "~> 7.0", ">= 7.0.1" # Tu tema actual
 
 group :jekyll_plugins do
   gem "jekyll-compose" # Herramientas adicionales para posts
+  gem "jekyll-redirect-from" # Redirecciones 301 para SEO
 end
 
 group :test do
