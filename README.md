@@ -13,11 +13,12 @@
 
 ---
 
-## 👋 ¡Bienvenido!
+## 👋 ¡Bienvenido
 
 Hola, soy **Andrés** (también conocido como **4ndymcfly**) y este es mi rincón personal en internet donde comparto todo lo que voy aprendiendo sobre **ciberseguridad**, **hacking ético** y **pentesting**.
 
 Si estás aquí probablemente sea porque:
+
 - 🎯 Estás preparando el **OSCP**, **eJPTv2** (o alguna certificación similar) y buscas apuntes
 - 💻 Te gustan los **writeups de máquinas** de HackTheBox, Proving Grounds, TryHackMe, etc.
 - 🛠️ Necesitas un **cheatsheet rápido** de alguna herramienta o técnica
@@ -41,6 +42,7 @@ Guías completas y cheatsheets sobre diferentes aspectos del pentesting:
 ### 🎮 WriteUps
 
 Soluciones detalladas de máquinas que he resuelto:
+
 - HackTheBox
 - Proving Grounds (Offsec)
 - TryHackMe
@@ -99,6 +101,7 @@ Por eso comparto todo lo que voy descubriendo en este apasionante mundo del pent
 ## ⚠️ Disclaimer Legal
 
 Todo el contenido de este blog es **exclusivamente educativo**. Las técnicas y herramientas aquí mostradas solo deben usarse en:
+
 - Entornos de laboratorio propios
 - Plataformas autorizadas (HTB, THM, etc.)
 - Auditorías con permiso explícito por escrito
@@ -111,7 +114,7 @@ El uso indebido de esta información es **ilegal** y va contra la ética del hac
 
 - 🌐 Blog: [hackingepico](https://hackingepico.com)
 - 💼 GitHub: [@4ndymcfly](https://github.com/4ndymcfly)
-- 📧 Email: info@hackingepico.com
+- 📧 Email: <info@hackingepico.com>
 
 ---
 
