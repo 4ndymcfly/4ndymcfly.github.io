@@ -2,6 +2,22 @@
 ---
 
 /* ============================================
+   FIX: FORZAR COLOR DE FONDO HTML - MÁXIMA PRIORIDAD
+   El elemento HTML debe tener el mismo color que body central
+   para evitar el color gris rgb(24, 26, 27) del tema Chirpy
+   Usa --cyber-bg-main (#0d1221) NO --cyber-bg-deep (#0a0e1a)
+   ============================================ */
+html,
+html:root,
+html[data-mode],
+html[data-mode="dark"],
+html[data-mode="light"],
+html:not([data-mode]) {
+  background: #0d1221 !important;
+  background-color: #0d1221 !important;
+}
+
+/* ============================================
    HACKING ÉPICO - CYBERPUNK NEON THEME v3
    Paleta inspirada en estética synthwave/tech
    Glow en tonos CYAN/AZUL
@@ -75,8 +91,8 @@ html[data-mode="dark"],
 
 /* FORZAR background directo en body y footer - máxima prioridad */
 html {
-     background: #0d1221 !important;
-     background-color: #0d1221 !important;
+  background: #0d1221 !important;
+  background-color: #0d1221 !important;
 }
 
 html body {
