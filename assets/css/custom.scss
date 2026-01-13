@@ -74,6 +74,11 @@ html[data-mode="dark"],
 }
 
 /* FORZAR background directo en body y footer - máxima prioridad */
+html {
+     background: #0d1221 !important;
+     background-color: #0d1221 !important;
+}
+
 html body {
   background: #0d1221 !important;
   background-color: #0d1221 !important;
