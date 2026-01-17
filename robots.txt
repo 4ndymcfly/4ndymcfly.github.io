@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /tags/
+Disallow: /categories/
+Disallow: /page
+Disallow: /cdn-cgi/
+
+Sitemap: https://hackingepico.com/sitemap.xml
